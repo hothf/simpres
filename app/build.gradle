@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'io.objectbox'
+
+android {
+    signingConfigs {
+        simpres {
+            keyAlias 'simpres'
+            keyPassword 'simpres'
+            storeFile file('../simpres.jks')
+            storePassword 'simpres'
+        }
+    }
+    compileSdkVersion "$target_version".toInteger()
+    defaultConfig {
+        applicationId "de.ka.simpres"
+        minSdkVersion "$min_version".toInteger()
+        targetSdkVersion "$target_version".toInteger()
+        versionCode "$project_version_code".toInteger()
+        versionName "$project_version_name"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    dataBinding {
+        enabled = true
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+        }
+        dev {
+            applicationIdSuffix ".dev"
+            minifyEnabled true
+            signingConfig signingConfigs.simpres
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        prod {
+            minifyEnabled true
+            signingConfig signingConfigs.simpres
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // base libraries
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$ktx_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_version"
+    implementation "com.google.android.material:material:$material_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "android.arch.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "android.arch.navigation:navigation-ui-ktx:$navigation_version"
+    implementation "androidx.core:core-ktx:$ktx_core_version"
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    testImplementation "org.koin:koin-test:$koin_version"
+    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+    androidTestImplementation "androidx.test.ext:junit:$junit_version"
+    androidTestImplementation "androidx.test:runner:$testrunner_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+
+    // recyclerview animations
+    implementation "jp.wasabeef:recyclerview-animators:$rv_animations_version"
+
+    // logging
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    // reactive
+    implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rx_kotlin_version"
+
+    // database
+    implementation "io.objectbox:objectbox-kotlin:$objectbox_version"
+}
