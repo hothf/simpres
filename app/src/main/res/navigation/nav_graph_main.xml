@@ -10,5 +10,29 @@
         android:name="de.ka.simpres.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_homeDetailFragment"
+            app:destination="@id/homeDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_homeNewEditFragment"
+            app:destination="@id/homeNewEditFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/homeDetailFragment"
+        android:name="de.ka.simpres.ui.home.detail.HomeDetailFragment"
+        android:label="fragment_homedetail"
+        tools:layout="@layout/fragment_homedetail">
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeNewEditFragment"
+        android:label="fragment_newedithome"
+        android:name="de.ka.simpres.ui.home.newedit.NewEditHomeFragment"
+        tools:layout="@layout/fragment_newedithome">
+        <action
+            android:id="@+id/action_homeNewEditFragment_to_homeDetailFragment"
+            app:destination="@id/homeDetailFragment" />
+    </fragment>
+
 </navigation>

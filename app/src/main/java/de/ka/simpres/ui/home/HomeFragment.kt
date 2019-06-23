@@ -17,6 +17,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(HomeViewMo
     override var bindingLayoutId = R.layout.fragment_home
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        viewModel.setupAdapterAndLoad(viewLifecycleOwner)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 }

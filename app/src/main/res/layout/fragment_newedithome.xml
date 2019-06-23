@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.ka.simpres.ui.home.newedit.NewEditHomeViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/transitionText"
+            android:layout_width="wrap_content"
+            android:text="new edit"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:onClick="@{()->viewModel.submit()}"
+            android:layout_width="wrap_content"
+            android:text="ok"
+            android:layout_height="wrap_content" />
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

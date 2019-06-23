@@ -11,9 +11,44 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/home"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/bottomBarSize"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
+            app:setRefreshing="@{viewModel.refresh}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adapter="@{viewModel.adapter}"
+                app:addItemDecoration="@{viewModel.itemDecoration}"
+                app:layoutManager="@{viewModel.layoutManager()}"
+                app:setItemAnimator="@{viewModel.itemAnimator}" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/bottomBarSize"
+            android:onClick="@{()->viewModel.onAddClick()}"
+            android:src="@drawable/ic_launcher_foreground"
+            android:tint="@color/colorAccent"
+            app:backgroundTint="@color/colorAccent"
+            app:layout_anchor="@id/swipeRefresh"
+            app:layout_anchorGravity="bottom|center_horizontal"
+            app:useCompatPadding="true" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 </layout>

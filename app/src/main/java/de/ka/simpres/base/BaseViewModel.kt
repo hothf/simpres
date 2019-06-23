@@ -51,6 +51,12 @@ abstract class BaseViewModel(val app: Application) : AndroidViewModel(app), Koin
         )
     }
 
+    /**
+     * Handles a general error.
+     */
+    fun handleGeneralError(throwable: Throwable) {
+    }
+
     fun handleBack() {
         queueEvent(Back(true))
     }
