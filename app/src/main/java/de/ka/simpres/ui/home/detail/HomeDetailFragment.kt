@@ -19,9 +19,8 @@ class HomeDetailFragment: BaseFragment<FragmentHomedetailBinding, HomeDetailView
 
         val homeId = arguments?.getString(HOME_ID_KEY)
         if (homeId != null) {
-           // viewModel.setupAdapterAndLoad(viewLifecycleOwner, consensusId.toInt())
+           viewModel.setupAdapterAndLoad(viewLifecycleOwner, homeId.toInt())
         }
-
 
         getBinding()?.transitionText?.let { ViewCompat.setTransitionName(it, homeId) }
         sharedElementEnterTransition =

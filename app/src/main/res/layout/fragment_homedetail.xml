@@ -20,6 +20,26 @@
             android:text="igfjkfgh"
             android:layout_height="wrap_content" />
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/bottomBarSize"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
+            app:setRefreshing="@{viewModel.refresh}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adapter="@{viewModel.adapter}"
+                app:addItemDecoration="@{viewModel.itemDecoration}"
+                app:layoutManager="@{viewModel.layoutManager()}"
+                app:setItemAnimator="@{viewModel.itemAnimator}" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

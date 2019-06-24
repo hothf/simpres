@@ -1,6 +1,7 @@
 package de.ka.simpres.repo
 
 import de.ka.simpres.ui.home.HomeItem
+import de.ka.simpres.ui.home.detail.HomeDetailItem
 import io.reactivex.Observable
 
 
@@ -11,7 +12,11 @@ interface Repository {
 
     val observableHomeItems: Observable<IndicatedList<HomeItem, List<HomeItem>>>
 
+    val observableHomeDetailItems: Observable<IndicatedList<HomeDetailItem, List<HomeDetailItem>>>
+
     fun getHomeItems()
+
+    fun getHomeDetailItems()
 }
 
 /**
