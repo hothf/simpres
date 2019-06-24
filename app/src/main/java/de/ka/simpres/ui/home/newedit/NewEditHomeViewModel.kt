@@ -14,6 +14,8 @@ class NewEditHomeViewModel(app: Application) : BaseViewModel(app) {
     val getTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it
         titleError.postValue("")
+
+        currentHomeItem?.title = it
     }
     val getDoneListener = ViewUtils.TextDoneListener { submit() }
     val title = MutableLiveData<String>().apply { value = "" }
@@ -23,6 +25,13 @@ class NewEditHomeViewModel(app: Application) : BaseViewModel(app) {
     private var currentHomeItem: HomeItem? = null
 
     fun submit() {
+
+        currentHomeItem?.let {
+
+
+            repository.saveHomeItem(it)
+        }
+
 
         val id = 485859
         navigateTo(
@@ -36,7 +45,7 @@ class NewEditHomeViewModel(app: Application) : BaseViewModel(app) {
      *
      */
     fun setupNew() {
-        currentHomeItem = null
+        currentHomeItem = HomeItem()
 //        currentTitle = ""
 
 //        header.postValue(app.getString(R.string.suggestions_newedit_title))
@@ -59,7 +68,7 @@ class NewEditHomeViewModel(app: Application) : BaseViewModel(app) {
     }
 
     private fun updateTextViews() {
-        if (currentHomeItem != null){
+        if (currentHomeItem != null) {
             title.postValue(currentHomeItem?.title)
             titleSelection.postValue(currentHomeItem?.title?.length)
             titleError.postValue("")

@@ -17,6 +17,8 @@ interface Repository {
     fun getHomeItems()
 
     fun getHomeDetailItems()
+
+    fun saveHomeItem(homeItem: HomeItem)
 }
 
 /**

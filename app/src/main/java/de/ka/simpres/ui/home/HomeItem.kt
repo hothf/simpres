@@ -4,8 +4,8 @@ import java.io.Serializable
 import java.util.*
 
 data class HomeItem(
-    val id: Int = 0,
-    val title: String = "",
-    val sum: Double = 0.0,
-    val date: Long = Calendar.getInstance().timeInMillis
+    var id: Int = 0,
+    var title: String = "",
+    var sum: Double = 0.0,
+    var date: Long = Calendar.getInstance().timeInMillis
 ): Serializable
