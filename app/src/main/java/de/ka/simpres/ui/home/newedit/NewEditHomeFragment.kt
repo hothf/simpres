@@ -17,13 +17,13 @@ class NewEditHomeFragment: BaseFragment<FragmentNewedithomeBinding, NewEditHomeV
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        val consensus = arguments?.getSerializable(HOME_KEY) as? HomeItem
-        if (consensus != null) {
-          //  viewModel.setupEdit(consensus)
+        val home = arguments?.getSerializable(HOME_KEY) as? HomeItem
+        if (home != null) {
+            viewModel.setupEdit(home)
         } else {
             val new = arguments?.getBoolean(NEW_KEY, false) ?: false
             if (new) {
-              //  viewModel.setupNew()
+              viewModel.setupNew()
             }
         }
         arguments?.clear()
