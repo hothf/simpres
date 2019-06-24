@@ -1,4 +1,10 @@
 package de.ka.simpres.ui.home
 
-class HomeItem(val id: Int = 0){
-}
+import java.util.*
+
+data class HomeItem(
+    val id: Int = 0,
+    val title: String = "",
+    val sum: Double = 0.0,
+    val date: Long = Calendar.getInstance().timeInMillis
+)
