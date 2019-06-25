@@ -14,16 +14,15 @@ class RepositoryImpl : Repository {
         PublishSubject.create<IndicatedList<HomeDetailItem, List<HomeDetailItem>>>()
 
     private val volatileHomeItems = mutableListOf<HomeItem>()
-    private val volatileHomeDetailItems = mutableListOf<HomeDetailItem>()
 
     override fun getHomeItems() {
         val randomCount = Random.nextInt(20)
 
         val list =
-        generateSequence(0, { it + 1 })
-            .take(randomCount)
-            .map { HomeItem(it.toString()) }
-            .toMutableList()
+            generateSequence(0, { it + 1 })
+                .take(randomCount)
+                .map { HomeItem(it.toString()) }
+                .toMutableList()
 
         list.addAll(volatileHomeItems)
 
@@ -31,9 +30,10 @@ class RepositoryImpl : Repository {
 
     }
 
-    override fun getHomeDetailItems() {
-        observableHomeDetailItems.onNext(IndicatedList(volatileHomeDetailItems))
-
+    override fun getHomeDetailItemsOf(id: String) {
+        volatileHomeItems.find { id == it.id }?.let {
+            observableHomeDetailItems.onNext(IndicatedList(it.items))
+        }
     }
 
     override fun saveHomeItem(homeItem: HomeItem) {
@@ -42,9 +42,12 @@ class RepositoryImpl : Repository {
         observableHomeItems.onNext(IndicatedList(listOf(homeItem), addToTop = true))
     }
 
-    override fun saveHomeDetailItem(homeDetailItem: HomeDetailItem) {
-        volatileHomeDetailItems.add(homeDetailItem)
+    override fun saveHomeDetailItem(id: String, homeDetailItem: HomeDetailItem) {
+        volatileHomeItems.find { id == it.id }?.let {
+            it.items.add(homeDetailItem)
+            observableHomeDetailItems.onNext(IndicatedList(it.items))
+        }
 
-        observableHomeDetailItems.onNext(IndicatedList(listOf(homeDetailItem), addToTop = true))
+
     }
 }

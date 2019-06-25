@@ -39,7 +39,10 @@ class HomeDetailViewModel(app: Application) : BaseViewModel(app) {
     fun onAddClick(){
         navigateTo(
             R.id.homeDetailNewEditFragment,
-            args = Bundle().apply { putBoolean(NewEditHomeDetailFragment.NEW_KEY, true) },
+            args = Bundle().apply {
+                putString(NewEditHomeDetailFragment.HOME_ID_KEY, currentId)
+                putBoolean(NewEditHomeDetailFragment.NEW_KEY, true)
+            },
             animType = AnimType.MODAL
         )
     }
@@ -101,9 +104,15 @@ class HomeDetailViewModel(app: Application) : BaseViewModel(app) {
 //                showLockLoading()
 //            }
 
-        showLoading()
-        repository.getHomeDetailItems()
-        hideLoading()
+
+
+
+            showLoading()
+            repository.getHomeDetailItemsOf(currentId)
+            hideLoading()
+
+
+
 
 
     }

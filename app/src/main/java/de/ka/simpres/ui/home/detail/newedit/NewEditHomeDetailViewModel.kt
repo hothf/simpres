@@ -24,29 +24,32 @@ class NewEditHomeDetailViewModel(app: Application) : BaseViewModel(app) {
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
 
     private var currentHomeDetailItem: HomeDetailItem? = null
+    private var currentHomeId: String? = null
 
     fun submit() {
 
-        currentHomeDetailItem?.let {
+        currentHomeDetailItem?.let { item ->
+            currentHomeId?.let { id ->
+                item.id = System.currentTimeMillis().toString()
+                repository.saveHomeDetailItem(id, item)
+                navigateTo(
+                    navigationTargetId = R.id.action_homeDetailNewEditFragment_to_homeDetailFragment,
+                    args = Bundle().apply { putString(HomeDetailFragment.HOME_ID_KEY, id) },
+                    popupToId = R.id.homeDetailFragment
+                )
+            }
 
-
-            repository.saveHomeDetailItem(it)
         }
 
 
-        val id = System.currentTimeMillis()
-        navigateTo(
-            navigationTargetId = R.id.action_homeDetailNewEditFragment_to_homeDetailFragment,
-            args = Bundle().apply { putString(HomeDetailFragment.HOME_ID_KEY, id.toString()) },
-            popupToId = R.id.homeDetailFragment
-        )
     }
 
     /**
      *
      */
-    fun setupNew() {
+    fun setupNew(id: String) {
         currentHomeDetailItem = HomeDetailItem()
+        currentHomeId = id
 //        currentTitle = ""
 
 //        header.postValue(app.getString(R.string.suggestions_newedit_title))
@@ -58,8 +61,9 @@ class NewEditHomeDetailViewModel(app: Application) : BaseViewModel(app) {
     /**
      *
      */
-    fun setupEdit(homeItem: HomeDetailItem) {
+    fun setupEdit(id: String, homeItem: HomeDetailItem) {
         currentHomeDetailItem = homeItem
+        currentHomeId = id
 //        currentTitle = suggestion.title
 
 //        header.postValue(app.getString(R.string.suggestions_newedit_edit))

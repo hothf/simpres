@@ -28,17 +28,19 @@ class NewEditHomeViewModel(app: Application) : BaseViewModel(app) {
 
         currentHomeItem?.let {
 
+            it.id = System.currentTimeMillis().toString()
 
             repository.saveHomeItem(it)
+
+            navigateTo(
+                navigationTargetId = R.id.action_homeNewEditFragment_to_homeDetailFragment,
+                args = Bundle().apply { putString(HomeDetailFragment.HOME_ID_KEY, it.id) },
+                popupToId = R.id.homeNewEditFragment
+            )
         }
 
 
-        val id = System.currentTimeMillis()
-        navigateTo(
-            navigationTargetId = R.id.action_homeNewEditFragment_to_homeDetailFragment,
-            args = Bundle().apply { putString(HomeDetailFragment.HOME_ID_KEY, id.toString()) },
-            popupToId = R.id.homeNewEditFragment
-        )
+
     }
 
     /**

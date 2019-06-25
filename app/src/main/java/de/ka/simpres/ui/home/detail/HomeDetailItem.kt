@@ -1,3 +1,5 @@
 package de.ka.simpres.ui.home.detail
 
-class HomeDetailItem(val id: Int = 0, var title: String = "")
+import java.io.Serializable
+
+class HomeDetailItem(var id: String = "0", var title: String = ""): Serializable

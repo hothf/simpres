@@ -16,11 +16,11 @@ interface Repository {
 
     fun getHomeItems()
 
-    fun getHomeDetailItems()
+    fun getHomeDetailItemsOf(id: String)
 
     fun saveHomeItem(homeItem: HomeItem)
 
-    fun saveHomeDetailItem(homeDetailItem: HomeDetailItem)
+    fun saveHomeDetailItem(id: String, homeDetailItem: HomeDetailItem)
 }
 
 /**

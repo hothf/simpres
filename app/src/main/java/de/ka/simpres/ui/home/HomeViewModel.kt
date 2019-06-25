@@ -37,7 +37,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app){
         navigateTo(
             R.id.action_homeFragment_to_homeDetailFragment,
             false,
-            Bundle().apply { putString(HomeDetailFragment.HOME_ID_KEY, vm.item.id.toString()) },
+            Bundle().apply { putString(HomeDetailFragment.HOME_ID_KEY, vm.item.id) },
             null,
             FragmentNavigatorExtras(view to view.transitionName)
         )
