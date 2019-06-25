@@ -1,4 +1,4 @@
-package de.ka.simpres.ui.home
+package de.ka.simpres.ui.subjects
 
 import android.app.Application
 import android.os.Bundle
@@ -11,8 +11,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
-import de.ka.simpres.ui.home.detail.HomeDetailFragment
-import de.ka.simpres.ui.home.newedit.NewEditHomeFragment
+import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
+import de.ka.simpres.ui.subjects.subjectlist.HomeAdapter
+import de.ka.simpres.ui.subjects.subjectlist.SubjectItemViewModel
+import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
 import de.ka.simpres.utils.AndroidSchedulerProvider
 import de.ka.simpres.utils.DecorationUtil
 import de.ka.simpres.utils.with
@@ -23,7 +25,7 @@ import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 /**
  *
  */
-class HomeViewModel(app: Application) : BaseViewModel(app){
+class SubjectsViewModel(app: Application) : BaseViewModel(app){
 
     private var isLoading: Boolean = false
 
@@ -33,11 +35,11 @@ class HomeViewModel(app: Application) : BaseViewModel(app){
     val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { loadHomeItems(true) }
     val itemDecoration = DecorationUtil(app.resources.getDimensionPixelSize(R.dimen.default_16), app.resources
         .getDimensionPixelSize(R.dimen.default_8))
-    private val itemClickListener = { vm: HomeItemViewModel, view: View ->
+    private val itemClickListener = { vm: SubjectItemViewModel, view: View ->
         navigateTo(
-            R.id.action_homeFragment_to_homeDetailFragment,
+            R.id.action_subjectsFragment_to_subjectsDetailFragment,
             false,
-            Bundle().apply { putString(HomeDetailFragment.HOME_ID_KEY, vm.item.id) },
+            Bundle().apply { putString(SubjectsDetailFragment.SUBJECT_ID_KEY, vm.item.id) },
             null,
             FragmentNavigatorExtras(view to view.transitionName)
         )
@@ -53,8 +55,8 @@ class HomeViewModel(app: Application) : BaseViewModel(app){
 
     fun onAddClick(){
         navigateTo(
-            R.id.homeNewEditFragment,
-            args = Bundle().apply { putBoolean(NewEditHomeFragment.NEW_KEY, true) },
+            R.id.subjectNewEditFragment,
+            args = Bundle().apply { putBoolean(NewEditSubjectFragment.NEW_KEY, true) },
             animType = AnimType.MODAL
         )
     }
@@ -72,7 +74,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app){
     }
 
     private fun startObserving(){
-        repository.observableHomeItems
+        repository.observableSubjects
             .with(AndroidSchedulerProvider())
             .subscribeBy(
                 onNext = { result ->
@@ -116,7 +118,7 @@ class HomeViewModel(app: Application) : BaseViewModel(app){
         }
 
         showLoading()
-        repository.getHomeItems()
+        repository.getSubjects()
         hideLoading()
     }
 

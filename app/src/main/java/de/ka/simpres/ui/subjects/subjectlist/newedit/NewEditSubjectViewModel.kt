@@ -1,15 +1,15 @@
-package de.ka.simpres.ui.home.newedit
+package de.ka.simpres.ui.subjects.subjectlist.newedit
 
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
-import de.ka.simpres.ui.home.HomeItem
-import de.ka.simpres.ui.home.detail.HomeDetailFragment
+import de.ka.simpres.repo.model.SubjectItem
+import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.utils.ViewUtils
 
-class NewEditHomeViewModel(app: Application) : BaseViewModel(app) {
+class NewEditSubjectViewModel(app: Application) : BaseViewModel(app) {
 
     val getTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it
@@ -22,7 +22,7 @@ class NewEditHomeViewModel(app: Application) : BaseViewModel(app) {
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
 
-    private var currentHomeItem: HomeItem? = null
+    private var currentHomeItem: SubjectItem? = null
 
     fun submit() {
 
@@ -30,12 +30,12 @@ class NewEditHomeViewModel(app: Application) : BaseViewModel(app) {
 
             it.id = System.currentTimeMillis().toString()
 
-            repository.saveHomeItem(it)
+            repository.saveSubject(it)
 
             navigateTo(
-                navigationTargetId = R.id.action_homeNewEditFragment_to_homeDetailFragment,
-                args = Bundle().apply { putString(HomeDetailFragment.HOME_ID_KEY, it.id) },
-                popupToId = R.id.homeNewEditFragment
+                navigationTargetId = R.id.action_subjectNewEditFragment_to_subjectsDetailFragment,
+                args = Bundle().apply { putString(SubjectsDetailFragment.SUBJECT_ID_KEY, it.id) },
+                popupToId = R.id.subjectNewEditFragment
             )
         }
 
@@ -47,7 +47,7 @@ class NewEditHomeViewModel(app: Application) : BaseViewModel(app) {
      *
      */
     fun setupNew() {
-        currentHomeItem = HomeItem()
+        currentHomeItem = SubjectItem()
 //        currentTitle = ""
 
 //        header.postValue(app.getString(R.string.suggestions_newedit_title))
@@ -59,7 +59,7 @@ class NewEditHomeViewModel(app: Application) : BaseViewModel(app) {
     /**
      *
      */
-    fun setupEdit(homeItem: HomeItem) {
+    fun setupEdit(homeItem: SubjectItem) {
         currentHomeItem = homeItem
 //        currentTitle = suggestion.title
 

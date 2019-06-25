@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="de.ka.simpres.ui.home.newedit.NewEditHomeViewModel" />
+            type="de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

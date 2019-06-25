@@ -1,4 +1,4 @@
-package de.ka.simpres.ui.home.newedit
+package de.ka.simpres.ui.subjects.subjectlist.newedit
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,20 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseFragment
-import de.ka.simpres.databinding.FragmentNewedithomeBinding
-import de.ka.simpres.ui.home.HomeItem
+import de.ka.simpres.databinding.FragmentSubjectneweditBinding
+import de.ka.simpres.repo.model.SubjectItem
 
-class NewEditHomeFragment: BaseFragment<FragmentNewedithomeBinding, NewEditHomeViewModel>
-    (NewEditHomeViewModel::class){
+class NewEditSubjectFragment: BaseFragment<FragmentSubjectneweditBinding, NewEditSubjectViewModel>
+    (NewEditSubjectViewModel::class){
 
-    override var bindingLayoutId = R.layout.fragment_newedithome
+    override var bindingLayoutId = R.layout.fragment_subjectnewedit
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        val home = arguments?.getSerializable(HOME_KEY) as? HomeItem
-        if (home != null) {
-            viewModel.setupEdit(home)
+        val subject = arguments?.getSerializable(SUBJECT_KEY) as? SubjectItem
+        if (subject != null) {
+            viewModel.setupEdit(subject)
         } else {
             val new = arguments?.getBoolean(NEW_KEY, false) ?: false
             if (new) {
@@ -32,7 +32,7 @@ class NewEditHomeFragment: BaseFragment<FragmentNewedithomeBinding, NewEditHomeV
     }
 
     companion object {
-        const val HOME_KEY = "home_key"
+        const val SUBJECT_KEY = "sub_key"
         const val NEW_KEY = "new_key"
     }
 

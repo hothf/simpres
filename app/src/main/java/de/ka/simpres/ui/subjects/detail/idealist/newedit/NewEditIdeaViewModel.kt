@@ -1,16 +1,15 @@
-package de.ka.simpres.ui.home.detail.newedit
+package de.ka.simpres.ui.subjects.detail.idealist.newedit
 
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
-import de.ka.simpres.ui.home.HomeItem
-import de.ka.simpres.ui.home.detail.HomeDetailFragment
-import de.ka.simpres.ui.home.detail.HomeDetailItem
+import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
+import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.utils.ViewUtils
 
-class NewEditHomeDetailViewModel(app: Application) : BaseViewModel(app) {
+class NewEditIdeaViewModel(app: Application) : BaseViewModel(app) {
 
     val getTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it
@@ -23,7 +22,7 @@ class NewEditHomeDetailViewModel(app: Application) : BaseViewModel(app) {
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
 
-    private var currentHomeDetailItem: HomeDetailItem? = null
+    private var currentHomeDetailItem: IdeaItem? = null
     private var currentHomeId: String? = null
 
     fun submit() {
@@ -31,11 +30,11 @@ class NewEditHomeDetailViewModel(app: Application) : BaseViewModel(app) {
         currentHomeDetailItem?.let { item ->
             currentHomeId?.let { id ->
                 item.id = System.currentTimeMillis().toString()
-                repository.saveHomeDetailItem(id, item)
+                repository.saveIdea(id, item)
                 navigateTo(
-                    navigationTargetId = R.id.action_homeDetailNewEditFragment_to_homeDetailFragment,
-                    args = Bundle().apply { putString(HomeDetailFragment.HOME_ID_KEY, id) },
-                    popupToId = R.id.homeDetailFragment
+                    navigationTargetId = R.id.action_ideaNewEditFragment_to_subjectsDetailFragment,
+                    args = Bundle().apply { putString(SubjectsDetailFragment.SUBJECT_ID_KEY, id) },
+                    popupToId = R.id.subjectsDetailFragment
                 )
             }
 
@@ -48,7 +47,7 @@ class NewEditHomeDetailViewModel(app: Application) : BaseViewModel(app) {
      *
      */
     fun setupNew(id: String) {
-        currentHomeDetailItem = HomeDetailItem()
+        currentHomeDetailItem = IdeaItem()
         currentHomeId = id
 //        currentTitle = ""
 
@@ -61,7 +60,7 @@ class NewEditHomeDetailViewModel(app: Application) : BaseViewModel(app) {
     /**
      *
      */
-    fun setupEdit(id: String, homeItem: HomeDetailItem) {
+    fun setupEdit(id: String, homeItem: IdeaItem) {
         currentHomeDetailItem = homeItem
         currentHomeId = id
 //        currentTitle = suggestion.title

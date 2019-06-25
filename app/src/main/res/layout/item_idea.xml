@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="de.ka.simpres.ui.home.HomeItemViewModel" />
+            type="de.ka.simpres.ui.subjects.detail.idealist.IdeaItemViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -20,35 +20,17 @@
         android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="@dimen/default_corner_radius"
         app:cardElevation="@dimen/default_4"
-        tools:cardBackgroundColor="@color/defaultBackgroundPrimary">R
+        tools:cardBackgroundColor="@color/defaultBackgroundPrimary">
 
         <RelativeLayout
-            android:layout_margin="@dimen/default_8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.title}"
-                tools:text="Title" />
-
-            <TextView
-                android:id="@+id/sum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
-                android:text="@{viewModel.sum}"
-                tools:text="Sum" />
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/sum"
-                android:text="@{viewModel.date}"
-                tools:text="Date" />
+                tools:text="grgrgrgefw" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

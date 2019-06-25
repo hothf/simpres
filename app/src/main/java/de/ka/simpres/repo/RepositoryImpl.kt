@@ -1,51 +1,51 @@
 package de.ka.simpres.repo
 
-import de.ka.simpres.ui.home.HomeItem
-import de.ka.simpres.ui.home.detail.HomeDetailItem
+import de.ka.simpres.repo.model.SubjectItem
+import de.ka.simpres.repo.model.IdeaItem
 import io.reactivex.subjects.PublishSubject
 import kotlin.random.Random
 
 class RepositoryImpl : Repository {
 
-    override val observableHomeItems =
-        PublishSubject.create<IndicatedList<HomeItem, List<HomeItem>>>()
+    override val observableSubjects =
+        PublishSubject.create<IndicatedList<SubjectItem, List<SubjectItem>>>()
 
-    override val observableHomeDetailItems =
-        PublishSubject.create<IndicatedList<HomeDetailItem, List<HomeDetailItem>>>()
+    override val observableIdeas =
+        PublishSubject.create<IndicatedList<IdeaItem, List<IdeaItem>>>()
 
-    private val volatileHomeItems = mutableListOf<HomeItem>()
+    private val volatileSubjects = mutableListOf<SubjectItem>()
 
-    override fun getHomeItems() {
+    override fun getSubjects() {
         val randomCount = Random.nextInt(20)
 
         val list =
             generateSequence(0, { it + 1 })
                 .take(randomCount)
-                .map { HomeItem(it.toString()) }
+                .map { SubjectItem(it.toString()) }
                 .toMutableList()
 
-        list.addAll(volatileHomeItems)
+        list.addAll(volatileSubjects)
 
-        observableHomeItems.onNext(IndicatedList(list))
+        observableSubjects.onNext(IndicatedList(list))
 
     }
 
-    override fun getHomeDetailItemsOf(id: String) {
-        volatileHomeItems.find { id == it.id }?.let {
-            observableHomeDetailItems.onNext(IndicatedList(it.items))
+    override fun saveSubject(subject: SubjectItem) {
+        volatileSubjects.add(subject)
+
+        observableSubjects.onNext(IndicatedList(listOf(subject), addToTop = true))
+    }
+
+    override fun getIdeasOf(subjectId: String) {
+        volatileSubjects.find { subjectId == it.id }?.let {
+            observableIdeas.onNext(IndicatedList(it.ideas))
         }
     }
 
-    override fun saveHomeItem(homeItem: HomeItem) {
-        volatileHomeItems.add(homeItem)
-
-        observableHomeItems.onNext(IndicatedList(listOf(homeItem), addToTop = true))
-    }
-
-    override fun saveHomeDetailItem(id: String, homeDetailItem: HomeDetailItem) {
-        volatileHomeItems.find { id == it.id }?.let {
-            it.items.add(homeDetailItem)
-            observableHomeDetailItems.onNext(IndicatedList(it.items))
+    override fun saveIdea(subjectId: String, idea: IdeaItem) {
+        volatileSubjects.find { subjectId == it.id }?.let {
+            it.ideas.add(idea)
+            observableIdeas.onNext(IndicatedList(it.ideas))
         }
 
 

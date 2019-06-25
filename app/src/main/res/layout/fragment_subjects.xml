@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="de.ka.simpres.ui.home.HomeViewModel" />
+            type="de.ka.simpres.ui.subjects.SubjectsViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

@@ -1,4 +1,4 @@
-package de.ka.simpres.ui.home.detail
+package de.ka.simpres.ui.subjects.detail
 
 import android.app.Application
 import android.os.Bundle
@@ -9,9 +9,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
-import de.ka.simpres.ui.home.HomeItem
-import de.ka.simpres.ui.home.detail.newedit.NewEditHomeDetailFragment
-import de.ka.simpres.ui.home.newedit.NewEditHomeFragment
+import de.ka.simpres.repo.model.SubjectItem
+import de.ka.simpres.ui.subjects.detail.idealist.HomeDetailAdapter
+import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment
 import de.ka.simpres.utils.AndroidSchedulerProvider
 import de.ka.simpres.utils.DecorationUtil
 import de.ka.simpres.utils.with
@@ -19,9 +19,9 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 
-class HomeDetailViewModel(app: Application) : BaseViewModel(app) {
+class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
 
-    private var currentItem: HomeItem? = null
+    private var currentItem: SubjectItem? = null
     private var currentId = "-1"
     private var isLoading = false
 
@@ -38,17 +38,17 @@ class HomeDetailViewModel(app: Application) : BaseViewModel(app) {
 
     fun onAddClick(){
         navigateTo(
-            R.id.homeDetailNewEditFragment,
+            R.id.ideaNewEditFragment,
             args = Bundle().apply {
-                putString(NewEditHomeDetailFragment.HOME_ID_KEY, currentId)
-                putBoolean(NewEditHomeDetailFragment.NEW_KEY, true)
+                putString(NewEditIdeaFragment.SUBJECT_ID_KEY, currentId)
+                putBoolean(NewEditIdeaFragment.NEW_KEY, true)
             },
             animType = AnimType.MODAL
         )
     }
 
     init {
-        repository.observableHomeDetailItems
+        repository.observableIdeas
             .with(AndroidSchedulerProvider())
             .subscribeBy(
                 onError = ::handleGeneralError,
@@ -62,7 +62,7 @@ class HomeDetailViewModel(app: Application) : BaseViewModel(app) {
             )
             .addTo(compositeDisposable)
 
-        repository.observableHomeItems
+        repository.observableSubjects
             .with(AndroidSchedulerProvider())
             .subscribeBy(
                 onError = ::handleGeneralError,
@@ -108,7 +108,7 @@ class HomeDetailViewModel(app: Application) : BaseViewModel(app) {
 
 
             showLoading()
-            repository.getHomeDetailItemsOf(currentId)
+            repository.getIdeasOf(currentId)
             hideLoading()
 
 
@@ -127,7 +127,7 @@ class HomeDetailViewModel(app: Application) : BaseViewModel(app) {
         refresh.postValue(true)
     }
 
-    private fun updateItem(it: HomeItem) {
+    private fun updateItem(it: SubjectItem) {
         val alreadyShowing = currentItem?.id == it.id
 
         currentItem = it

@@ -1,6 +1,6 @@
-package de.ka.simpres.ui.home
+package de.ka.simpres.ui.subjects.detail.idealist
 
-import android.view.View
+
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
@@ -8,27 +8,27 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
-import de.ka.simpres.databinding.ItemHomeBinding
+import de.ka.simpres.databinding.ItemIdeaBinding
+import de.ka.simpres.repo.model.IdeaItem
 
-/**
- * Adapter for displaying [HomeItemViewModel]s.
- */
-class HomeAdapter(owner: LifecycleOwner, list: ArrayList<HomeItemViewModel> = arrayListOf()) :
-    BaseAdapter<HomeItemViewModel>(owner, list, HomeAdapterDiffCallback()) {
+class HomeDetailAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = arrayListOf()) :
+    BaseAdapter<IdeaItemViewModel>(owner, list,
+        HomeDetailAdapterDiffCallback()
+    ) {
 
     private var dispose: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-        return BaseViewHolder(ItemHomeBinding.inflate(layoutInflater, parent, false))
+        return BaseViewHolder(ItemIdeaBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         getItems()[position].apply {
-            DataBindingUtil.getBinding<ItemHomeBinding>(holder.itemView)?.let { binding ->
+            DataBindingUtil.getBinding<ItemIdeaBinding>(holder.itemView)?.let { binding ->
                 val sharedTransitionView = binding.itemContainer
                 ViewCompat.setTransitionName(sharedTransitionView, this.item.id.toString())
                 binding.itemContainer.setOnClickListener {
-                    listener(this, sharedTransitionView)
+//                    listener(this, sharedTransitionView)
                 }
             }
         }
@@ -56,10 +56,9 @@ class HomeAdapter(owner: LifecycleOwner, list: ArrayList<HomeItemViewModel> = ar
      * @param itemClickListener a click listener for individual items
      */
     fun overwriteList(
-        newItems: List<HomeItem>,
-        itemClickListener: (HomeItemViewModel, View) -> Unit
+        newItems: List<IdeaItem>
     ) {
-        setItems(newItems.map { consensus -> HomeItemViewModel(consensus, itemClickListener) })
+        setItems(newItems.map { detail -> IdeaItemViewModel(detail) })
     }
 
     /**
@@ -80,14 +79,13 @@ class HomeAdapter(owner: LifecycleOwner, list: ArrayList<HomeItemViewModel> = ar
      * @return the items removed and added count, updated items are not counted
      */
     fun removeAddOrUpdate(
-        updatedItems: List<HomeItem>,
-        itemClickListener: (HomeItemViewModel, View) -> Unit,
+        updatedItems: List<IdeaItem>,
         remove: Boolean,
         onlyUpdate: Boolean,
         addToTop: Boolean,
-        filter: ((HomeItem) -> Boolean)? = null
+        filter: ((IdeaItem) -> Boolean)? = null
     ): Int {
-        val items: MutableList<HomeItemViewModel> = getItems().toMutableList()
+        val items: MutableList<IdeaItemViewModel> = getItems().toMutableList()
         var itemsRemovedAndAddedCount = 0
 
         if (dispose) {
@@ -103,14 +101,14 @@ class HomeAdapter(owner: LifecycleOwner, list: ArrayList<HomeItemViewModel> = ar
                         items.removeAt(foundIndex)
                         itemsRemovedAndAddedCount--
                     } else {                                                    // update
-                        items[foundIndex] = HomeItemViewModel(item, itemClickListener)
+                        items[foundIndex] = IdeaItemViewModel(item)
                     }
                 } else if ((!onlyUpdate && filter == null) || (filter != null && filter(item))) {   // add
                     itemsRemovedAndAddedCount++
                     if (addToTop) {
-                        items.add(0, HomeItemViewModel(item, itemClickListener))
+                        items.add(0, IdeaItemViewModel(item))
                     } else {
-                        items.add(HomeItemViewModel(item, itemClickListener))
+                        items.add(IdeaItemViewModel(item))
                     }
                 }
             }
@@ -121,15 +119,15 @@ class HomeAdapter(owner: LifecycleOwner, list: ArrayList<HomeItemViewModel> = ar
     }
 }
 
-class HomeAdapterDiffCallback : DiffUtil.ItemCallback<HomeItemViewModel>() {
+class HomeDetailAdapterDiffCallback : DiffUtil.ItemCallback<IdeaItemViewModel>() {
 
-    override fun areItemsTheSame(oldItem: HomeItemViewModel, newItem: HomeItemViewModel): Boolean {
+    override fun areItemsTheSame(oldItem: IdeaItemViewModel, newItem: IdeaItemViewModel): Boolean {
         return oldItem.item.id == newItem.item.id
     }
 
     override fun areContentsTheSame(
-        oldItem: HomeItemViewModel,
-        newItem: HomeItemViewModel
+        oldItem: IdeaItemViewModel,
+        newItem: IdeaItemViewModel
     ): Boolean {
         return oldItem == newItem
     }

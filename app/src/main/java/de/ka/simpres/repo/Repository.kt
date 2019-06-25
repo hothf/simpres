@@ -1,7 +1,7 @@
 package de.ka.simpres.repo
 
-import de.ka.simpres.ui.home.HomeItem
-import de.ka.simpres.ui.home.detail.HomeDetailItem
+import de.ka.simpres.repo.model.SubjectItem
+import de.ka.simpres.repo.model.IdeaItem
 import io.reactivex.Observable
 
 
@@ -10,17 +10,17 @@ import io.reactivex.Observable
  */
 interface Repository {
 
-    val observableHomeItems: Observable<IndicatedList<HomeItem, List<HomeItem>>>
+    val observableSubjects: Observable<IndicatedList<SubjectItem, List<SubjectItem>>>
 
-    val observableHomeDetailItems: Observable<IndicatedList<HomeDetailItem, List<HomeDetailItem>>>
+    val observableIdeas: Observable<IndicatedList<IdeaItem, List<IdeaItem>>>
 
-    fun getHomeItems()
+    fun getSubjects()
 
-    fun getHomeDetailItemsOf(id: String)
+    fun getIdeasOf(subjectId: String)
 
-    fun saveHomeItem(homeItem: HomeItem)
+    fun saveSubject(subject: SubjectItem)
 
-    fun saveHomeDetailItem(id: String, homeDetailItem: HomeDetailItem)
+    fun saveIdea(subjectId: String, idea: IdeaItem)
 }
 
 /**

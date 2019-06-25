@@ -3,49 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/subjectsFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="de.ka.simpres.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
+        android:id="@+id/subjectsFragment"
+        android:name="de.ka.simpres.ui.subjects.SubjectsFragment"
+        android:label="fragment_subjects"
+        tools:layout="@layout/fragment_subjects">
         <action
-            android:id="@+id/action_homeFragment_to_homeDetailFragment"
-            app:destination="@id/homeDetailFragment" />
+            android:id="@+id/action_subjectsFragment_to_subjectsDetailFragment"
+            app:destination="@id/subjectsDetailFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_homeNewEditFragment"
-            app:destination="@id/homeNewEditFragment" />
+            android:id="@+id/action_subjectsFragment_to_subjectNewEditFragment"
+            app:destination="@id/subjectNewEditFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/homeDetailFragment"
-        android:name="de.ka.simpres.ui.home.detail.HomeDetailFragment"
-        android:label="fragment_homedetail"
-        tools:layout="@layout/fragment_homedetail">
+        android:id="@+id/subjectsDetailFragment"
+        android:name="de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment"
+        android:label="fragment_subjectsdetail"
+        tools:layout="@layout/fragment_subjectsdetail">
         <action
-            android:id="@+id/action_homeDetailFragment_to_homeDetailNewEditFragment"
-            app:destination="@id/homeDetailNewEditFragment" />
+            android:id="@+id/action_subjectsDetailFragment_to_ideaNewEditFragment"
+            app:destination="@id/ideaNewEditFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/homeNewEditFragment"
-        android:label="fragment_newedithome"
-        android:name="de.ka.simpres.ui.home.newedit.NewEditHomeFragment"
-        tools:layout="@layout/fragment_newedithome">
+        android:id="@+id/subjectNewEditFragment"
+        android:label="fragment_neweditsubject"
+        android:name="de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment"
+        tools:layout="@layout/fragment_subjectnewedit">
         <action
-            android:id="@+id/action_homeNewEditFragment_to_homeDetailFragment"
-            app:destination="@id/homeDetailFragment" />
+            android:id="@+id/action_subjectNewEditFragment_to_subjectsDetailFragment"
+            app:destination="@id/subjectsDetailFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/homeDetailNewEditFragment"
-        android:label="fragment_newedithomedetail"
-        android:name="de.ka.simpres.ui.home.detail.newedit.NewEditHomeDetailFragment"
-        tools:layout="@layout/fragment_newedithomedetail">
+        android:id="@+id/ideaNewEditFragment"
+        android:label="fragment_neweditidea"
+        android:name="de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment"
+        tools:layout="@layout/fragment_ideanewedit">
         <action
-            android:id="@+id/action_homeDetailNewEditFragment_to_homeDetailFragment"
-            app:destination="@id/homeDetailFragment" />
+            android:id="@+id/action_ideaNewEditFragment_to_subjectsDetailFragment"
+            app:destination="@id/subjectsDetailFragment" />
     </fragment>
 
 </navigation>
