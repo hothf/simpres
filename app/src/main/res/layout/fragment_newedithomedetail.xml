@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.ka.simpres.ui.home.detail.newedit.NewEditHomeDetailViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_16"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setError="@{viewModel.titleError}"
+                android:hint="Title edit">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/suggInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapSentences"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@{viewModel.title}"
+                    app:addTextChangedListener="@{viewModel.getTextChangedListener}"
+                    app:setOnEditorActionListener="@{viewModel.getDoneListener}"
+                    app:setSelection="@{viewModel.titleSelection}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:onClick="@{()->viewModel.submit()}"
+                android:layout_width="wrap_content"
+                android:text="ok"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -23,6 +23,9 @@
         android:name="de.ka.simpres.ui.home.detail.HomeDetailFragment"
         android:label="fragment_homedetail"
         tools:layout="@layout/fragment_homedetail">
+        <action
+            android:id="@+id/action_homeDetailFragment_to_homeDetailNewEditFragment"
+            app:destination="@id/homeDetailNewEditFragment" />
     </fragment>
 
     <fragment
@@ -32,6 +35,16 @@
         tools:layout="@layout/fragment_newedithome">
         <action
             android:id="@+id/action_homeNewEditFragment_to_homeDetailFragment"
+            app:destination="@id/homeDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeDetailNewEditFragment"
+        android:label="fragment_newedithomedetail"
+        android:name="de.ka.simpres.ui.home.detail.newedit.NewEditHomeDetailFragment"
+        tools:layout="@layout/fragment_newedithomedetail">
+        <action
+            android:id="@+id/action_homeDetailNewEditFragment_to_homeDetailFragment"
             app:destination="@id/homeDetailFragment" />
     </fragment>
 

@@ -5,6 +5,7 @@ import de.ka.simpres.ui.home.HomeViewModel
 import de.ka.simpres.ui.MainViewModel
 import de.ka.simpres.ui.home.detail.HomeDetailFragment
 import de.ka.simpres.ui.home.detail.HomeDetailViewModel
+import de.ka.simpres.ui.home.detail.newedit.NewEditHomeDetailViewModel
 import de.ka.simpres.ui.home.newedit.NewEditHomeViewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
@@ -18,6 +19,7 @@ val appModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { HomeDetailViewModel(get()) }
     viewModel { NewEditHomeViewModel(get()) }
+    viewModel { NewEditHomeDetailViewModel(get()) }
 
     single { RepositoryImpl() as Repository }
 }

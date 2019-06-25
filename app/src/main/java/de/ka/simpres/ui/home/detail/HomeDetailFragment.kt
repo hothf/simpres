@@ -19,7 +19,7 @@ class HomeDetailFragment: BaseFragment<FragmentHomedetailBinding, HomeDetailView
 
         val homeId = arguments?.getString(HOME_ID_KEY)
         if (homeId != null) {
-           viewModel.setupAdapterAndLoad(viewLifecycleOwner, homeId.toInt())
+           viewModel.setupAdapterAndLoad(viewLifecycleOwner, homeId)
         }
 
         getBinding()?.transitionText?.let { ViewCompat.setTransitionName(it, homeId) }
