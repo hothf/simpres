@@ -15,18 +15,18 @@ class NewEditSubjectViewModel(app: Application) : BaseViewModel(app) {
         title.value = it
         titleError.postValue("")
 
-        currentHomeItem?.title = it
+        currentSubject?.title = it
     }
     val getDoneListener = ViewUtils.TextDoneListener { submit() }
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
 
-    private var currentHomeItem: SubjectItem? = null
+    private var currentSubject: SubjectItem? = null
 
     fun submit() {
 
-        currentHomeItem?.let {
+        currentSubject?.let {
 
             it.id = System.currentTimeMillis().toString()
 
@@ -47,7 +47,7 @@ class NewEditSubjectViewModel(app: Application) : BaseViewModel(app) {
      *
      */
     fun setupNew() {
-        currentHomeItem = SubjectItem()
+        currentSubject = SubjectItem()
 //        currentTitle = ""
 
 //        header.postValue(app.getString(R.string.suggestions_newedit_title))
@@ -60,7 +60,7 @@ class NewEditSubjectViewModel(app: Application) : BaseViewModel(app) {
      *
      */
     fun setupEdit(homeItem: SubjectItem) {
-        currentHomeItem = homeItem
+        currentSubject = homeItem
 //        currentTitle = suggestion.title
 
 //        header.postValue(app.getString(R.string.suggestions_newedit_edit))
@@ -70,9 +70,9 @@ class NewEditSubjectViewModel(app: Application) : BaseViewModel(app) {
     }
 
     private fun updateTextViews() {
-        if (currentHomeItem != null) {
-            title.postValue(currentHomeItem?.title)
-            titleSelection.postValue(currentHomeItem?.title?.length)
+        if (currentSubject != null) {
+            title.postValue(currentSubject?.title)
+            titleSelection.postValue(currentSubject?.title?.length)
             titleError.postValue("")
         } else {
             title.postValue("")

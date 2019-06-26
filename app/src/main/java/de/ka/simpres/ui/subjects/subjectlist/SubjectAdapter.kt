@@ -14,7 +14,7 @@ import de.ka.simpres.repo.model.SubjectItem
 /**
  * Adapter for displaying [SubjectItemViewModel]s.
  */
-class HomeAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel> = arrayListOf()) :
+class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel> = arrayListOf()) :
     BaseAdapter<SubjectItemViewModel>(owner, list,
         HomeAdapterDiffCallback()
     ) {
@@ -29,7 +29,7 @@ class HomeAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel> =
         getItems()[position].apply {
             DataBindingUtil.getBinding<ItemSubjectBinding>(holder.itemView)?.let { binding ->
                 val sharedTransitionView = binding.itemContainer
-                ViewCompat.setTransitionName(sharedTransitionView, this.item.id.toString())
+                ViewCompat.setTransitionName(sharedTransitionView, this.item.id)
                 binding.itemContainer.setOnClickListener {
                     listener(this, sharedTransitionView)
                 }

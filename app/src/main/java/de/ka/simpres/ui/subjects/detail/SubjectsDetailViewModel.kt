@@ -10,7 +10,7 @@ import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
 import de.ka.simpres.repo.model.SubjectItem
-import de.ka.simpres.ui.subjects.detail.idealist.HomeDetailAdapter
+import de.ka.simpres.ui.subjects.detail.idealist.IdeaAdapter
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment
 import de.ka.simpres.utils.AndroidSchedulerProvider
 import de.ka.simpres.utils.DecorationUtil
@@ -21,11 +21,10 @@ import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 
 class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
 
-    private var currentItem: SubjectItem? = null
-    private var currentId = "-1"
+    private var currentSubjectId = "-1"
     private var isLoading = false
 
-    val adapter = MutableLiveData<HomeDetailAdapter>()
+    val adapter = MutableLiveData<IdeaAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
     val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { refreshDetails() }
     val itemDecoration = DecorationUtil(
@@ -40,7 +39,7 @@ class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
         navigateTo(
             R.id.ideaNewEditFragment,
             args = Bundle().apply {
-                putString(NewEditIdeaFragment.SUBJECT_ID_KEY, currentId)
+                putString(NewEditIdeaFragment.SUBJECT_ID_KEY, currentSubjectId)
                 putBoolean(NewEditIdeaFragment.NEW_KEY, true)
             },
             animType = AnimType.MODAL
@@ -66,7 +65,7 @@ class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
             .with(AndroidSchedulerProvider())
             .subscribeBy(
                 onError = ::handleGeneralError,
-                onNext = { it.list.find { home -> home.id == currentId }?.let(::updateItem) }
+                onNext = { it.list.find { subject -> subject.id == currentSubjectId }?.let(::updateSubject) }
             )
             .addTo(compositeDisposable)
 
@@ -79,18 +78,18 @@ class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
      * @param owner the lifecycle owner, needed for keeping new data in sync with the lifecycle owner
      * @param id the id of the consensus to display.
      */
-    fun setupAdapterAndLoad(owner: LifecycleOwner, id: String) {
-        if (currentId == id) {
-            currentItem?.let { updateItem(it) }
+    fun setupAdapterAndLoad(owner: LifecycleOwner, subjectId: String) {
+        if (currentSubjectId == subjectId) {
+//            currentSubject?.let { updateSubject(it) }
             return
         }
 
-        currentId = id
+        currentSubjectId = subjectId
 
-        adapter.value = HomeDetailAdapter(owner = owner)
+        adapter.value = IdeaAdapter(owner = owner)
 
         // resets all current saved details, should be fairly impossible to get here without a deep link / wrong id
-        currentItem = null
+//        currentSubject = null
 
         refreshDetails()
     }
@@ -108,7 +107,7 @@ class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
 
 
             showLoading()
-            repository.getIdeasOf(currentId)
+            repository.getIdeasOf(currentSubjectId)
             hideLoading()
 
 
@@ -127,10 +126,10 @@ class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
         refresh.postValue(true)
     }
 
-    private fun updateItem(it: SubjectItem) {
-        val alreadyShowing = currentItem?.id == it.id
-
-        currentItem = it
+    private fun updateSubject(subject: SubjectItem) {
+//        val alreadyShowing = currentSubject?.id == subject.id
+//
+//        currentSubject = subject
 
     }
 

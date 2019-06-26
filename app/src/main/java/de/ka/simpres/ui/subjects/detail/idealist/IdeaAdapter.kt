@@ -11,7 +11,7 @@ import de.ka.simpres.base.BaseViewHolder
 import de.ka.simpres.databinding.ItemIdeaBinding
 import de.ka.simpres.repo.model.IdeaItem
 
-class HomeDetailAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = arrayListOf()) :
+class IdeaAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = arrayListOf()) :
     BaseAdapter<IdeaItemViewModel>(owner, list,
         HomeDetailAdapterDiffCallback()
     ) {

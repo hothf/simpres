@@ -12,7 +12,7 @@ import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
-import de.ka.simpres.ui.subjects.subjectlist.HomeAdapter
+import de.ka.simpres.ui.subjects.subjectlist.SubjectAdapter
 import de.ka.simpres.ui.subjects.subjectlist.SubjectItemViewModel
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
 import de.ka.simpres.utils.AndroidSchedulerProvider
@@ -29,10 +29,10 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app){
 
     private var isLoading: Boolean = false
 
-    val adapter = MutableLiveData<HomeAdapter>()
+    val adapter = MutableLiveData<SubjectAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
-    val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { loadHomeItems(true) }
+    val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { loadSubjects(true) }
     val itemDecoration = DecorationUtil(app.resources.getDimensionPixelSize(R.dimen.default_16), app.resources
         .getDimensionPixelSize(R.dimen.default_8))
     private val itemClickListener = { vm: SubjectItemViewModel, view: View ->
@@ -68,8 +68,8 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app){
      */
     fun setupAdapterAndLoad(owner: LifecycleOwner) {
         if (adapter.value == null) {
-            adapter.postValue(HomeAdapter(owner))
-            loadHomeItems(true)
+            adapter.postValue(SubjectAdapter(owner))
+            loadSubjects(true)
         }
     }
 
@@ -105,7 +105,7 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app){
      *
      * @param reset set to true to reset the current state of consensus pagination loading and force a fresh reload
      */
-    private fun loadHomeItems(reset: Boolean) {
+    private fun loadSubjects(reset: Boolean) {
         if (reset) {
             isLoading = false
             compositeDisposable.clear()

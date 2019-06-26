@@ -15,22 +15,22 @@ class NewEditIdeaViewModel(app: Application) : BaseViewModel(app) {
         title.value = it
         titleError.postValue("")
 
-        currentHomeDetailItem?.title = it
+        currentIdea?.title = it
     }
     val getDoneListener = ViewUtils.TextDoneListener { submit() }
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
 
-    private var currentHomeDetailItem: IdeaItem? = null
-    private var currentHomeId: String? = null
+    private var currentIdea: IdeaItem? = null
+    private var currentSubjectId: String? = null
 
     fun submit() {
 
-        currentHomeDetailItem?.let { item ->
-            currentHomeId?.let { id ->
-                item.id = System.currentTimeMillis().toString()
-                repository.saveIdea(id, item)
+        currentIdea?.let { idea ->
+            currentSubjectId?.let { id ->
+                idea.id = System.currentTimeMillis().toString()
+                repository.saveIdea(id, idea)
                 navigateTo(
                     navigationTargetId = R.id.action_ideaNewEditFragment_to_subjectsDetailFragment,
                     args = Bundle().apply { putString(SubjectsDetailFragment.SUBJECT_ID_KEY, id) },
@@ -47,8 +47,8 @@ class NewEditIdeaViewModel(app: Application) : BaseViewModel(app) {
      *
      */
     fun setupNew(id: String) {
-        currentHomeDetailItem = IdeaItem()
-        currentHomeId = id
+        currentIdea = IdeaItem()
+        currentSubjectId = id
 //        currentTitle = ""
 
 //        header.postValue(app.getString(R.string.suggestions_newedit_title))
@@ -61,8 +61,8 @@ class NewEditIdeaViewModel(app: Application) : BaseViewModel(app) {
      *
      */
     fun setupEdit(id: String, homeItem: IdeaItem) {
-        currentHomeDetailItem = homeItem
-        currentHomeId = id
+        currentIdea = homeItem
+        currentSubjectId = id
 //        currentTitle = suggestion.title
 
 //        header.postValue(app.getString(R.string.suggestions_newedit_edit))
@@ -72,9 +72,9 @@ class NewEditIdeaViewModel(app: Application) : BaseViewModel(app) {
     }
 
     private fun updateTextViews() {
-        if (currentHomeDetailItem != null) {
-            title.postValue(currentHomeDetailItem?.title)
-            titleSelection.postValue(currentHomeDetailItem?.title?.length)
+        if (currentIdea != null) {
+            title.postValue(currentIdea?.title)
+            titleSelection.postValue(currentIdea?.title?.length)
             titleError.postValue("")
         } else {
             title.postValue("")
