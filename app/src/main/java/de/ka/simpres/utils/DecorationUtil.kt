@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * A item decoration for consensuses.
  */
-class DecorationUtil(private val spacingTop: Int, private val spacingLeftAndRight: Int = 0) :
+class DecorationUtil(
+    private val spacingTop: Int,
+    private val spacingLeftAndRight: Int = 0,
+    private val columnCount: Int = 0
+) :
     RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
@@ -28,8 +32,8 @@ class DecorationUtil(private val spacingTop: Int, private val spacingLeftAndRigh
             spacingRight = spacingLeftAndRight
         }
 
-        if (itemPosition == 0) {    // first item
-            outRect.set(spacingLeft, spacingTop/4, spacingRight, spacingTop)
+        if (itemPosition < if (columnCount > 1) columnCount else 1) {    // first items
+            outRect.set(spacingLeft, spacingTop, spacingRight, spacingTop)
         } else // every other item
             outRect.set(spacingLeft, view.paddingTop, spacingRight, spacingTop)
     }

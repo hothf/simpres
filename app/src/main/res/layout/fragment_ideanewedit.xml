@@ -41,7 +41,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:onClick="@{()->viewModel.submit()}"
+                android:onClick="@{(v)->viewModel.submit(v)}"
                 android:layout_width="wrap_content"
                 android:text="ok"
                 android:layout_height="wrap_content" />

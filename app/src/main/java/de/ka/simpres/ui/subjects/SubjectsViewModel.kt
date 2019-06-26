@@ -6,7 +6,7 @@ import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
@@ -25,7 +25,7 @@ import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 /**
  *
  */
-class SubjectsViewModel(app: Application) : BaseViewModel(app){
+class SubjectsViewModel(app: Application) : BaseViewModel(app) {
 
     private var isLoading: Boolean = false
 
@@ -33,8 +33,10 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app){
     val refresh = MutableLiveData<Boolean>().apply { value = false }
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { loadSubjects(true) }
-    val itemDecoration = DecorationUtil(app.resources.getDimensionPixelSize(R.dimen.default_16), app.resources
-        .getDimensionPixelSize(R.dimen.default_8))
+    val itemDecoration = DecorationUtil(
+        app.resources.getDimensionPixelSize(R.dimen.default_16), app.resources
+            .getDimensionPixelSize(R.dimen.default_8), COLUMNS_COUNT
+    )
     private val itemClickListener = { vm: SubjectItemViewModel, view: View ->
         navigateTo(
             R.id.action_subjectsFragment_to_subjectsDetailFragment,
@@ -45,7 +47,7 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app){
         )
     }
 
-    fun layoutManager() = LinearLayoutManager(app.applicationContext)
+    fun layoutManager() = GridLayoutManager(app.applicationContext, COLUMNS_COUNT)
 
     fun itemAnimator() = SlideInDownAnimator()
 
@@ -53,7 +55,7 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app){
         startObserving()
     }
 
-    fun onAddClick(){
+    fun onAddClick() {
         navigateTo(
             R.id.subjectNewEditFragment,
             args = Bundle().apply { putBoolean(NewEditSubjectFragment.NEW_KEY, true) },
@@ -73,7 +75,7 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app){
         }
     }
 
-    private fun startObserving(){
+    private fun startObserving() {
         repository.observableSubjects
             .with(AndroidSchedulerProvider())
             .subscribeBy(
@@ -130,5 +132,9 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app){
     private fun showLoading() {
         isLoading = true
         refresh.postValue(true)
+    }
+
+    companion object {
+        const val COLUMNS_COUNT = 2
     }
 }

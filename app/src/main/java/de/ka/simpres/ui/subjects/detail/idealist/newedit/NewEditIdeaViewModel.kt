@@ -2,12 +2,14 @@ package de.ka.simpres.ui.subjects.detail.idealist.newedit
 
 import android.app.Application
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.utils.ViewUtils
+import de.ka.simpres.utils.closeAttachedKeyboard
 
 class NewEditIdeaViewModel(app: Application) : BaseViewModel(app) {
 
@@ -25,7 +27,9 @@ class NewEditIdeaViewModel(app: Application) : BaseViewModel(app) {
     private var currentIdea: IdeaItem? = null
     private var currentSubjectId: String? = null
 
-    fun submit() {
+    fun submit(view: View? = null) {
+
+        view?.closeAttachedKeyboard()
 
         currentIdea?.let { idea ->
             currentSubjectId?.let { id ->

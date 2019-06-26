@@ -2,12 +2,14 @@ package de.ka.simpres.ui.subjects.subjectlist.newedit
 
 import android.app.Application
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.utils.ViewUtils
+import de.ka.simpres.utils.closeAttachedKeyboard
 
 class NewEditSubjectViewModel(app: Application) : BaseViewModel(app) {
 
@@ -24,7 +26,9 @@ class NewEditSubjectViewModel(app: Application) : BaseViewModel(app) {
 
     private var currentSubject: SubjectItem? = null
 
-    fun submit() {
+    fun submit(view: View? = null) {
+
+        view?.closeAttachedKeyboard()
 
         currentSubject?.let {
 
