@@ -16,6 +16,8 @@ interface Repository {
 
     fun getSubjects()
 
+    fun getSubject(subjectId: String)
+
     fun getIdeasOf(subjectId: String)
 
     fun saveSubject(subject: SubjectItem)

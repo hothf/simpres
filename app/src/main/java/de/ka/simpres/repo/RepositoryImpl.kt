@@ -3,7 +3,6 @@ package de.ka.simpres.repo
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.repo.model.IdeaItem
 import io.reactivex.subjects.PublishSubject
-import kotlin.random.Random
 
 class RepositoryImpl : Repository {
 
@@ -16,18 +15,26 @@ class RepositoryImpl : Repository {
     private val volatileSubjects = mutableListOf<SubjectItem>()
 
     override fun getSubjects() {
-        val randomCount = Random.nextInt(20)
+//        val randomCount = Random.nextInt(20)
+//
+//        val list =
+//            generateSequence(0, { it + 1 })
+//                .take(randomCount)
+//                .map { SubjectItem(it.toString()) }
+//                .toMutableList()
 
-        val list =
-            generateSequence(0, { it + 1 })
-                .take(randomCount)
-                .map { SubjectItem(it.toString()) }
-                .toMutableList()
+        val list = mutableListOf<SubjectItem>()
 
         list.addAll(volatileSubjects)
 
         observableSubjects.onNext(IndicatedList(list))
 
+    }
+
+    override fun getSubject(subjectId: String) {
+        findSubjectById(subjectId)?.let {
+            observableSubjects.onNext(IndicatedList(listOf(it), update = true))
+        }
     }
 
     override fun saveSubject(subject: SubjectItem) {
@@ -37,17 +44,20 @@ class RepositoryImpl : Repository {
     }
 
     override fun getIdeasOf(subjectId: String) {
-        volatileSubjects.find { subjectId == it.id }?.let {
+        findSubjectById(subjectId)?.let {
             observableIdeas.onNext(IndicatedList(it.ideas))
         }
     }
 
     override fun saveIdea(subjectId: String, idea: IdeaItem) {
-        volatileSubjects.find { subjectId == it.id }?.let {
+        findSubjectById(subjectId)?.let {
             it.ideas.add(idea)
             observableIdeas.onNext(IndicatedList(it.ideas))
         }
 
 
     }
+
+
+    private fun findSubjectById(subjectId: String): SubjectItem? = volatileSubjects.find { subjectId == it.id }
 }

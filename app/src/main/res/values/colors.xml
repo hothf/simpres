@@ -3,4 +3,12 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="colorDefaultIconTint">#002200</color>
+
+    <color name="fontNav">#232323</color>
+    <color name="fontTitle">#333333</color>
+    <color name="fontDefault">#B7B7B9</color>
+    <color name="fontDisabled">#33888888</color>
+    <color name="fontDefaultInverted">#ffffff</color>
 </resources>

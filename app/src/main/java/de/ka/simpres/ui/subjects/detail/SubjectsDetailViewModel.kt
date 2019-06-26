@@ -14,6 +14,7 @@ import de.ka.simpres.ui.subjects.detail.idealist.IdeaAdapter
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment
 import de.ka.simpres.utils.AndroidSchedulerProvider
 import de.ka.simpres.utils.DecorationUtil
+import de.ka.simpres.utils.NavigationUtils.BACK
 import de.ka.simpres.utils.with
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
@@ -26,16 +27,19 @@ class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
 
     val adapter = MutableLiveData<IdeaAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
-    val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { refreshDetails() }
+    val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { refresh() }
     val itemDecoration = DecorationUtil(
         app.resources.getDimensionPixelSize(R.dimen.default_8), app.resources.getDimensionPixelSize(R.dimen.default_8)
     )
+    val title = MutableLiveData<String>()
 
     fun itemAnimator() = SlideInDownAnimator()
 
     fun layoutManager() = LinearLayoutManager(app.applicationContext)
 
-    fun onAddClick(){
+    fun onBack( )= navigateTo(BACK)
+
+    fun onAddClick() {
         navigateTo(
             R.id.ideaNewEditFragment,
             args = Bundle().apply {
@@ -53,7 +57,7 @@ class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
                 onError = ::handleGeneralError,
                 onNext = { result ->
                     if (result.invalidate) {
-                        refreshDetails()
+                        refresh()
                     } else {
                         adapter.value?.let { it.overwriteList(result.list) }
                     }
@@ -68,7 +72,6 @@ class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
                 onNext = { it.list.find { subject -> subject.id == currentSubjectId }?.let(::updateSubject) }
             )
             .addTo(compositeDisposable)
-
     }
 
     /**
@@ -76,49 +79,31 @@ class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
      * case the data is simply updated.
      *
      * @param owner the lifecycle owner, needed for keeping new data in sync with the lifecycle owner
-     * @param id the id of the consensus to display.
+     * @param subjectId the id of the subject to display.
      */
     fun setupAdapterAndLoad(owner: LifecycleOwner, subjectId: String) {
         if (currentSubjectId == subjectId) {
-//            currentSubject?.let { updateSubject(it) }
             return
         }
 
         currentSubjectId = subjectId
 
-        adapter.value = IdeaAdapter(owner = owner)
-
         // resets all current saved details, should be fairly impossible to get here without a deep link / wrong id
-//        currentSubject = null
+        adapter.value = IdeaAdapter(owner = owner)
+        title.postValue("")
 
-        refreshDetails()
+        refresh()
     }
 
-    fun refreshDetails() {
-//        repository.consensusManager.getConsensusDetail(currentId)
-//            .with(AndroidSchedulerProvider())
-//            .subscribeRepoCompletion { onDetailsLoaded(it, fromLock = false) }
-//            .start(compositeDisposable) {
-//                showLoading()
-//                showLockLoading()
-//            }
-
-
-
-
-            showLoading()
-            repository.getIdeasOf(currentSubjectId)
-            hideLoading()
-
-
-
-
-
+    private fun refresh() {
+        showLoading()
+        repository.getSubject(currentSubjectId)
+        repository.getIdeasOf(currentSubjectId)
+        hideLoading()
     }
 
-    private fun hideLoading() {
-        refresh.postValue(false)
-        isLoading = false
+    private fun updateSubject(subject: SubjectItem) {
+        title.postValue(subject.title)
     }
 
     private fun showLoading() {
@@ -126,12 +111,8 @@ class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
         refresh.postValue(true)
     }
 
-    private fun updateSubject(subject: SubjectItem) {
-//        val alreadyShowing = currentSubject?.id == subject.id
-//
-//        currentSubject = subject
-
+    private fun hideLoading() {
+        refresh.postValue(false)
+        isLoading = false
     }
-
-
 }

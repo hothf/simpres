@@ -14,17 +14,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:id="@+id/subjectDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_marginTop="@dimen/default_8"
+                android:layout_marginStart="@dimen/default_8"
+                android:layout_width="@dimen/default_48"
+                android:background="@drawable/round_button_transparent_selector"
+                android:src="@drawable/ic_launcher_foreground"
+                android:onClick="@{() -> viewModel.onBack()}"
+                android:tint="@color/colorDefaultIconTint"
+                android:layout_height="@dimen/default_48" />
+
         <TextView
             android:id="@+id/transitionText"
             android:layout_width="wrap_content"
-            android:text="igfjkfgh"
+            android:text="@{viewModel.title}"
+            android:layout_marginStart="@dimen/default_8"
+            android:layout_toEndOf="@+id/back"
+            tools:text="Detail Title"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/actionBarSize"
+            android:maxLines="3"
             android:layout_height="wrap_content" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/bottomBarSize"
+            android:layout_below="@+id/transitionText"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
             app:setRefreshing="@{viewModel.refresh}">
@@ -40,6 +63,8 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        </RelativeLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_button"
             android:layout_width="wrap_content"
@@ -49,7 +74,7 @@
             android:src="@drawable/ic_launcher_foreground"
             android:tint="@color/colorAccent"
             app:backgroundTint="@color/colorPrimaryDark"
-            app:layout_anchor="@id/swipeRefresh"
+            app:layout_anchor="@id/subjectDetail"
             app:layout_anchorGravity="bottom|center_horizontal"
             app:useCompatPadding="true" />
 
