@@ -6,6 +6,9 @@ import androidx.databinding.ViewDataBinding
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import androidx.core.view.MotionEventCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -14,6 +17,11 @@ import de.ka.simpres.repo.Repository
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
+import androidx.recyclerview.widget.ItemTouchHelper
+import de.ka.simpres.R
+import de.ka.simpres.utils.DragAndSwipeItemTouchHelperCallback
+import timber.log.Timber
+
 
 abstract class BaseAdapter<E : BaseItemViewModel>(
     private val owner: LifecycleOwner,
@@ -26,6 +34,8 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
 
     private var differ: AsyncListDiffer<E>? = null
 
+    private var itemTouchHelper: ItemTouchHelper? = null
+
     init {
         if (diffCallback != null) {
             @Suppress("LeakingThis")
@@ -33,7 +43,21 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
         }
     }
 
+    fun useTouchHelperFor(recyclerView: RecyclerView) {
+        itemTouchHelper = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
+        itemTouchHelper?.attachToRecyclerView(recyclerView)
+    }
+
     open var isEmpty: Boolean = items.isEmpty()
+
+    fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+        Timber.e("LIST -- move")
+        return true
+    }
+
+    fun onItemDismiss(position: Int) {
+        Timber.e("LIST -- dismiss")
+    }
 
     fun getItems(): List<E> {
         return if (differ != null) {
@@ -111,6 +135,15 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
                 items[holder.adapterPosition].onAttached()
             }
         }
+
+        holder.itemView.findViewById<View>(R.id.swipeHandle)?.let {
+            it.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    itemTouchHelper?.startDrag(holder)
+                }
+                false
+            }
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -157,8 +190,16 @@ class BaseViewHolder<T : ViewDataBinding>(private val binding: T) : RecyclerView
 
     fun bind(owner: LifecycleOwner, viewModel: BaseItemViewModel) {
         binding.setVariable(BR.viewModel, viewModel)
-        binding.setLifecycleOwner(owner)
+        binding.lifecycleOwner = owner
         binding.executePendingBindings()
+    }
+
+    fun onItemSelected() {
+        Timber.e("LIST -- selected")
+    }
+
+    fun onItemClear() {
+        Timber.e("LIST -- clear")
     }
 }
 

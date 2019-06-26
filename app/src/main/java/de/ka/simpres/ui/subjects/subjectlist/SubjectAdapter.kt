@@ -15,9 +15,7 @@ import de.ka.simpres.repo.model.SubjectItem
  * Adapter for displaying [SubjectItemViewModel]s.
  */
 class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel> = arrayListOf()) :
-    BaseAdapter<SubjectItemViewModel>(owner, list,
-        HomeAdapterDiffCallback()
-    ) {
+    BaseAdapter<SubjectItemViewModel>(owner, list, SubjectAdapterDiffCallback()) {
 
     private var dispose: Boolean = false
 
@@ -129,7 +127,7 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
     }
 }
 
-class HomeAdapterDiffCallback : DiffUtil.ItemCallback<SubjectItemViewModel>() {
+class SubjectAdapterDiffCallback : DiffUtil.ItemCallback<SubjectItemViewModel>() {
 
     override fun areItemsTheSame(oldItem: SubjectItemViewModel, newItem: SubjectItemViewModel): Boolean {
         return oldItem.item.id == newItem.item.id

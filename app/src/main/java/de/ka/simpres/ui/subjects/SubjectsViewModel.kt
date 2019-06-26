@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
@@ -68,10 +69,13 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app) {
      *
      * @param owner the lifecycle owner to keep the data in sync with the lifecycle
      */
-    fun setupAdapterAndLoad(owner: LifecycleOwner) {
+    fun setupAdapterAndLoad(owner: LifecycleOwner, recyclerView: RecyclerView) {
         if (adapter.value == null) {
-            adapter.postValue(SubjectAdapter(owner))
+            val subjectAdapter = SubjectAdapter(owner)
+            subjectAdapter.useTouchHelperFor(recyclerView)
+            adapter.postValue(subjectAdapter)
             loadSubjects(true)
+
         }
     }
 

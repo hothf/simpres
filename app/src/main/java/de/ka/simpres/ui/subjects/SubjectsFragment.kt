@@ -1,12 +1,12 @@
 package de.ka.simpres.ui.subjects
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseFragment
 import de.ka.simpres.databinding.FragmentSubjectsBinding
+
+
 
 
 /**
@@ -16,8 +16,8 @@ class SubjectsFragment : BaseFragment<FragmentSubjectsBinding, SubjectsViewModel
 
     override var bindingLayoutId = R.layout.fragment_subjects
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewModel.setupAdapterAndLoad(viewLifecycleOwner)
-        return super.onCreateView(inflater, container, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.setupAdapterAndLoad(viewLifecycleOwner, getBinding()?.recyclerHome!!)
+        super.onViewCreated(view, savedInstanceState)
     }
 }

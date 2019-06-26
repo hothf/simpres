@@ -3,6 +3,7 @@ package de.ka.simpres.repo
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.repo.model.IdeaItem
 import io.reactivex.subjects.PublishSubject
+import kotlin.random.Random
 
 class RepositoryImpl : Repository {
 
@@ -15,15 +16,15 @@ class RepositoryImpl : Repository {
     private val volatileSubjects = mutableListOf<SubjectItem>()
 
     override fun getSubjects() {
-//        val randomCount = Random.nextInt(20)
-//
-//        val list =
-//            generateSequence(0, { it + 1 })
-//                .take(randomCount)
-//                .map { SubjectItem(it.toString()) }
-//                .toMutableList()
+        val randomCount = Random.nextInt(20)
 
-        val list = mutableListOf<SubjectItem>()
+        val list =
+            generateSequence(0, { it + 1 })
+                .take(randomCount)
+                .map { SubjectItem(it.toString()) }
+                .toMutableList()
+
+//        val list = mutableListOf<SubjectItem>()
 
         list.addAll(volatileSubjects)
 

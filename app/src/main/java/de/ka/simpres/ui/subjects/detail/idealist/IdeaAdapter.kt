@@ -13,7 +13,7 @@ import de.ka.simpres.repo.model.IdeaItem
 
 class IdeaAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = arrayListOf()) :
     BaseAdapter<IdeaItemViewModel>(owner, list,
-        HomeDetailAdapterDiffCallback()
+        IdeaAdapterDiffCallback()
     ) {
 
     private var dispose: Boolean = false
@@ -119,7 +119,7 @@ class IdeaAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = ar
     }
 }
 
-class HomeDetailAdapterDiffCallback : DiffUtil.ItemCallback<IdeaItemViewModel>() {
+class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaItemViewModel>() {
 
     override fun areItemsTheSame(oldItem: IdeaItemViewModel, newItem: IdeaItemViewModel): Boolean {
         return oldItem.item.id == newItem.item.id
