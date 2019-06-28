@@ -26,9 +26,9 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         getItems()[position].apply {
             DataBindingUtil.getBinding<ItemSubjectBinding>(holder.itemView)?.let { binding ->
-                val sharedTransitionView = binding.itemContainer
+                val sharedTransitionView = binding.item
                 ViewCompat.setTransitionName(sharedTransitionView, this.item.id)
-                binding.itemContainer.setOnClickListener {
+                binding.item.setOnClickListener {
                     listener(this, sharedTransitionView)
                 }
             }

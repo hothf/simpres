@@ -1,6 +1,5 @@
 package de.ka.simpres.ui.subjects.subjectlist.newedit
 
-import android.app.Application
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +10,7 @@ import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
 
-class NewEditSubjectViewModel(app: Application) : BaseViewModel(app) {
+class NewEditSubjectViewModel : BaseViewModel() {
 
     val getTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it

@@ -6,6 +6,8 @@ import de.ka.simpres.ui.MainViewModel
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailViewModel
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaViewModel
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectViewModel
+import de.ka.simpres.utils.resources.ResourcesProvider
+import de.ka.simpres.utils.resources.ResourcesProviderImpl
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
@@ -14,11 +16,12 @@ import org.koin.dsl.module.module
  */
 
 val appModule = module {
-    viewModel { MainViewModel(get()) }
-    viewModel { SubjectsViewModel(get()) }
-    viewModel { SubjectsDetailViewModel(get()) }
-    viewModel { NewEditSubjectViewModel(get()) }
-    viewModel { NewEditIdeaViewModel(get()) }
+    viewModel { MainViewModel() }
+    viewModel { SubjectsViewModel() }
+    viewModel { SubjectsDetailViewModel() }
+    viewModel { NewEditSubjectViewModel() }
+    viewModel { NewEditIdeaViewModel() }
 
+    single { ResourcesProviderImpl(get()) as ResourcesProvider }
     single { RepositoryImpl() as Repository }
 }

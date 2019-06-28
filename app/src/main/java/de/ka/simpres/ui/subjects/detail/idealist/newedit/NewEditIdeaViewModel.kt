@@ -1,6 +1,5 @@
 package de.ka.simpres.ui.subjects.detail.idealist.newedit
 
-import android.app.Application
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +10,7 @@ import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
 
-class NewEditIdeaViewModel(app: Application) : BaseViewModel(app) {
+class NewEditIdeaViewModel : BaseViewModel() {
 
     val getTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it

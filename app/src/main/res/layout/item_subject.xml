@@ -11,22 +11,30 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/itemContainer"
+        android:id="@+id/item"
         style="@style/CardView.Light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_8"
         android:layout_marginEnd="@dimen/default_8"
+        android:clickable="true"
+        android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardCornerRadius="@dimen/default_corner_radius"
         app:cardElevation="@dimen/default_4"
         tools:cardBackgroundColor="@color/defaultBackgroundPrimary">R
 
         <RelativeLayout
-            android:id="@+id/swipeHandle"
+            android:id="@+id/gg"
             android:layout_margin="@dimen/default_8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/swipeHandle"
+
+                android:layout_width="1dp"
+                android:layout_height="match_parent" />
 
             <TextView
                 android:id="@+id/title"

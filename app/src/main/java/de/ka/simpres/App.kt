@@ -7,8 +7,9 @@ import timber.log.Timber
 /**
  * App creation point. Please keep as simple as possible - keep an eye on memory leaks: please
  * do not access the app context through a singleton here;
- * The application context is already available for all viewModels extending
- * the [de.ka.simpres.base.BaseViewModel].
+ *
+ * Application context and resources can be used by injecting a [de.ka.simpres.utils.resources.ResourcesProvider].
+ *
  **/
 class App : Application() {
 

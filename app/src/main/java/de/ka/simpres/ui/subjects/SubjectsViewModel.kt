@@ -1,6 +1,5 @@
 package de.ka.simpres.ui.subjects
 
-import android.app.Application
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
@@ -18,25 +17,30 @@ import de.ka.simpres.ui.subjects.subjectlist.SubjectItemViewModel
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
 import de.ka.simpres.utils.AndroidSchedulerProvider
 import de.ka.simpres.utils.DecorationUtil
+import de.ka.simpres.utils.resources.ResourcesProvider
 import de.ka.simpres.utils.with
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
+import org.koin.standalone.inject
 
 /**
  *
  */
-class SubjectsViewModel(app: Application) : BaseViewModel(app) {
+class SubjectsViewModel : BaseViewModel() {
 
     private var isLoading: Boolean = false
+
+    private val resourcesProvider: ResourcesProvider by inject()
 
     val adapter = MutableLiveData<SubjectAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { loadSubjects(true) }
     val itemDecoration = DecorationUtil(
-        app.resources.getDimensionPixelSize(R.dimen.default_16), app.resources
-            .getDimensionPixelSize(R.dimen.default_8), COLUMNS_COUNT
+        resourcesProvider.getDimensionPixelSize(R.dimen.default_16),
+        resourcesProvider.getDimensionPixelSize(R.dimen.default_8),
+        COLUMNS_COUNT
     )
     private val itemClickListener = { vm: SubjectItemViewModel, view: View ->
         navigateTo(
@@ -48,7 +52,7 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app) {
         )
     }
 
-    fun layoutManager() = GridLayoutManager(app.applicationContext, COLUMNS_COUNT)
+    fun layoutManager() = GridLayoutManager(resourcesProvider.getApplicationContext(), COLUMNS_COUNT)
 
     fun itemAnimator() = SlideInDownAnimator()
 
@@ -72,11 +76,10 @@ class SubjectsViewModel(app: Application) : BaseViewModel(app) {
     fun setupAdapterAndLoad(owner: LifecycleOwner, recyclerView: RecyclerView) {
         if (adapter.value == null) {
             val subjectAdapter = SubjectAdapter(owner)
-            subjectAdapter.useTouchHelperFor(recyclerView)
-            adapter.postValue(subjectAdapter)
+            adapter.value = subjectAdapter
             loadSubjects(true)
-
         }
+        adapter.value?.useTouchHelperFor(recyclerView)
     }
 
     private fun startObserving() {

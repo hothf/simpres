@@ -1,40 +1,40 @@
 package de.ka.simpres.base
 
-import android.app.Application
-import android.content.Context
+import android.graphics.Color
 import androidx.databinding.ViewDataBinding
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.view.MotionEventCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import de.ka.simpres.BR
-import de.ka.simpres.repo.Repository
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import androidx.recyclerview.widget.ItemTouchHelper
 import de.ka.simpres.R
 import de.ka.simpres.utils.DragAndSwipeItemTouchHelperCallback
+import de.ka.simpres.utils.resources.ResourcesProvider
 import timber.log.Timber
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 abstract class BaseAdapter<E : BaseItemViewModel>(
     private val owner: LifecycleOwner,
     private val items: ArrayList<E> = arrayListOf(),
-    diffCallback: DiffUtil.ItemCallback<E>? = null
+    private val diffCallback: DiffUtil.ItemCallback<E>? = null
 ) : RecyclerView.Adapter<BaseViewHolder<*>>(), KoinComponent {
 
-    val app: Application by inject()
-    val layoutInflater: LayoutInflater = LayoutInflater.from(app.applicationContext)
+    private val resourcesProvider: ResourcesProvider by inject()
 
     private var differ: AsyncListDiffer<E>? = null
-
     private var itemTouchHelper: ItemTouchHelper? = null
+
+    val layoutInflater: LayoutInflater = LayoutInflater.from(resourcesProvider.getApplicationContext())
 
     init {
         if (diffCallback != null) {
@@ -52,11 +52,25 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
 
     fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         Timber.e("LIST -- move")
+        if (diffCallback != null) {
+            Collections.swap(differ!!.currentList.toMutableList(), fromPosition, toPosition)
+            differ?.submitList(differ!!.currentList)
+            notifyItemMoved(fromPosition, toPosition)
+
+        } else {
+            Collections.swap(items, fromPosition, toPosition)
+            notifyItemMoved(fromPosition, toPosition)
+        }
         return true
     }
 
     fun onItemDismiss(position: Int) {
-        Timber.e("LIST -- dismiss")
+        if (diffCallback != null) {
+            differ?.submitList(differ!!.currentList.toMutableList().apply { removeAt(position) })
+        } else {
+            items.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 
     fun getItems(): List<E> {
@@ -78,8 +92,8 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
     }
 
     open fun addItem(index: Int = 0, item: E) {
-        if (differ != null) {
-            differ!!.submitList(differ!!.currentList.toMutableList().apply { add(index, item) })
+        if (diffCallback != null) {
+            differ?.submitList(differ!!.currentList.toMutableList().apply { add(index, item) })
         } else {
             items.add(item)
 
@@ -89,8 +103,8 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
     }
 
     open fun setItems(newItems: List<E>) {
-        if (differ != null) {
-            differ!!.submitList(newItems)
+        if (diffCallback != null) {
+            differ?.submitList(newItems)
         } else {
             items.clear()
 
@@ -102,11 +116,11 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
     }
 
     open fun addItems(newItems: List<E>) {
-        if (differ != null) {
+        if (diffCallback != null) {
             val items = ArrayList(differ!!.currentList)
             items.addAll(newItems)
 
-            differ!!.submitList(items)
+            differ?.submitList(items)
         } else {
             items.addAll(newItems)
             notifyDataSetChanged()
@@ -115,21 +129,21 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
     }
 
     override fun getItemCount(): Int {
-        if (differ != null) {
+        if (diffCallback != null) {
             return differ!!.currentList.size
         }
         return items.size
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-        if (differ != null) {
+        if (diffCallback != null) {
             holder.bind(owner, differ!!.currentList[holder.adapterPosition])
         } else {
             holder.bind(owner, items[holder.adapterPosition])
         }
 
         if (holder.adapterPosition in 0 until itemCount) {
-            if (differ != null) {
+            if (diffCallback != null) {
                 differ!!.currentList[holder.adapterPosition].onAttached()
             } else {
                 items[holder.adapterPosition].onAttached()
@@ -147,7 +161,7 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (differ != null) {
+        return if (diffCallback != null) {
             differ!!.currentList[position].type
         } else {
             items[position].type
@@ -156,7 +170,7 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
 
     override fun onViewRecycled(holder: BaseViewHolder<*>) {
         if (holder.adapterPosition in 0 until itemCount) {
-            if (differ != null) {
+            if (diffCallback != null) {
                 differ!!.currentList[holder.adapterPosition].onCleared()
             } else {
                 items[holder.adapterPosition].onCleared()
@@ -171,9 +185,6 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
  * with [MutableLiveData<T>].
  */
 abstract class BaseItemViewModel(val type: Int = 0) : KoinComponent {
-
-    val appContext: Context by inject()
-    val repository: Repository by inject()
 
     var compositeDisposable: CompositeDisposable? = null
 
@@ -196,10 +207,12 @@ class BaseViewHolder<T : ViewDataBinding>(private val binding: T) : RecyclerView
 
     fun onItemSelected() {
         Timber.e("LIST -- selected")
+        itemView.setBackgroundColor(Color.LTGRAY)
     }
 
     fun onItemClear() {
         Timber.e("LIST -- clear")
+        itemView.setBackgroundColor(0)
     }
 }
 

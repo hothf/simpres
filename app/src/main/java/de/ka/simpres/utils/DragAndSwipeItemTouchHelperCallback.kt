@@ -31,7 +31,7 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
         // Set movement flags based on the layout manager
         return if (recyclerView.layoutManager is GridLayoutManager) {
             val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-            val swipeFlags = 0
+            val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
             makeMovementFlags(dragFlags, swipeFlags)
         } else {
             val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
@@ -42,7 +42,7 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
 
     override fun onMove(recyclerView: RecyclerView, source: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder):
             Boolean {
-        if (source.itemViewType !== target.itemViewType) {
+        if (source.itemViewType != target.itemViewType) {
             return false
         }
 
@@ -67,7 +67,7 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
     ) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             // Fade out the view as it is swiped out of the parent's bounds
-            val alpha = ALPHA_FULL - abs(dX) / viewHolder.itemView.width as Float
+            val alpha = ALPHA_FULL - abs(dX) / viewHolder.itemView.width
             viewHolder.itemView.alpha = alpha
             viewHolder.itemView.translationX = dX
         } else {

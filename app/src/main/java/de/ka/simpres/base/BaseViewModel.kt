@@ -1,9 +1,8 @@
 package de.ka.simpres.base
 
-import android.app.Application
 import android.os.Bundle
 import androidx.annotation.IdRes
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import de.ka.simpres.base.events.*
@@ -16,7 +15,7 @@ import kotlin.reflect.KClass
 /**
  * The base view model.
  */
-abstract class BaseViewModel(val app: Application) : AndroidViewModel(app), KoinComponent {
+abstract class BaseViewModel : ViewModel(), KoinComponent {
 
     val events = QueueLiveEvent<Event>()
 

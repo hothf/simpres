@@ -1,6 +1,5 @@
 package de.ka.simpres.ui.subjects.detail
 
-import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -15,27 +14,31 @@ import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment
 import de.ka.simpres.utils.AndroidSchedulerProvider
 import de.ka.simpres.utils.DecorationUtil
 import de.ka.simpres.utils.NavigationUtils.BACK
+import de.ka.simpres.utils.resources.ResourcesProvider
 import de.ka.simpres.utils.with
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
+import org.koin.standalone.inject
 
-class SubjectsDetailViewModel(app: Application) : BaseViewModel(app) {
+class SubjectsDetailViewModel : BaseViewModel() {
 
     private var currentSubjectId = "-1"
     private var isLoading = false
+
+    private val resourcesProvider: ResourcesProvider by inject()
 
     val adapter = MutableLiveData<IdeaAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
     val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { refresh() }
     val itemDecoration = DecorationUtil(
-        app.resources.getDimensionPixelSize(R.dimen.default_8), app.resources.getDimensionPixelSize(R.dimen.default_8)
+        resourcesProvider.getDimensionPixelSize(R.dimen.default_8), resourcesProvider.getDimensionPixelSize(R.dimen.default_8)
     )
     val title = MutableLiveData<String>()
 
     fun itemAnimator() = SlideInDownAnimator()
 
-    fun layoutManager() = LinearLayoutManager(app.applicationContext)
+    fun layoutManager() = LinearLayoutManager(resourcesProvider.getApplicationContext())
 
     fun onBack( )= navigateTo(BACK)
 
