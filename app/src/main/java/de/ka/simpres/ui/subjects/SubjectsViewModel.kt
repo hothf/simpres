@@ -35,7 +35,6 @@ class SubjectsViewModel : BaseViewModel() {
 
     val adapter = MutableLiveData<SubjectAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
-    val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { loadSubjects(true) }
     val itemDecoration = DecorationUtil(
         resourcesProvider.getDimensionPixelSize(R.dimen.default_16),
@@ -72,10 +71,12 @@ class SubjectsViewModel : BaseViewModel() {
      * Sets up the view, if not already done.
      *
      * @param owner the lifecycle owner to keep the data in sync with the lifecycle
+     * @param recyclerView the recycler view to attach the adapter to
+     * @param blankView a view to show if there are no items to display
      */
-    fun setupAdapterAndLoad(owner: LifecycleOwner, recyclerView: RecyclerView) {
+    fun setupAdapterAndLoad(owner: LifecycleOwner, recyclerView: RecyclerView, blankView: View) {
         if (adapter.value == null) {
-            val subjectAdapter = SubjectAdapter(owner)
+            val subjectAdapter = SubjectAdapter(owner).apply { this.blankView = blankView }
             adapter.value = subjectAdapter
             loadSubjects(true)
         }
@@ -97,11 +98,6 @@ class SubjectsViewModel : BaseViewModel() {
                             updateOnly,
                             result.addToTop
                         )
-                        if (it.isEmpty) {
-                            blankVisibility.postValue(View.VISIBLE)
-                        } else {
-                            blankVisibility.postValue(View.GONE)
-                        }
                     }
                 }, onError = ::handleGeneralError
             )
