@@ -12,10 +12,10 @@ import kotlin.math.abs
  * An implementation of [ItemTouchHelper.Callback] that enables basic drag & drop and
  * swipe-to-dismiss. Drag events are automatically started by an item long-press.<br></br>
  *
- * Expects the `RecyclerView.Adapter` to listen for [ ] callbacks and the `RecyclerView.ViewHolder` to implement
- * [ItemTouchHelperViewHolder].
+ * Converted to kotlin and edited for this project use by Thomas Hofmann.
  *
- * @author mainly Paul Burke (ipaulpro), see https://github.com/iPaulPro/Android-ItemTouchHelper-Demo/tree/master/app/src/main/java/co/paulburke/android/itemtouchhelperdemo/helper
+ * @author mainly Paul Burke (ipaulpro) on gihub
+ * (https://github.com/iPaulPro/Android-ItemTouchHelper-Demo/tree/master/app/src/main/java/com/paulburke/android/itemtouchhelperdemo/helper)
  */
 class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) : ItemTouchHelper.Callback() {
 
@@ -77,12 +77,9 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         // We only want the active item to change
-        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
-            if (viewHolder is BaseViewHolder<*>) {
-                // Let the view holder know that this item is being moved or dragged
-                val itemViewHolder = viewHolder as BaseViewHolder<*>
-                itemViewHolder.onItemSelected()
-            }
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE && viewHolder is BaseViewHolder<*>) {
+            // Let the view holder know that this item is being moved or dragged
+            viewHolder.onItemSelected()
         }
 
         super.onSelectedChanged(viewHolder, actionState)
@@ -95,8 +92,7 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
 
         if (viewHolder is BaseViewHolder<*>) {
             // Tell the view holder it's time to restore the idle state
-            val itemViewHolder = viewHolder as BaseViewHolder<*>
-            itemViewHolder.onItemClear()
+            viewHolder.onItemClear()
         }
     }
 

@@ -2,6 +2,7 @@ package de.ka.simpres.utils
 
 import android.graphics.Rect
 import android.view.View
+import androidx.core.view.setMargins
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -14,27 +15,33 @@ class DecorationUtil(
 ) :
     RecyclerView.ItemDecoration() {
 
+
+
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        val itemPosition = parent.getChildAdapterPosition(view)
+        val itemPosition = parent.getChildViewHolder(view).adapterPosition;
+
+        val layoutParams = view.layoutParams as RecyclerView.LayoutParams
 
         // no position, leave it alone
         if (itemPosition == RecyclerView.NO_POSITION) {
             return
         }
 
-        var spacingLeft = view.paddingLeft
-        var spacingRight = view.paddingRight
-
-        if (spacingLeftAndRight > 0) {
-            spacingLeft = spacingLeftAndRight
-            spacingRight = spacingLeftAndRight
+        if (itemPosition % 2 == 0) {
+            layoutParams.topMargin = 25
+            layoutParams.leftMargin = 50
+            layoutParams.rightMargin = 25
+            layoutParams.bottomMargin = 25
+        } else {
+            layoutParams.topMargin = 25
+            layoutParams.leftMargin = 25
+            layoutParams.rightMargin = 50
+            layoutParams.bottomMargin = 25
         }
 
-        if (itemPosition < if (columnCount > 1) columnCount else 1) {    // first items
-            outRect.set(spacingLeft, spacingTop, spacingRight, spacingTop)
-        } else // every other item
-            outRect.set(spacingLeft, view.paddingTop, spacingRight, spacingTop)
+
+        view.layoutParams = layoutParams
     }
 }
