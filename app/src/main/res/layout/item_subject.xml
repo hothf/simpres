@@ -18,15 +18,16 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
+        android:minHeight="@dimen/default_112"
         app:cardCornerRadius="@dimen/default_corner_radius"
         app:cardElevation="@dimen/default_4"
-        tools:cardBackgroundColor="@color/defaultBackgroundPrimary">R
+        tools:cardBackgroundColor="@color/defaultBackgroundPrimary">
 
         <RelativeLayout
             android:id="@+id/gg"
-            android:layout_margin="@dimen/default_8"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_8">
 
             <View
                 android:id="@+id/swipeHandle"
@@ -58,5 +59,4 @@
                 tools:text="Date" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
-
 </layout>

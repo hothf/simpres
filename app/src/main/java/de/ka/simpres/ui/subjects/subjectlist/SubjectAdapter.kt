@@ -37,6 +37,8 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
         super.onBindViewHolder(holder, position)
     }
 
+
+
     /**
      * Marks the list items for disposition. Only useful with lists that will be dynamically changed and if this adapter
      * is reused.

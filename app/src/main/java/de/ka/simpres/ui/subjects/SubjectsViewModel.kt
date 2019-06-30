@@ -39,7 +39,7 @@ class SubjectsViewModel : BaseViewModel() {
     val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { loadSubjects(true) }
     val itemDecoration = DecorationUtil(
         resourcesProvider.getDimensionPixelSize(R.dimen.default_16),
-        resourcesProvider.getDimensionPixelSize(R.dimen.default_8),
+        resourcesProvider.getDimensionPixelSize(R.dimen.default_16),
         COLUMNS_COUNT
     )
     private val itemClickListener = { vm: SubjectItemViewModel, view: View ->
