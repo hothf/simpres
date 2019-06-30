@@ -9,13 +9,17 @@ import androidx.recyclerview.widget.DiffUtil
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
 import de.ka.simpres.databinding.ItemSubjectBinding
+import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.SubjectItem
+import org.koin.standalone.inject
 
 /**
  * Adapter for displaying [SubjectItemViewModel]s.
  */
 class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel> = arrayListOf()) :
     BaseAdapter<SubjectItemViewModel>(owner, list, SubjectAdapterDiffCallback()) {
+
+    val repository: Repository by inject()
 
     private var dispose: Boolean = false
 
@@ -37,7 +41,10 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
         super.onBindViewHolder(holder, position)
     }
 
-
+    override fun onItemDismiss(position: Int) {
+        repository.removeSubject(getItems()[position].item.id)
+        super.onItemDismiss(position)
+    }
 
     /**
      * Marks the list items for disposition. Only useful with lists that will be dynamically changed and if this adapter

@@ -23,10 +23,7 @@ class RepositoryImpl : Repository {
                 .take(randomCount)
                 .map { SubjectItem(it.toString()) }
                 .toMutableList()
-
-//        val list = mutableListOf<SubjectItem>()
-
-        list.addAll(volatileSubjects)
+        volatileSubjects.addAll(list)
 
         observableSubjects.onNext(IndicatedList(list))
 
@@ -42,6 +39,13 @@ class RepositoryImpl : Repository {
         volatileSubjects.add(subject)
 
         observableSubjects.onNext(IndicatedList(listOf(subject), addToTop = true))
+    }
+
+    override fun removeSubject(subjectId: String) {
+        findSubjectById(subjectId)?.let {
+            volatileSubjects.remove(it)
+            observableSubjects.onNext(IndicatedList(listOf(it), remove = true))
+        }
     }
 
     override fun getIdeasOf(subjectId: String) {

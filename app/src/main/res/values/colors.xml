@@ -6,6 +6,8 @@
 
     <color name="colorDefaultIconTint">#002200</color>
 
+    <color name="colorPrimaryBack">#fefefe</color>
+
     <color name="fontNav">#232323</color>
     <color name="fontTitle">#333333</color>
     <color name="fontDefault">#B7B7B9</color>

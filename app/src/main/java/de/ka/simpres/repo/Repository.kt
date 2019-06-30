@@ -18,6 +18,8 @@ interface Repository {
 
     fun getSubject(subjectId: String)
 
+    fun removeSubject(subjectId: String)
+
     fun getIdeasOf(subjectId: String)
 
     fun saveSubject(subject: SubjectItem)

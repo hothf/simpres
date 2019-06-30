@@ -33,6 +33,7 @@ class SubjectsViewModel : BaseViewModel() {
 
     private val resourcesProvider: ResourcesProvider by inject()
 
+    val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val adapter = MutableLiveData<SubjectAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
     val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { loadSubjects(true) }
@@ -76,11 +77,13 @@ class SubjectsViewModel : BaseViewModel() {
      */
     fun setupAdapterAndLoad(owner: LifecycleOwner, recyclerView: RecyclerView, blankView: View) {
         if (adapter.value == null) {
-            val subjectAdapter = SubjectAdapter(owner).apply { this.blankView = blankView }
+            val subjectAdapter = SubjectAdapter(owner)
             adapter.value = subjectAdapter
             loadSubjects(true)
         }
-        adapter.value?.useTouchHelperFor(recyclerView)
+        adapter.value?.apply {
+            useTouchHelperFor(recyclerView)
+        }
     }
 
     private fun startObserving() {
@@ -98,6 +101,12 @@ class SubjectsViewModel : BaseViewModel() {
                             updateOnly,
                             result.addToTop
                         )
+
+                        if (it.isEmpty) {
+                            blankVisibility.postValue(View.VISIBLE)
+                        } else {
+                            blankVisibility.postValue(View.GONE)
+                        }
                     }
                 }, onError = ::handleGeneralError
             )

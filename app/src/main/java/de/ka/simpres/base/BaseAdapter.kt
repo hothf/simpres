@@ -1,15 +1,14 @@
 package de.ka.simpres.base
 
+import android.graphics.drawable.Drawable
 import androidx.databinding.ViewDataBinding
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.*
 import de.ka.simpres.BR
+import de.ka.simpres.R
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -29,7 +28,7 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
 
     private var differ: AsyncListDiffer<E>? = null
 
-    var blankView: View? = null
+    var isEmpty: Boolean = items.isEmpty()
 
     val layoutInflater: LayoutInflater = LayoutInflater.from(resourcesProvider.getApplicationContext())
 
@@ -44,8 +43,6 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
         ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this)).attachToRecyclerView(recyclerView)
     }
 
-    open var isEmpty: Boolean = items.isEmpty()
-
     fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         if (diffCallback != null) {
             Collections.swap(differ!!.currentList.toMutableList(), fromPosition, toPosition)
@@ -55,19 +52,14 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
         return true
     }
 
-    fun onItemDismiss(position: Int) {
+    open fun onItemDismiss(position: Int) {
         if (diffCallback != null) {
-            differ?.submitList(differ!!.currentList.toMutableList().apply {
-                removeAt(position)
-                isEmpty = isEmpty()
-            })
+            return
         } else {
             items.removeAt(position)
             notifyItemRemoved(position)
             isEmpty = items.isEmpty()
         }
-
-        toggleBlank()
     }
 
     fun getItems(): List<E> {
@@ -86,8 +78,6 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
             notifyDataSetChanged()
         }
         isEmpty = true
-
-        toggleBlank()
     }
 
     open fun addItem(index: Int = 0, item: E) {
@@ -99,8 +89,6 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
             notifyDataSetChanged()
         }
         isEmpty = false
-
-        toggleBlank()
     }
 
     open fun setItems(newItems: List<E>) {
@@ -114,8 +102,6 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
             notifyDataSetChanged()
         }
         isEmpty = newItems.isEmpty()
-
-        toggleBlank()
     }
 
     open fun addItems(newItems: List<E>) {
@@ -128,9 +114,7 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
             items.addAll(newItems)
             notifyDataSetChanged()
         }
-        isEmpty = newItems.isEmpty()
-
-        toggleBlank()
+        isEmpty = false
     }
 
     override fun getItemCount(): Int {
@@ -174,14 +158,6 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
         }
         super.onViewRecycled(holder)
     }
-
-    private fun toggleBlank() {
-        if (isEmpty) {
-            blankView?.visibility = View.VISIBLE
-        } else {
-            blankView?.visibility = View.GONE
-        }
-    }
 }
 
 /**
@@ -203,6 +179,8 @@ abstract class BaseItemViewModel(val type: Int = 0) : KoinComponent {
 
 class BaseViewHolder<T : ViewDataBinding>(private val binding: T) : RecyclerView.ViewHolder(binding.root) {
 
+    private var cachedBackgroundImage: Drawable? = null
+
     fun bind(owner: LifecycleOwner, viewModel: BaseItemViewModel) {
         binding.setVariable(BR.viewModel, viewModel)
         binding.lifecycleOwner = owner
@@ -210,13 +188,12 @@ class BaseViewHolder<T : ViewDataBinding>(private val binding: T) : RecyclerView
     }
 
     fun onItemSelected() {
-        // itemView.setBackgroundColor(Color.LTGRAY) just an example how this could be managed
+        cachedBackgroundImage = itemView.background
+
+        itemView.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_selected)
     }
 
     fun onItemClear() {
-        // itemView.setBackgroundColor(0)
+        itemView.background = cachedBackgroundImage
     }
 }
-
-
-
