@@ -25,9 +25,9 @@ class IdeaAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = ar
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         getItems()[position].apply {
             DataBindingUtil.getBinding<ItemIdeaBinding>(holder.itemView)?.let { binding ->
-                val sharedTransitionView = binding.itemContainer
+                val sharedTransitionView = binding.item
                 ViewCompat.setTransitionName(sharedTransitionView, this.item.id.toString())
-                binding.itemContainer.setOnClickListener {
+                binding.item.setOnClickListener {
 //                    listener(this, sharedTransitionView)
                 }
             }

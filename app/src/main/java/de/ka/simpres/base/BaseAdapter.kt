@@ -5,6 +5,7 @@ import androidx.databinding.ViewDataBinding
 
 import android.view.LayoutInflater
 import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.*
 import de.ka.simpres.BR
@@ -37,10 +38,6 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
             @Suppress("LeakingThis")
             differ = AsyncListDiffer(this, diffCallback)
         }
-    }
-
-    fun useTouchHelperFor(recyclerView: RecyclerView) {
-        ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this)).attachToRecyclerView(recyclerView)
     }
 
     fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {

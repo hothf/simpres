@@ -19,7 +19,7 @@ import org.koin.standalone.inject
 class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel> = arrayListOf()) :
     BaseAdapter<SubjectItemViewModel>(owner, list, SubjectAdapterDiffCallback()) {
 
-    val repository: Repository by inject()
+    private val repository: Repository by inject()
 
     private var dispose: Boolean = false
 

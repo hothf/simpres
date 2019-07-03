@@ -27,6 +27,7 @@
                 android:id="@+id/recyclerSubjects"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:touchHelper="@{viewModel.touchHelper}"
                 android:adapter="@{viewModel.adapter}"
                 app:addItemDecoration="@{viewModel.itemDecoration}"
                 app:layoutManager="@{viewModel.layoutManager()}"

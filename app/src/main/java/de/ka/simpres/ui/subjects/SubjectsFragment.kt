@@ -15,7 +15,7 @@ class SubjectsFragment : BaseFragment<FragmentSubjectsBinding, SubjectsViewModel
     override var bindingLayoutId = R.layout.fragment_subjects
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.setupAdapterAndLoad(viewLifecycleOwner, getBinding()?.recyclerSubjects!!, getBinding()?.blankView!!)
+        viewModel.setupAdapterAndLoad(viewLifecycleOwner)
         super.onViewCreated(view, savedInstanceState)
     }
 }

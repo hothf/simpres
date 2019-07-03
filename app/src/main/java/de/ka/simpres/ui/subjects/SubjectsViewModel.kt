@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
@@ -17,6 +18,7 @@ import de.ka.simpres.ui.subjects.subjectlist.SubjectItemViewModel
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
 import de.ka.simpres.utils.AndroidSchedulerProvider
 import de.ka.simpres.utils.DecorationUtil
+import de.ka.simpres.utils.DragAndSwipeItemTouchHelperCallback
 import de.ka.simpres.utils.resources.ResourcesProvider
 import de.ka.simpres.utils.with
 import io.reactivex.rxkotlin.addTo
@@ -33,6 +35,7 @@ class SubjectsViewModel : BaseViewModel() {
 
     private val resourcesProvider: ResourcesProvider by inject()
 
+    val touchHelper =  MutableLiveData<ItemTouchHelper>()
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val adapter = MutableLiveData<SubjectAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
@@ -72,17 +75,15 @@ class SubjectsViewModel : BaseViewModel() {
      * Sets up the view, if not already done.
      *
      * @param owner the lifecycle owner to keep the data in sync with the lifecycle
-     * @param recyclerView the recycler view to attach the adapter to
-     * @param blankView a view to show if there are no items to display
      */
-    fun setupAdapterAndLoad(owner: LifecycleOwner, recyclerView: RecyclerView, blankView: View) {
+    fun setupAdapterAndLoad(owner: LifecycleOwner) {
         if (adapter.value == null) {
             val subjectAdapter = SubjectAdapter(owner)
             adapter.value = subjectAdapter
             loadSubjects(true)
         }
         adapter.value?.apply {
-            useTouchHelperFor(recyclerView)
+            touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
         }
     }
 
