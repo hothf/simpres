@@ -79,7 +79,14 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
         // We only want the active item to change
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE && viewHolder is BaseViewHolder<*>) {
             // Let the view holder know that this item is being moved or dragged
-            viewHolder.onItemSelected()
+
+            if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                viewHolder.onItemDrag()
+            } else if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                viewHolder.onItemSwipe()
+            }
+
+
         }
 
         super.onSelectedChanged(viewHolder, actionState)

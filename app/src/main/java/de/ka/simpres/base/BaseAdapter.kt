@@ -181,19 +181,32 @@ class BaseViewHolder<T : ViewDataBinding>(private val binding: T) : RecyclerView
 
     private var cachedBackgroundImage: Drawable? = null
 
+    private var isDragging = false
+
     fun bind(owner: LifecycleOwner, viewModel: BaseItemViewModel) {
         binding.setVariable(BR.viewModel, viewModel)
         binding.lifecycleOwner = owner
         binding.executePendingBindings()
     }
 
-    fun onItemSelected() {
+    fun onItemDrag() {
         cachedBackgroundImage = itemView.background
 
         itemView.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_selected)
+
+        isDragging = true
     }
 
+    fun onItemSwipe() {
+
+    }
+
+
     fun onItemClear() {
-        itemView.background = cachedBackgroundImage
+        if (isDragging) {
+            itemView.background = cachedBackgroundImage
+        }
+
+        isDragging = false
     }
 }
