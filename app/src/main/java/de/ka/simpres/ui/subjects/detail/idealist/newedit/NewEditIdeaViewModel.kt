@@ -7,6 +7,7 @@ import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.repo.model.IdeaItem
+import de.ka.simpres.utils.NavigationUtils
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
 
@@ -25,6 +26,8 @@ class NewEditIdeaViewModel : BaseViewModel() {
 
     private var currentIdea: IdeaItem? = null
     private var currentSubjectId: String? = null
+
+    fun onBack() = navigateTo(NavigationUtils.BACK)
 
     fun submit(view: View? = null) {
 

@@ -15,6 +15,7 @@ import org.koin.standalone.inject
 class IdeaAdapter(
     owner: LifecycleOwner,
     list: ArrayList<IdeaItemViewModel> = arrayListOf(),
+    val listener: (IdeaItem) -> Unit,
     val subjectId: String
 ) :
     BaseAdapter<IdeaItemViewModel>(
@@ -36,6 +37,9 @@ class IdeaAdapter(
                 binding.check.setOnCheckedChangeListener { _, checked ->
                     item.done = checked
                     repository.saveOrUpdateIdea(subjectId, item)
+                }
+                binding.item.setOnClickListener {
+                    listener(item)
                 }
             }
         }

@@ -17,14 +17,42 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_16"
             android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="@dimen/default_48"
+                    android:layout_height="@dimen/default_48"
+                    android:layout_marginStart="@dimen/default_8"
+                    android:layout_marginTop="@dimen/default_8"
+                    android:background="@drawable/round_button_transparent_selector"
+                    android:onClick="@{() -> viewModel.onBack()}"
+                    android:src="@drawable/ic_launcher_foreground"
+                    android:tint="@color/colorIconTintDefault" />
+
+                <TextView
+                    android:id="@+id/transitionText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_8"
+                    android:layout_toEndOf="@+id/back"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="3"
+                    android:minHeight="@dimen/actionBarSize"
+                    android:text="@{viewModel.title}"
+                    tools:text="Title" />
+            </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setError="@{viewModel.titleError}"
-                android:hint="Title edit">
+                android:hint="Title edit"
+                app:setError="@{viewModel.titleError}">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/suggInput"
@@ -41,10 +69,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:onClick="@{(v)->viewModel.submit(v)}"
                 android:layout_width="wrap_content"
-                android:text="ok"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:onClick="@{(v)->viewModel.submit(v)}"
+                android:text="ok" />
         </LinearLayout>
 
 

@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
+import de.ka.simpres.base.events.NavigateTo
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.idealist.IdeaAdapter
@@ -111,13 +112,22 @@ class SubjectsDetailViewModel : BaseViewModel() {
         currentSubjectId = subjectId
 
         // resets all current saved details, should be fairly impossible to get here without a deep link / wrong id
-        adapter.value = IdeaAdapter(owner = owner, subjectId = subjectId)
+        adapter.value = IdeaAdapter(owner = owner, subjectId = subjectId, listener = ::onIdeaClick)
         adapter.value?.apply {
             touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
         }
         title.postValue("")
 
         refresh()
+    }
+
+    private fun onIdeaClick(ideaItem: IdeaItem) {
+        navigateTo(
+            R.id.action_subjectsDetailFragment_to_ideaNewEditFragment,
+            false,
+            Bundle().apply { putSerializable(NewEditIdeaFragment.IDEA_KEY, ideaItem) },
+            animType = AnimType.MODAL
+        )
     }
 
     private fun refresh() {

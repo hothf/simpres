@@ -7,6 +7,7 @@ import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
+import de.ka.simpres.utils.NavigationUtils
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
 
@@ -22,6 +23,8 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
+
+    fun onBack() = navigateTo(NavigationUtils.BACK)
 
     private var currentSubject: SubjectItem? = null
 
