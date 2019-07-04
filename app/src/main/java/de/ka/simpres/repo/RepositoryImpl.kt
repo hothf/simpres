@@ -75,6 +75,24 @@ class RepositoryImpl : Repository {
                 subject.ideas.add(idea)
             }
             observableIdeas.onNext(IndicatedList(subject.ideas))
+
+            if (subject.ideas.isEmpty()) {
+                return
+            }
+
+            subject.sum = subject.ideas
+                .filter { !it.done }
+                .map {
+                    if (it.sum.isBlank()) {
+                        0
+                    } else {
+                        it.sum.toInt()
+                    }
+                }
+                .fold(0) { sum, item -> sum + item }
+                .toString()
+
+            saveOrUpdateSubject(subject)
         }
     }
 

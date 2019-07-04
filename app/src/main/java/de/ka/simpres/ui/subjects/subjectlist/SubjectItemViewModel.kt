@@ -9,7 +9,7 @@ class SubjectItemViewModel(val item: SubjectItem, val listener: (SubjectItemView
 
     val title = item.title
 
-    val sum = item.sum.toString()
+    val sum = item.sum
 
     val date = item.date.toDate()
 

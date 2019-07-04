@@ -7,6 +7,8 @@ class IdeaItemViewModel(val item: IdeaItem): BaseItemViewModel(){
 
     val title = item.title
 
+    val sum = item.sum
+
     val done = item.done
 
     override fun equals(other: Any?): Boolean {

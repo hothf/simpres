@@ -13,13 +13,22 @@ import de.ka.simpres.utils.closeAttachedKeyboard
 
 class NewEditIdeaViewModel : BaseViewModel() {
 
-    val getTextChangedListener = ViewUtils.TextChangeListener {
+    val getTitleTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it
         titleError.postValue("")
 
         currentIdea?.title = it
     }
+    val getSumTextChangedListener = ViewUtils.TextChangeListener {
+        sum.value = it
+        sumError.postValue("")
+
+        currentIdea?.sum = it
+    }
     val getDoneListener = ViewUtils.TextDoneListener { submit() }
+    val sum = MutableLiveData<String>().apply { value = "" }
+    val sumError = MutableLiveData<String>().apply { value = "" }
+    val sumSelection = MutableLiveData<Int>().apply { value = 0 }
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
@@ -82,10 +91,16 @@ class NewEditIdeaViewModel : BaseViewModel() {
             title.postValue(currentIdea?.title)
             titleSelection.postValue(currentIdea?.title?.length)
             titleError.postValue("")
+            sum.postValue(currentIdea?.sum)
+            sumSelection.postValue(currentIdea?.sum?.length)
+            sumError.postValue("")
         } else {
             title.postValue("")
             titleSelection.postValue(0)
             titleError.postValue("")
+            sum.postValue("")
+            sumSelection.postValue(0)
+            sumError.postValue("")
         }
 
     }

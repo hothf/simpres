@@ -55,17 +55,34 @@
                 android:hint="Title edit">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/suggInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionNext"
                     android:inputType="textCapSentences"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="@{viewModel.title}"
-                    app:addTextChangedListener="@{viewModel.getTextChangedListener}"
-                    app:setOnEditorActionListener="@{viewModel.getDoneListener}"
+                    app:addTextChangedListener="@{viewModel.getTitleTextChangedListener}"
                     app:setSelection="@{viewModel.titleSelection}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setError="@{viewModel.sumError}"
+                android:hint="Sum edit">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberSigned"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@{viewModel.sum}"
+                    app:addTextChangedListener="@{viewModel.getSumTextChangedListener}"
+                    app:setOnEditorActionListener="@{viewModel.getDoneListener}"
+                    app:setSelection="@{viewModel.sumSelection}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button

@@ -21,48 +21,56 @@
 
             <ImageView
                 android:id="@+id/back"
-                android:layout_marginTop="@dimen/default_8"
-                android:layout_marginStart="@dimen/default_8"
                 android:layout_width="@dimen/default_48"
+                android:layout_height="@dimen/default_48"
+                android:layout_marginStart="@dimen/default_8"
+                android:layout_marginTop="@dimen/default_8"
                 android:background="@drawable/round_button_transparent_selector"
-                android:src="@drawable/ic_launcher_foreground"
                 android:onClick="@{() -> viewModel.onBack()}"
-                android:tint="@color/colorIconTintDefault"
-                android:layout_height="@dimen/default_48" />
+                android:src="@drawable/ic_launcher_foreground"
+                android:tint="@color/colorIconTintDefault" />
 
-        <TextView
-            android:id="@+id/transitionText"
-            android:layout_width="wrap_content"
-            android:text="@{viewModel.title}"
-            android:layout_marginStart="@dimen/default_8"
-            android:layout_toEndOf="@+id/back"
-            tools:text="Detail Title"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:minHeight="@dimen/actionBarSize"
-            android:maxLines="3"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/transitionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/default_8"
+                android:layout_toEndOf="@+id/back"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="3"
+                android:minHeight="@dimen/actionBarSize"
+                android:text="@{viewModel.title}"
+                tools:text="Detail Title" />
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/transitionText"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
-            app:setRefreshing="@{viewModel.refresh}">
+            <TextView
+                android:id="@+id/totalSumText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@{viewModel.sum}"
+                tools:text="Total Sum" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerIdeas"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:touchHelper="@{viewModel.touchHelper}"
-                android:adapter="@{viewModel.adapter}"
-                app:addItemDecoration="@{viewModel.itemDecoration}"
-                app:layoutManager="@{viewModel.layoutManager()}"
-                app:setItemAnimator="@{viewModel.itemAnimator}" />
+                android:layout_below="@+id/totalSumText"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
+                app:setRefreshing="@{viewModel.refresh}">
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerIdeas"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adapter="@{viewModel.adapter}"
+                    app:addItemDecoration="@{viewModel.itemDecoration}"
+                    app:layoutManager="@{viewModel.layoutManager()}"
+                    app:setItemAnimator="@{viewModel.itemAnimator}"
+                    app:touchHelper="@{viewModel.touchHelper}" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <RelativeLayout
                 android:id="@+id/blankView"

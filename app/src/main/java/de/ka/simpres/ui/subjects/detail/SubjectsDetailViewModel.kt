@@ -6,12 +6,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
-import de.ka.simpres.base.events.NavigateTo
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.idealist.IdeaAdapter
@@ -46,6 +44,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
     )
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
+    val sum = MutableLiveData<String>().apply { value = "" }
 
     fun itemAnimator() = SlideInDownAnimator()
 
@@ -117,6 +116,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
             touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
         }
         title.postValue("")
+        sum.postValue("0")
 
         refresh()
     }
@@ -139,6 +139,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
 
     private fun updateSubject(subject: SubjectItem) {
         title.postValue(subject.title)
+        sum.postValue(subject.sum)
     }
 
     private fun showLoading() {
