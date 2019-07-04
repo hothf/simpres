@@ -1,11 +1,15 @@
 <resources>
 
     <style name="CardStyle.Simpres" parent="CardView.Light">
-        <item name="cardBackgroundColor">@color/colorPrimaryDark</item>
+        <item name="cardBackgroundColor">@color/colorBackgroundSecondary</item>
+        <item name="android:textColor">@color/colorTextDefault</item>
+        <item name="android:textColorHighlight">@color/colorTextDefault</item>
     </style>
 
     <style name="CardStyle.Simpres.Dark" parent="CardView.Light">
         <item name="cardBackgroundColor">@color/darkColorBackgroundSecondary</item>
+        <item name="android:textColor">@color/darkColorTextDefault</item>
+        <item name="android:textColorHighlight">@color/darkColorTextDefault</item>
     </style>
 
     <style name="SwipeToRefresh.Simpres" parent="">

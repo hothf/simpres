@@ -33,7 +33,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
         currentIdea?.let { idea ->
             currentSubjectId?.let { id ->
                 idea.id = System.currentTimeMillis().toString()
-                repository.saveIdea(id, idea)
+                repository.saveOrUpdateIdea(id, idea)
                 navigateTo(
                     navigationTargetId = R.id.action_ideaNewEditFragment_to_subjectsDetailFragment,
                     args = Bundle().apply { putString(SubjectsDetailFragment.SUBJECT_ID_KEY, id) },

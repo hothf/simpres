@@ -33,7 +33,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
             it.id = System.currentTimeMillis().toString()
 
-            repository.saveSubject(it)
+            repository.saveOrUpdateSubject(it)
 
             navigateTo(
                 navigationTargetId = R.id.action_subjectNewEditFragment_to_subjectsDetailFragment,

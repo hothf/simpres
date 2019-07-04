@@ -29,10 +29,21 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:padding="@dimen/default_4"
+                android:layout_toStartOf="@+id/check"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.title}"
                 tools:text="grgrgrgefw" />
+
+            <CheckBox
+                android:padding="@dimen/default_4"
+                android:checked="@{viewModel.done}"
+                android:id="@+id/check"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

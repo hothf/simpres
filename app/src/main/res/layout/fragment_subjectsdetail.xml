@@ -27,7 +27,7 @@
                 android:background="@drawable/round_button_transparent_selector"
                 android:src="@drawable/ic_launcher_foreground"
                 android:onClick="@{() -> viewModel.onBack()}"
-                android:tint="@color/colorDefaultIconTint"
+                android:tint="@color/colorIconTintDefault"
                 android:layout_height="@dimen/default_48" />
 
         <TextView

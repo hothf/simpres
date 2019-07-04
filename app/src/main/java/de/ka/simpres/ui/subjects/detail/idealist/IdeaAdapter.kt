@@ -2,7 +2,6 @@ package de.ka.simpres.ui.subjects.detail.idealist
 
 
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +12,11 @@ import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.IdeaItem
 import org.koin.standalone.inject
 
-class IdeaAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = arrayListOf(), val subjectId: String) :
+class IdeaAdapter(
+    owner: LifecycleOwner,
+    list: ArrayList<IdeaItemViewModel> = arrayListOf(),
+    val subjectId: String
+) :
     BaseAdapter<IdeaItemViewModel>(
         owner, list,
         IdeaAdapterDiffCallback()
@@ -30,10 +33,9 @@ class IdeaAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = ar
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         getItems()[position].apply {
             DataBindingUtil.getBinding<ItemIdeaBinding>(holder.itemView)?.let { binding ->
-                val sharedTransitionView = binding.item
-                ViewCompat.setTransitionName(sharedTransitionView, this.item.id.toString())
-                binding.item.setOnClickListener {
-                    //                    listener(this, sharedTransitionView)
+                binding.check.setOnCheckedChangeListener { _, checked ->
+                    item.done = checked
+                    repository.saveOrUpdateIdea(subjectId, item)
                 }
             }
         }

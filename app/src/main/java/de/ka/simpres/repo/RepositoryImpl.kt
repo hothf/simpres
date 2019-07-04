@@ -35,10 +35,15 @@ class RepositoryImpl : Repository {
         }
     }
 
-    override fun saveSubject(subject: SubjectItem) {
-        volatileSubjects.add(subject)
-
-        observableSubjects.onNext(IndicatedList(listOf(subject), addToTop = true))
+    override fun saveOrUpdateSubject(subject: SubjectItem) {
+        val index = volatileSubjects.indexOfFirst { subject.id == it.id }
+        if (index >= 0) {
+            volatileSubjects[index] = subject
+            observableSubjects.onNext(IndicatedList(listOf(subject), update = true))
+        } else {
+            volatileSubjects.add(subject)
+            observableSubjects.onNext(IndicatedList(listOf(subject), addToTop = true))
+        }
     }
 
     override fun removeSubject(subject: SubjectItem) {
@@ -61,13 +66,16 @@ class RepositoryImpl : Repository {
         }
     }
 
-    override fun saveIdea(subjectId: String, idea: IdeaItem) {
-        findSubjectById(subjectId)?.let {
-            it.ideas.add(idea)
-            observableIdeas.onNext(IndicatedList(it.ideas))
+    override fun saveOrUpdateIdea(subjectId: String, idea: IdeaItem) {
+        findSubjectById(subjectId)?.let { subject ->
+            val index = subject.ideas.indexOfFirst { idea.id == it.id }
+            if (index >= 0) {
+                subject.ideas[index] = idea
+            } else {
+                subject.ideas.add(idea)
+            }
+            observableIdeas.onNext(IndicatedList(subject.ideas))
         }
-
-
     }
 
     private fun findSubjectById(subjectId: String): SubjectItem? = volatileSubjects.find { subjectId == it.id }

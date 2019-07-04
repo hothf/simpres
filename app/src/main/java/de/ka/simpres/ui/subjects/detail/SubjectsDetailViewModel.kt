@@ -11,6 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
+import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.idealist.IdeaAdapter
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment

@@ -20,13 +20,15 @@ interface Repository {
 
     fun removeSubject(subject: SubjectItem)
 
-    fun saveSubject(subject: SubjectItem)
+    fun saveOrUpdateSubject(subject: SubjectItem)
 
     fun getIdeasOf(subjectId: String)
 
     fun removeIdea(subjectId: String, ideaItem: IdeaItem)
 
-    fun saveIdea(subjectId: String, idea: IdeaItem)
+    fun saveOrUpdateIdea(subjectId: String, idea: IdeaItem)
+
+    //TODO add better id generation!
 }
 
 /**
