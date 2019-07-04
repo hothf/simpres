@@ -26,6 +26,9 @@
         <action
             android:id="@+id/action_subjectsDetailFragment_to_ideaNewEditFragment"
             app:destination="@id/ideaNewEditFragment" />
+        <action
+            android:id="@+id/action_subjectsDetailFragment_to_subjectNewEditFragment"
+            app:destination="@id/subjectNewEditFragment" />
     </fragment>
 
     <fragment

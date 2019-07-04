@@ -14,6 +14,7 @@ import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.idealist.IdeaAdapter
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment
+import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
 import de.ka.simpres.utils.AndroidSchedulerProvider
 import de.ka.simpres.utils.DecorationUtil
 import de.ka.simpres.utils.DragAndSwipeItemTouchHelperCallback
@@ -51,6 +52,15 @@ class SubjectsDetailViewModel : BaseViewModel() {
     fun layoutManager() = LinearLayoutManager(resourcesProvider.getApplicationContext())
 
     fun onBack() = navigateTo(BACK)
+
+    fun onEdit(){
+        navigateTo(
+            R.id.action_subjectsDetailFragment_to_subjectNewEditFragment,
+            false,
+            Bundle().apply { putString(NewEditSubjectFragment.SUBJECT_ID_KEY, currentSubjectId) },
+            animType = AnimType.MODAL
+        )
+    }
 
     fun onAddClick() {
         navigateTo(

@@ -19,9 +19,9 @@ class NewEditSubjectFragment : BaseFragment<FragmentSubjectneweditBinding, NewEd
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        val subject = arguments?.getSerializable(SUBJECT_KEY) as? SubjectItem
-        if (subject != null) {
-            viewModel.setupEdit(subject)
+        val subjectId = arguments?.getString(SUBJECT_ID_KEY)
+        if (subjectId != null) {
+            viewModel.setupEdit(subjectId)
         } else {
             val new = arguments?.getBoolean(NEW_KEY, false) ?: false
             if (new) {
@@ -48,7 +48,7 @@ class NewEditSubjectFragment : BaseFragment<FragmentSubjectneweditBinding, NewEd
     }
 
     companion object {
-        const val SUBJECT_KEY = "sub_key"
+        const val SUBJECT_ID_KEY = "sub_key"
         const val NEW_KEY = "new_key"
     }
 

@@ -43,10 +43,23 @@
                 android:text="@{viewModel.title}"
                 tools:text="Detail Title" />
 
+            <ImageView
+                android:id="@+id/edit"
+                android:layout_width="@dimen/default_48"
+                android:layout_height="@dimen/default_48"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/default_8"
+                android:layout_marginTop="@dimen/default_8"
+                android:background="@drawable/round_button_transparent_selector"
+                android:onClick="@{() -> viewModel.onEdit()}"
+                android:src="@drawable/ic_launcher_foreground"
+                android:tint="@color/colorIconTintDefault" />
+
             <TextView
                 android:id="@+id/totalSumText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_48"
                 android:layout_centerHorizontal="true"
                 android:text="@{viewModel.sum}"
                 tools:text="Total Sum" />

@@ -54,34 +54,24 @@ class NewEditIdeaViewModel : BaseViewModel() {
             }
 
         }
-
-
     }
 
     /**
-     *
+     * Sets up a new empty idea.
      */
-    fun setupNew(id: String) {
+    fun setupNew(subjectId: String) {
         currentIdea = IdeaItem()
-        currentSubjectId = id
-//        currentTitle = ""
-
-//        header.postValue(app.getString(R.string.suggestions_newedit_title))
-//        saveDrawableRes.postValue(R.drawable.ic_small_add)
+        currentSubjectId = subjectId
 
         updateTextViews()
     }
 
     /**
-     *
+     * Sets up an editable idea, taken from the given item.
      */
-    fun setupEdit(id: String, homeItem: IdeaItem) {
-        currentIdea = homeItem
-        currentSubjectId = id
-//        currentTitle = suggestion.title
-
-//        header.postValue(app.getString(R.string.suggestions_newedit_edit))
-//        saveDrawableRes.postValue(R.drawable.ic_small_done)
+    fun setupEdit(subjectId: String, idea: IdeaItem) {
+        currentIdea = idea
+        currentSubjectId = subjectId
 
         updateTextViews()
     }
@@ -102,7 +92,6 @@ class NewEditIdeaViewModel : BaseViewModel() {
             sumSelection.postValue(0)
             sumError.postValue("")
         }
-
     }
 
 }

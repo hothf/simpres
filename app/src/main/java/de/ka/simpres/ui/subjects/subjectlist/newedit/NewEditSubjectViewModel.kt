@@ -7,7 +7,7 @@ import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
-import de.ka.simpres.utils.NavigationUtils
+import de.ka.simpres.utils.NavigationUtils.BACK
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
 import de.ka.simpres.utils.toDate
@@ -27,16 +27,14 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
     val date = MutableLiveData<String>().apply { value = "" }
 
-    fun onBack() = navigateTo(NavigationUtils.BACK)
-
     private var currentSubject: SubjectItem? = null
 
-    fun submit(view: View? = null) {
+    fun onBack() = navigateTo(BACK)
 
+    fun submit(view: View? = null) {
         view?.closeAttachedKeyboard()
 
         currentSubject?.let {
-
             it.id = System.currentTimeMillis().toString()
 
             repository.saveOrUpdateSubject(it)
@@ -44,35 +42,25 @@ class NewEditSubjectViewModel : BaseViewModel() {
             navigateTo(
                 navigationTargetId = R.id.action_subjectNewEditFragment_to_subjectsDetailFragment,
                 args = Bundle().apply { putString(SubjectsDetailFragment.SUBJECT_ID_KEY, it.id) },
-                popupToId = R.id.subjectNewEditFragment
+                popupToId = R.id.subjectsDetailFragment
             )
         }
-
-
     }
 
     /**
-     *
+     * Sets up a new empty subject.
      */
     fun setupNew() {
         currentSubject = SubjectItem()
-//        currentTitle = ""
-
-//        header.postValue(app.getString(R.string.suggestions_newedit_title))
-//        saveDrawableRes.postValue(R.drawable.ic_small_add)
 
         updateTextViews()
     }
 
     /**
-     *
+     * Sets up an editable subject, received from the given id, if possible.
      */
-    fun setupEdit(subject: SubjectItem) {
-        currentSubject = subject
-//        currentTitle = suggestion.title
-
-//        header.postValue(app.getString(R.string.suggestions_newedit_edit))
-//        saveDrawableRes.postValue(R.drawable.ic_small_done)
+    fun setupEdit(subjectId: String) {
+        currentSubject = repository.findSubjectById(subjectId)
 
         updateTextViews()
     }
@@ -107,8 +95,6 @@ class NewEditSubjectViewModel : BaseViewModel() {
             titleError.postValue("")
             date.postValue(System.currentTimeMillis().toDate())
         }
-
-
     }
 
     /**

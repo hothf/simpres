@@ -82,7 +82,7 @@ class RepositoryImpl : Repository {
         }
     }
 
-    private fun findSubjectById(subjectId: String): SubjectItem? = volatileSubjects.find { subjectId == it.id }
+    override fun findSubjectById(subjectId: String): SubjectItem? = volatileSubjects.find { subjectId == it.id }
 
     private fun recalculateSum(subject: SubjectItem) {
         subject.sum = subject.ideas

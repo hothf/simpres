@@ -28,6 +28,8 @@ interface Repository {
 
     fun saveOrUpdateIdea(subjectId: String, idea: IdeaItem)
 
+    fun findSubjectById(subjectId: String): SubjectItem?
+
     //TODO add better id generation!
 }
 
