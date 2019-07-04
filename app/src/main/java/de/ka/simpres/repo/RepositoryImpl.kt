@@ -60,9 +60,11 @@ class RepositoryImpl : Repository {
     }
 
     override fun removeIdea(subjectId: String, ideaItem: IdeaItem) {
-        findSubjectById(subjectId)?.let {
-            it.ideas.remove(ideaItem)
-            observableIdeas.onNext(IndicatedList(it.ideas))
+        findSubjectById(subjectId)?.let { subject ->
+            subject.ideas.remove(ideaItem)
+            observableIdeas.onNext(IndicatedList(subject.ideas))
+
+            recalculateSum(subject)
         }
     }
 
@@ -76,25 +78,25 @@ class RepositoryImpl : Repository {
             }
             observableIdeas.onNext(IndicatedList(subject.ideas))
 
-            if (subject.ideas.isEmpty()) {
-                return
-            }
-
-            subject.sum = subject.ideas
-                .filter { !it.done }
-                .map {
-                    if (it.sum.isBlank()) {
-                        0
-                    } else {
-                        it.sum.toInt()
-                    }
-                }
-                .fold(0) { sum, item -> sum + item }
-                .toString()
-
-            saveOrUpdateSubject(subject)
+            recalculateSum(subject)
         }
     }
 
     private fun findSubjectById(subjectId: String): SubjectItem? = volatileSubjects.find { subjectId == it.id }
+
+    private fun recalculateSum(subject: SubjectItem) {
+        subject.sum = subject.ideas
+            .filter { !it.done }
+            .map {
+                if (it.sum.isBlank()) {
+                    0
+                } else {
+                    it.sum.toInt()
+                }
+            }
+            .fold(0) { sum, item -> sum + item }
+            .toString()
+
+        saveOrUpdateSubject(subject)
+    }
 }
