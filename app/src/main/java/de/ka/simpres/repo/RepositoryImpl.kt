@@ -41,8 +41,8 @@ class RepositoryImpl : Repository {
         observableSubjects.onNext(IndicatedList(listOf(subject), addToTop = true))
     }
 
-    override fun removeSubject(subjectId: String) {
-        findSubjectById(subjectId)?.let {
+    override fun removeSubject(subject: SubjectItem) {
+        findSubjectById(subject.id)?.let {
             volatileSubjects.remove(it)
             observableSubjects.onNext(IndicatedList(listOf(it), remove = true))
         }
@@ -50,6 +50,13 @@ class RepositoryImpl : Repository {
 
     override fun getIdeasOf(subjectId: String) {
         findSubjectById(subjectId)?.let {
+            observableIdeas.onNext(IndicatedList(it.ideas))
+        }
+    }
+
+    override fun removeIdea(subjectId: String, ideaItem: IdeaItem) {
+        findSubjectById(subjectId)?.let {
+            it.ideas.remove(ideaItem)
             observableIdeas.onNext(IndicatedList(it.ideas))
         }
     }
@@ -62,7 +69,6 @@ class RepositoryImpl : Repository {
 
 
     }
-
 
     private fun findSubjectById(subjectId: String): SubjectItem? = volatileSubjects.find { subjectId == it.id }
 }

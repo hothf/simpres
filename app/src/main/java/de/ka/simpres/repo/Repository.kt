@@ -18,11 +18,13 @@ interface Repository {
 
     fun getSubject(subjectId: String)
 
-    fun removeSubject(subjectId: String)
+    fun removeSubject(subject: SubjectItem)
+
+    fun saveSubject(subject: SubjectItem)
 
     fun getIdeasOf(subjectId: String)
 
-    fun saveSubject(subject: SubjectItem)
+    fun removeIdea(subjectId: String, ideaItem: IdeaItem)
 
     fun saveIdea(subjectId: String, idea: IdeaItem)
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Simpres" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/colorBackgroundPrimary</item>
+        <item name="colorPrimaryVariant">#003399</item>
+    </style>
+
+    <style name="Theme.Simpres.Dark">
+        <item name="colorPrimary">@color/darkColorPrimary</item>
+        <item name="colorAccent">@color/darkColorAccent</item>
+        <item name="colorPrimaryDark">@color/darkColorPrimaryDark</item>
+        <item name="android:colorBackground">@color/darkColorBackgroundPrimary</item>
+
+
+    </style>
+
+
+</resources>

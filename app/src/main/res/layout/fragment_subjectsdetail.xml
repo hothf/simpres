@@ -64,6 +64,21 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+            <RelativeLayout
+                android:id="@+id/blankView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/default_36"
+                android:visibility="@{viewModel.blankVisibility}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Nothing here, try to add something!" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -73,8 +88,6 @@
             android:layout_marginBottom="@dimen/bottomBarSize"
             android:onClick="@{()->viewModel.onAddClick()}"
             android:src="@drawable/ic_launcher_foreground"
-            android:tint="@color/colorAccent"
-            app:backgroundTint="@color/colorPrimaryDark"
             app:layout_anchor="@id/subjectDetail"
             app:layout_anchorGravity="bottom|center_horizontal"
             app:useCompatPadding="true" />

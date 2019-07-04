@@ -4,6 +4,17 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="colorBackgroundPrimary">#fefefe</color>
+    <color name="colorBackgroundSecondary">#dedede</color>
+
+
+    <color name="darkColorPrimary">#56477d</color>
+    <color name="darkColorPrimaryDark">#54574B</color>
+    <color name="darkColorAccent">#D9d96d</color>
+
+    <color name="darkColorBackgroundPrimary">#333333</color>
+    <color name="darkColorBackgroundSecondary">#535353</color>
+
     <color name="colorDefaultIconTint">#002200</color>
 
     <color name="colorPrimaryBack">#fefefe</color>

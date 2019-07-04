@@ -1,6 +1,7 @@
 package de.ka.simpres.ui.subjects.detail
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -41,6 +42,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
                 .default_16
         )
     )
+    val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
 
     fun itemAnimator() = SlideInDownAnimator()
@@ -69,7 +71,16 @@ class SubjectsDetailViewModel : BaseViewModel() {
                     if (result.invalidate) {
                         refresh()
                     } else {
-                        adapter.value?.let { it.overwriteList(result.list) }
+                        adapter.value?.let {
+                            it.overwriteList(result.list)
+
+                            if (it.isEmpty) {
+                                blankVisibility.postValue(View.VISIBLE)
+                            } else {
+                                blankVisibility.postValue(View.GONE)
+                            }
+
+                        }
                     }
                 }
             )
@@ -99,7 +110,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         currentSubjectId = subjectId
 
         // resets all current saved details, should be fairly impossible to get here without a deep link / wrong id
-        adapter.value = IdeaAdapter(owner)
+        adapter.value = IdeaAdapter(owner = owner, subjectId = subjectId)
         adapter.value?.apply {
             touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
         }

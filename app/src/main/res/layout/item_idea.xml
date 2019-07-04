@@ -12,7 +12,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/item"
-        style="@style/CardView.Light"
+        style="@style/CardStyle.Simpres.Dark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_8"

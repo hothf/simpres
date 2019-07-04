@@ -42,7 +42,7 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
     }
 
     override fun onItemDismiss(position: Int) {
-        repository.removeSubject(getItems()[position].item.id)
+        repository.removeSubject(getItems()[position].item)
         super.onItemDismiss(position)
     }
 
@@ -122,7 +122,7 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
                     }
                 } else if ((!onlyUpdate && filter == null) || (filter != null && filter(item))) {   // add
                     itemsRemovedAndAddedCount++
-                    item.sum = itemsRemovedAndAddedCount-1.toDouble()
+                    item.sum = itemsRemovedAndAddedCount - 1.toDouble()
                     if (addToTop) {
                         items.add(0, SubjectItemViewModel(item, itemClickListener))
                     } else {
@@ -149,5 +149,4 @@ class SubjectAdapterDiffCallback : DiffUtil.ItemCallback<SubjectItemViewModel>()
     ): Boolean {
         return oldItem == newItem
     }
-
 }

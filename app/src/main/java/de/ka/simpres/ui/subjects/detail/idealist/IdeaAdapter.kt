@@ -9,12 +9,17 @@ import androidx.recyclerview.widget.DiffUtil
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
 import de.ka.simpres.databinding.ItemIdeaBinding
+import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.IdeaItem
+import org.koin.standalone.inject
 
-class IdeaAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = arrayListOf()) :
-    BaseAdapter<IdeaItemViewModel>(owner, list,
+class IdeaAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = arrayListOf(), val subjectId: String) :
+    BaseAdapter<IdeaItemViewModel>(
+        owner, list,
         IdeaAdapterDiffCallback()
     ) {
+
+    private val repository: Repository by inject()
 
     private var dispose: Boolean = false
 
@@ -28,12 +33,17 @@ class IdeaAdapter(owner: LifecycleOwner, list: ArrayList<IdeaItemViewModel> = ar
                 val sharedTransitionView = binding.item
                 ViewCompat.setTransitionName(sharedTransitionView, this.item.id.toString())
                 binding.item.setOnClickListener {
-//                    listener(this, sharedTransitionView)
+                    //                    listener(this, sharedTransitionView)
                 }
             }
         }
 
         super.onBindViewHolder(holder, position)
+    }
+
+    override fun onItemDismiss(position: Int) {
+        repository.removeIdea(subjectId, getItems()[position].item)
+        super.onItemDismiss(position)
     }
 
     /**

@@ -7,4 +7,12 @@ class IdeaItemViewModel(val item: IdeaItem): BaseItemViewModel(){
 
     val title = item.title
 
+    override fun equals(other: Any?): Boolean {
+        if (other is IdeaItemViewModel && other.item == this.item) return true
+        return super.equals(other)
+    }
+
+    override fun hashCode(): Int {
+        return item.hashCode()
+    }
 }

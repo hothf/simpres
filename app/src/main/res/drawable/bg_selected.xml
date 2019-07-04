@@ -6,6 +6,6 @@
     <stroke
         android:width="@dimen/default_2"
         android:color="@color/fontDefault" />
-    <solid android:color="@color/colorPrimaryBack" />
+    <solid android:color="?attr/colorPrimary" />
 
 </shape>
