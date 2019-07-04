@@ -8,9 +8,11 @@ import de.ka.simpres.R
 import de.ka.simpres.base.BaseFragment
 import de.ka.simpres.databinding.FragmentSubjectneweditBinding
 import de.ka.simpres.repo.model.SubjectItem
+import de.ka.simpres.utils.DatePickeable
+import de.ka.simpres.utils.DatePicker
 
-class NewEditSubjectFragment: BaseFragment<FragmentSubjectneweditBinding, NewEditSubjectViewModel>
-    (NewEditSubjectViewModel::class){
+class NewEditSubjectFragment : BaseFragment<FragmentSubjectneweditBinding, NewEditSubjectViewModel>
+    (NewEditSubjectViewModel::class), DatePickeable {
 
     override var bindingLayoutId = R.layout.fragment_subjectnewedit
 
@@ -23,12 +25,26 @@ class NewEditSubjectFragment: BaseFragment<FragmentSubjectneweditBinding, NewEdi
         } else {
             val new = arguments?.getBoolean(NEW_KEY, false) ?: false
             if (new) {
-              viewModel.setupNew()
+                viewModel.setupNew()
             }
         }
         arguments?.clear()
 
         return view
+    }
+
+    override fun onDateSet(year: Int, month: Int, day: Int, callerId: Int) {
+        if (callerId == 1) {
+            viewModel.updateDate(year, month, day)
+        }
+    }
+
+    override fun handle(element: Any?) {
+        if (element is NewEditSubjectViewModel.OpenDatePickerEvent) {
+            DatePicker
+                .newInstance(element.date, this@NewEditSubjectFragment, 1)
+                .show(fragmentManager, "ddtlg")
+        }
     }
 
     companion object {

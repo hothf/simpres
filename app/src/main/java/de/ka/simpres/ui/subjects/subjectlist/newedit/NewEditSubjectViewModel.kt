@@ -10,6 +10,8 @@ import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.utils.NavigationUtils
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
+import de.ka.simpres.utils.toDate
+import java.util.*
 
 class NewEditSubjectViewModel : BaseViewModel() {
 
@@ -23,6 +25,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
+    val date = MutableLiveData<String>().apply { value = "" }
 
     fun onBack() = navigateTo(NavigationUtils.BACK)
 
@@ -46,7 +49,6 @@ class NewEditSubjectViewModel : BaseViewModel() {
         }
 
 
-
     }
 
     /**
@@ -65,12 +67,30 @@ class NewEditSubjectViewModel : BaseViewModel() {
     /**
      *
      */
-    fun setupEdit(homeItem: SubjectItem) {
-        currentSubject = homeItem
+    fun setupEdit(subject: SubjectItem) {
+        currentSubject = subject
 //        currentTitle = suggestion.title
 
 //        header.postValue(app.getString(R.string.suggestions_newedit_edit))
 //        saveDrawableRes.postValue(R.drawable.ic_small_done)
+
+        updateTextViews()
+    }
+
+    /**
+     * Updates the date.
+     *
+     * @param year the date year
+     * @param month the date month
+     * @param day the date day
+     */
+    fun updateDate(year: Int, month: Int, day: Int) {
+        currentSubject?.let {
+            it.date = Calendar.getInstance().apply {
+                time = Date(it.date)
+                set(year, month, day)
+            }.timeInMillis
+        }
 
         updateTextViews()
     }
@@ -80,12 +100,29 @@ class NewEditSubjectViewModel : BaseViewModel() {
             title.postValue(currentSubject?.title)
             titleSelection.postValue(currentSubject?.title?.length)
             titleError.postValue("")
+            date.postValue(currentSubject?.date?.toDate())
         } else {
             title.postValue("")
             titleSelection.postValue(0)
             titleError.postValue("")
+            date.postValue(System.currentTimeMillis().toDate())
         }
 
+
     }
+
+    /**
+     * Requests to open the date picker.
+     *
+     * @param view the view requesting the open
+     */
+    fun onOpenDatePicker(view: View) {
+        view.closeAttachedKeyboard()
+        currentSubject?.let {
+            handle(OpenDatePickerEvent(it.date))
+        }
+    }
+
+    class OpenDatePickerEvent(val date: Long)
 
 }
