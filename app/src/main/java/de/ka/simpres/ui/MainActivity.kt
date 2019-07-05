@@ -1,10 +1,15 @@
 package de.ka.simpres.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.navigation.Navigation.findNavController
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseActivity
 import de.ka.simpres.databinding.ActivityMainBinding
+import android.view.WindowManager
+
+
+
 
 class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>(MainViewModel::class) {
 
@@ -14,7 +19,5 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMod
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
     }
 }

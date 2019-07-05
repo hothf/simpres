@@ -4,23 +4,15 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
-    <color name="colorBackgroundPrimary">#fefefe</color>
-    <color name="colorBackgroundSecondary">#dedede</color>
+    <color name="colorBackgroundPrimary">#dedede</color>
+    <color name="colorBackgroundSecondary">#fefefe</color>
 
     <color name="colorTextDefault">#888888</color>
+    <color name="colorTextSecondaryDefault">#333333</color>
+    <color name="colorTextNav">#000000</color>
 
     <color name="colorIconTintDefault">#002200</color>
 
-    <!-- dark -->
-
-    <color name="darkColorPrimary">#56477d</color>
-    <color name="darkColorPrimaryDark">#54574B</color>
-    <color name="darkColorAccent">#D9d96d</color>
-
-    <color name="darkColorBackgroundPrimary">#333333</color>
-    <color name="darkColorBackgroundSecondary">#535353</color>
-
-    <color name="darkColorTextDefault">#fefefe</color>
 
 
 

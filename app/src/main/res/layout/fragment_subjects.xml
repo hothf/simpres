@@ -24,15 +24,31 @@
             app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
             app:setRefreshing="@{viewModel.refresh}">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerSubjects"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adapter="@{viewModel.adapter}"
-                app:addItemDecoration="@{viewModel.itemDecoration}"
-                app:layoutManager="@{viewModel.layoutManager()}"
-                app:setItemAnimator="@{viewModel.itemAnimator}"
-                app:touchHelper="@{viewModel.touchHelper}" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/TextStyle.Simpres.Nav"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_24"
+                    android:text="@string/app_name"
+                    tools:text="Title" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerSubjects"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/title"
+                    android:adapter="@{viewModel.adapter}"
+                    app:addItemDecoration="@{viewModel.itemDecoration}"
+                    app:layoutManager="@{viewModel.layoutManager()}"
+                    app:setItemAnimator="@{viewModel.itemAnimator}"
+                    app:touchHelper="@{viewModel.touchHelper}" />
+
+            </RelativeLayout>
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

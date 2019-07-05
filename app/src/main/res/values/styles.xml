@@ -6,14 +6,31 @@
         <item name="android:textColorHighlight">@color/colorTextDefault</item>
     </style>
 
-    <style name="CardStyle.Simpres.Dark" parent="CardView.Light">
-        <item name="cardBackgroundColor">@color/darkColorBackgroundSecondary</item>
-        <item name="android:textColor">@color/darkColorTextDefault</item>
-        <item name="android:textColorHighlight">@color/darkColorTextDefault</item>
-    </style>
-
     <style name="SwipeToRefresh.Simpres" parent="">
         <item name="android:tint">#009977</item>
+    </style>
+
+    <style name="TextStyle.Simpres.Default" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/font_default</item>
+        <item name="android:textColor">@color/colorTextDefault</item>
+    </style>
+
+    <style name="TextStyle.Simpres.Default.Large" parent="TextStyle.Simpres.Default">
+        <item name="android:textSize">@dimen/font_large</item>
+    </style>
+
+    <style name="TextStyle.Simpres.Default.Bold" parent="TextStyle.Simpres.Default">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.Simpres.Default.Small" parent="TextStyle.Simpres.Default">
+        <item name="android:textSize">@dimen/font_small</item>
+    </style>
+
+    <style name="TextStyle.Simpres.Nav" parent="TextStyle.Simpres.Default">
+        <item name="android:textSize">@dimen/font_nav</item>
+        <item name="android:textColor">@color/colorTextNav</item>
+
     </style>
 
 </resources>
