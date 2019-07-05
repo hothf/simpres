@@ -1,6 +1,7 @@
 package de.ka.simpres
 
 import de.ka.simpres.repo.*
+import de.ka.simpres.repo.db.AppDatabase
 import de.ka.simpres.ui.subjects.SubjectsViewModel
 import de.ka.simpres.ui.MainViewModel
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailViewModel
@@ -22,6 +23,7 @@ val appModule = module {
     viewModel { NewEditSubjectViewModel() }
     viewModel { NewEditIdeaViewModel() }
 
-    single { ResourcesProviderImpl(get()) as ResourcesProvider }
-    single { RepositoryImpl() as Repository }
+    single { AppDatabase(get()) }
+    single { ResourcesProviderImpl(get()) as ResourcesProvider}
+    single { RepositoryImpl(get()) as Repository }
 }

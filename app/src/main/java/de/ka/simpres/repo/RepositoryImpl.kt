@@ -1,11 +1,22 @@
 package de.ka.simpres.repo
 
+import de.ka.simpres.repo.db.AppDatabase
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.repo.model.IdeaItem
+import de.ka.simpres.repo.model.IdeaItem_
+import io.objectbox.kotlin.boxFor
 import io.reactivex.subjects.PublishSubject
-import kotlin.random.Random
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
 
-class RepositoryImpl : Repository {
+class RepositoryImpl(db: AppDatabase) : Repository {
+
+    private val subjectsBox = db.get().boxFor<SubjectItem>()
+    private val ideasBox = db.get().boxFor<IdeaItem>()
 
     override val observableSubjects =
         PublishSubject.create<IndicatedList<SubjectItem, List<SubjectItem>>>()
@@ -13,89 +24,82 @@ class RepositoryImpl : Repository {
     override val observableIdeas =
         PublishSubject.create<IndicatedList<IdeaItem, List<IdeaItem>>>()
 
-    private val volatileSubjects = mutableListOf<SubjectItem>()
-
     override fun getSubjects() {
-        val randomCount = Random.nextInt(20)
-
-        val list =
-            generateSequence(0, { it + 1 })
-                .take(randomCount)
-                .map { SubjectItem(it.toString()) }
-                .toMutableList()
-        volatileSubjects.addAll(list)
-
-        observableSubjects.onNext(IndicatedList(list))
-
+        //TODO evaluate: is objectbox nice for persisting the position? We will need this!
+        GlobalScope.launch {
+            delay(250)
+            observableSubjects.onNext(IndicatedList(subjectsBox.all.reversed()))
+        }
     }
 
-    override fun getSubject(subjectId: String) {
+    override fun getSubject(subjectId: Long) {
         findSubjectById(subjectId)?.let {
             observableSubjects.onNext(IndicatedList(listOf(it), update = true))
         }
     }
 
     override fun saveOrUpdateSubject(subject: SubjectItem) {
-        val index = volatileSubjects.indexOfFirst { subject.id == it.id }
-        if (index >= 0) {
-            volatileSubjects[index] = subject
+        val was = subject.id
+        val id = subjectsBox.put(subject)
+        if (id == was) {
             observableSubjects.onNext(IndicatedList(listOf(subject), update = true))
         } else {
-            volatileSubjects.add(subject)
             observableSubjects.onNext(IndicatedList(listOf(subject), addToTop = true))
         }
     }
 
     override fun removeSubject(subject: SubjectItem) {
         findSubjectById(subject.id)?.let {
-            volatileSubjects.remove(it)
+            subjectsBox.remove(it)
             observableSubjects.onNext(IndicatedList(listOf(it), remove = true))
         }
     }
 
-    override fun getIdeasOf(subjectId: String) {
-        findSubjectById(subjectId)?.let {
-            observableIdeas.onNext(IndicatedList(it.ideas))
+    override fun getIdeasOf(subjectId: Long) {
+        val items = ideasBox.query().equal(IdeaItem_.subjectId, subjectId).build().find()
+        observableIdeas.onNext(IndicatedList(items))
+    }
+
+    override fun removeIdea(subjectId: Long, ideaItem: IdeaItem) {
+
+        ideasBox.get(ideaItem.id)?.let {
+            ideasBox.remove(it)
+            getIdeasOf(subjectId)
+
+//            recalculateSum(subject)
         }
     }
 
-    override fun removeIdea(subjectId: String, ideaItem: IdeaItem) {
-        findSubjectById(subjectId)?.let { subject ->
-            subject.ideas.remove(ideaItem)
-            observableIdeas.onNext(IndicatedList(subject.ideas))
+    override fun saveOrUpdateIdea(subjectId: Long, idea: IdeaItem) {
+//        findSubjectById(subjectId)?.let { subject ->
+//            val index = subject.ideas.indexOfFirst { idea.id == it.id }
+//            if (index >= 0) {
+//                subject.ideas[index] = idea
+//            } else {
+//                subject.ideas.add(idea)
+//            }
+//            observableIdeas.onNext(IndicatedList(subject.ideas))
 
-            recalculateSum(subject)
-        }
+//            recalculateSum(subject)
+//        }
     }
 
-    override fun saveOrUpdateIdea(subjectId: String, idea: IdeaItem) {
-        findSubjectById(subjectId)?.let { subject ->
-            val index = subject.ideas.indexOfFirst { idea.id == it.id }
-            if (index >= 0) {
-                subject.ideas[index] = idea
-            } else {
-                subject.ideas.add(idea)
-            }
-            observableIdeas.onNext(IndicatedList(subject.ideas))
-
-            recalculateSum(subject)
-        }
+    override fun findSubjectById(subjectId: Long): SubjectItem? {
+        return subjectsBox.get(subjectId)
     }
-
-    override fun findSubjectById(subjectId: String): SubjectItem? = volatileSubjects.find { subjectId == it.id }
 
     private fun recalculateSum(subject: SubjectItem) {
-        subject.sum = subject.ideas
-            .filter { !it.done }
-            .map {
-                if (it.sum.isBlank()) {
-                    0
-                } else {
-                    it.sum.toInt()
-                }
-            }
-            .fold(0) { sum, item -> sum + item }
-            .toString()
+//        subject.sum = subject.ideas
+//            .filter { !it.done }
+//            .map {
+//                if (it.sum.isBlank()) {
+//                    0
+//                } else {
+//                    it.sum.toInt()
+//                }
+//            }
+//            .fold(0) { sum, item -> sum + item }
+//            .toString()
 
         saveOrUpdateSubject(subject)
     }

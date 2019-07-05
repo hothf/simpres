@@ -1,6 +1,7 @@
 package de.ka.simpres.ui.subjects
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -25,6 +26,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 import org.koin.standalone.inject
+import timber.log.Timber
 
 /**
  *
@@ -35,7 +37,7 @@ class SubjectsViewModel : BaseViewModel() {
 
     private val resourcesProvider: ResourcesProvider by inject()
 
-    val touchHelper =  MutableLiveData<ItemTouchHelper>()
+    val touchHelper = MutableLiveData<ItemTouchHelper>()
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val adapter = MutableLiveData<SubjectAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
@@ -49,7 +51,7 @@ class SubjectsViewModel : BaseViewModel() {
         navigateTo(
             R.id.action_subjectsFragment_to_subjectsDetailFragment,
             false,
-            Bundle().apply { putString(SubjectsDetailFragment.SUBJECT_ID_KEY, vm.item.id) },
+            Bundle().apply { putLong(SubjectsDetailFragment.SUBJECT_ID_KEY, vm.item.id) },
             null,
             FragmentNavigatorExtras(view to view.transitionName)
         )
@@ -92,8 +94,11 @@ class SubjectsViewModel : BaseViewModel() {
             .with(AndroidSchedulerProvider())
             .subscribeBy(
                 onNext = { result ->
+                    hideLoading()
                     adapter.value?.let {
                         val updateOnly = if (result.isFiltered) true else result.update
+
+                        Timber.e("_error $result ... -> resulting")
 
                         val removedOrAddedCount = it.removeAddOrUpdate(
                             result.list,
@@ -109,7 +114,10 @@ class SubjectsViewModel : BaseViewModel() {
                             blankVisibility.postValue(View.GONE)
                         }
                     }
-                }, onError = ::handleGeneralError
+                }, onError = { throwable ->
+                    hideLoading()
+                    handleGeneralError(throwable)
+                }
             )
             .addTo(compositeDisposable)
     }
@@ -134,7 +142,6 @@ class SubjectsViewModel : BaseViewModel() {
 
         showLoading()
         repository.getSubjects()
-        hideLoading()
     }
 
     private fun hideLoading() {

@@ -29,21 +29,25 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
     private var currentSubject: SubjectItem? = null
 
+    private var isUpdating = false
+
     fun onBack() = navigateTo(BACK)
 
     fun submit(view: View? = null) {
         view?.closeAttachedKeyboard()
 
         currentSubject?.let {
-            it.id = System.currentTimeMillis().toString()
-
             repository.saveOrUpdateSubject(it)
 
-            navigateTo(
-                navigationTargetId = R.id.action_subjectNewEditFragment_to_subjectsDetailFragment,
-                args = Bundle().apply { putString(SubjectsDetailFragment.SUBJECT_ID_KEY, it.id) },
-                popupToId = R.id.subjectsDetailFragment
-            )
+            if (isUpdating) {
+                navigateTo(BACK)
+            } else {
+                navigateTo(
+                    navigationTargetId = R.id.action_subjectNewEditFragment_to_subjectsDetailFragment,
+                    args = Bundle().apply { putLong(SubjectsDetailFragment.SUBJECT_ID_KEY, it.id) },
+                    popupToId = R.id.subjectNewEditFragment
+                )
+            }
         }
     }
 
@@ -51,7 +55,9 @@ class NewEditSubjectViewModel : BaseViewModel() {
      * Sets up a new empty subject.
      */
     fun setupNew() {
-        currentSubject = SubjectItem()
+        currentSubject = SubjectItem(0)
+
+        isUpdating = false
 
         updateTextViews()
     }
@@ -59,8 +65,10 @@ class NewEditSubjectViewModel : BaseViewModel() {
     /**
      * Sets up an editable subject, received from the given id, if possible.
      */
-    fun setupEdit(subjectId: String) {
+    fun setupEdit(subjectId: Long) {
         currentSubject = repository.findSubjectById(subjectId)
+
+        isUpdating = true
 
         updateTextViews()
     }

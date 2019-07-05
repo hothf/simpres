@@ -17,7 +17,7 @@ class NewEditIdeaFragment : BaseFragment<FragmentIdeaneweditBinding, NewEditIdea
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        arguments?.getString(SUBJECT_ID_KEY)?.let {
+        arguments?.getLong(SUBJECT_ID_KEY)?.let {
             val idea = arguments?.getSerializable(IDEA_KEY) as? IdeaItem
             if (idea != null) {
                 viewModel.setupEdit(it, idea)

@@ -28,7 +28,7 @@ import org.koin.standalone.inject
 
 class SubjectsDetailViewModel : BaseViewModel() {
 
-    private var currentSubjectId = "-1"
+    private var currentSubjectId = -1L
     private var isLoading = false
 
     private val resourcesProvider: ResourcesProvider by inject()
@@ -57,7 +57,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         navigateTo(
             R.id.action_subjectsDetailFragment_to_subjectNewEditFragment,
             false,
-            Bundle().apply { putString(NewEditSubjectFragment.SUBJECT_ID_KEY, currentSubjectId) },
+            Bundle().apply { putLong(NewEditSubjectFragment.SUBJECT_ID_KEY, currentSubjectId) },
             animType = AnimType.MODAL
         )
     }
@@ -66,7 +66,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         navigateTo(
             R.id.ideaNewEditFragment,
             args = Bundle().apply {
-                putString(NewEditIdeaFragment.SUBJECT_ID_KEY, currentSubjectId)
+                putLong(NewEditIdeaFragment.SUBJECT_ID_KEY, currentSubjectId)
                 putBoolean(NewEditIdeaFragment.NEW_KEY, true)
             },
             animType = AnimType.MODAL
@@ -113,7 +113,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
      * @param owner the lifecycle owner, needed for keeping new data in sync with the lifecycle owner
      * @param subjectId the id of the subject to display.
      */
-    fun setupAdapterAndLoad(owner: LifecycleOwner, subjectId: String) {
+    fun setupAdapterAndLoad(owner: LifecycleOwner, subjectId: Long) {
         if (currentSubjectId == subjectId) {
             return
         }

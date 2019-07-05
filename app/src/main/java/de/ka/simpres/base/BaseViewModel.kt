@@ -10,6 +10,7 @@ import de.ka.simpres.repo.Repository
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
+import timber.log.Timber
 import kotlin.reflect.KClass
 
 /**
@@ -54,6 +55,7 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
      * Handles a general error.
      */
     fun handleGeneralError(throwable: Throwable) {
+        Timber.e("_error: $throwable")
     }
 
     fun handleBack() {

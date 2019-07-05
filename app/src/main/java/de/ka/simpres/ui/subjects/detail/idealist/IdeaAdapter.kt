@@ -16,7 +16,7 @@ class IdeaAdapter(
     owner: LifecycleOwner,
     list: ArrayList<IdeaItemViewModel> = arrayListOf(),
     val listener: (IdeaItem) -> Unit,
-    val subjectId: String
+    val subjectId: Long
 ) :
     BaseAdapter<IdeaItemViewModel>(
         owner, list,
@@ -145,7 +145,7 @@ class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaItemViewModel>() {
         oldItem: IdeaItemViewModel,
         newItem: IdeaItemViewModel
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.item == newItem.item
     }
 
 }

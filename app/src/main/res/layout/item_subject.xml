@@ -12,7 +12,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/item"
-        style="@style/CardStyle.Simpres.Dark"
+        style="@style/CardStyle.Simpres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"

@@ -16,21 +16,19 @@ interface Repository {
 
     fun getSubjects()
 
-    fun getSubject(subjectId: String)
+    fun getSubject(subjectId: Long)
 
     fun removeSubject(subject: SubjectItem)
 
     fun saveOrUpdateSubject(subject: SubjectItem)
 
-    fun getIdeasOf(subjectId: String)
+    fun getIdeasOf(subjectId: Long)
 
-    fun removeIdea(subjectId: String, ideaItem: IdeaItem)
+    fun removeIdea(subjectId: Long, ideaItem: IdeaItem)
 
-    fun saveOrUpdateIdea(subjectId: String, idea: IdeaItem)
+    fun saveOrUpdateIdea(subjectId: Long, idea: IdeaItem)
 
-    fun findSubjectById(subjectId: String): SubjectItem?
-
-    //TODO add better id generation!
+    fun findSubjectById(subjectId: Long): SubjectItem?
 }
 
 /**

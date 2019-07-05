@@ -12,13 +12,4 @@ class SubjectItemViewModel(val item: SubjectItem, val listener: (SubjectItemView
     val sum = item.sum
 
     val date = item.date.toDate()
-
-    override fun equals(other: Any?): Boolean {
-        if (other is SubjectItemViewModel && other.item == this.item) return true
-        return super.equals(other)
-    }
-
-    override fun hashCode(): Int {
-        return item.hashCode()
-    }
 }

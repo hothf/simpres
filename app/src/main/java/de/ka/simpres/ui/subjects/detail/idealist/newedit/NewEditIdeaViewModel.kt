@@ -34,7 +34,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
 
     private var currentIdea: IdeaItem? = null
-    private var currentSubjectId: String? = null
+    private var currentSubjectId: Long = -1
 
     fun onBack() = navigateTo(NavigationUtils.BACK)
 
@@ -43,24 +43,20 @@ class NewEditIdeaViewModel : BaseViewModel() {
         view?.closeAttachedKeyboard()
 
         currentIdea?.let { idea ->
-            currentSubjectId?.let { id ->
-                idea.id = System.currentTimeMillis().toString()
-                repository.saveOrUpdateIdea(id, idea)
-                navigateTo(
-                    navigationTargetId = R.id.action_ideaNewEditFragment_to_subjectsDetailFragment,
-                    args = Bundle().apply { putString(SubjectsDetailFragment.SUBJECT_ID_KEY, id) },
-                    popupToId = R.id.subjectsDetailFragment
-                )
-            }
-
+            repository.saveOrUpdateIdea(currentSubjectId, idea)
+            navigateTo(
+                navigationTargetId = R.id.action_ideaNewEditFragment_to_subjectsDetailFragment,
+                args = Bundle().apply { putLong(SubjectsDetailFragment.SUBJECT_ID_KEY, currentSubjectId) },
+                popupToId = R.id.subjectsDetailFragment
+            )
         }
     }
 
     /**
      * Sets up a new empty idea.
      */
-    fun setupNew(subjectId: String) {
-        currentIdea = IdeaItem()
+    fun setupNew(subjectId: Long) {
+        currentIdea = IdeaItem(0, subjectId)
         currentSubjectId = subjectId
 
         updateTextViews()
@@ -69,7 +65,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
     /**
      * Sets up an editable idea, taken from the given item.
      */
-    fun setupEdit(subjectId: String, idea: IdeaItem) {
+    fun setupEdit(subjectId: Long, idea: IdeaItem) {
         currentIdea = idea
         currentSubjectId = subjectId
 

@@ -31,7 +31,7 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
         getItems()[position].apply {
             DataBindingUtil.getBinding<ItemSubjectBinding>(holder.itemView)?.let { binding ->
                 val sharedTransitionView = binding.item
-                ViewCompat.setTransitionName(sharedTransitionView, this.item.id)
+                ViewCompat.setTransitionName(sharedTransitionView, this.item.id.toString())
                 binding.item.setOnClickListener {
                     listener(this, sharedTransitionView)
                 }
@@ -146,6 +146,6 @@ class SubjectAdapterDiffCallback : DiffUtil.ItemCallback<SubjectItemViewModel>()
         oldItem: SubjectItemViewModel,
         newItem: SubjectItemViewModel
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.item == newItem.item
     }
 }

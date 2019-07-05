@@ -17,12 +17,12 @@ class SubjectsDetailFragment: BaseFragment<FragmentSubjectsdetailBinding, Subjec
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        val subjectId = arguments?.getString(SUBJECT_ID_KEY)
+        val subjectId = arguments?.getLong(SUBJECT_ID_KEY)
         if (subjectId != null) {
            viewModel.setupAdapterAndLoad(viewLifecycleOwner, subjectId)
         }
 
-        getBinding()?.transitionText?.let { ViewCompat.setTransitionName(it, subjectId) }
+        getBinding()?.transitionText?.let { ViewCompat.setTransitionName(it, subjectId.toString()) }
         sharedElementEnterTransition =
             TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_element_home_transition)
 
