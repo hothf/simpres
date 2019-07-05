@@ -7,11 +7,8 @@ import de.ka.simpres.repo.model.IdeaItem_
 import io.objectbox.kotlin.boxFor
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
 
 class RepositoryImpl(db: AppDatabase) : Repository {
 
@@ -38,6 +35,10 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         }
     }
 
+    override fun findSubjectById(subjectId: Long): SubjectItem? {
+        return subjectsBox.get(subjectId)
+    }
+
     override fun saveOrUpdateSubject(subject: SubjectItem) {
         val was = subject.id
         val id = subjectsBox.put(subject)
@@ -50,6 +51,7 @@ class RepositoryImpl(db: AppDatabase) : Repository {
 
     override fun removeSubject(subject: SubjectItem) {
         findSubjectById(subject.id)?.let {
+            ideasBox.remove(ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find())
             subjectsBox.remove(it)
             observableSubjects.onNext(IndicatedList(listOf(it), remove = true))
         }
@@ -61,45 +63,38 @@ class RepositoryImpl(db: AppDatabase) : Repository {
     }
 
     override fun removeIdea(subjectId: Long, ideaItem: IdeaItem) {
+        findSubjectById(subjectId)?.let { subject ->
+            ideasBox.remove(ideaItem)
 
-        ideasBox.get(ideaItem.id)?.let {
-            ideasBox.remove(it)
             getIdeasOf(subjectId)
 
-//            recalculateSum(subject)
+            recalculateSum(subject)
         }
     }
 
     override fun saveOrUpdateIdea(subjectId: Long, idea: IdeaItem) {
-//        findSubjectById(subjectId)?.let { subject ->
-//            val index = subject.ideas.indexOfFirst { idea.id == it.id }
-//            if (index >= 0) {
-//                subject.ideas[index] = idea
-//            } else {
-//                subject.ideas.add(idea)
-//            }
-//            observableIdeas.onNext(IndicatedList(subject.ideas))
+        findSubjectById(subjectId)?.let { subject ->
+            ideasBox.put(idea)
 
-//            recalculateSum(subject)
-//        }
-    }
+            getIdeasOf(subjectId)
 
-    override fun findSubjectById(subjectId: Long): SubjectItem? {
-        return subjectsBox.get(subjectId)
+            recalculateSum(subject)
+        }
     }
 
     private fun recalculateSum(subject: SubjectItem) {
-//        subject.sum = subject.ideas
-//            .filter { !it.done }
-//            .map {
-//                if (it.sum.isBlank()) {
-//                    0
-//                } else {
-//                    it.sum.toInt()
-//                }
-//            }
-//            .fold(0) { sum, item -> sum + item }
-//            .toString()
+        val ideas = ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find()
+        subject.sum = ideas
+            .filter { !it.done }
+            .map {
+                if (it.sum.isBlank()) {
+                    0
+                } else {
+                    it.sum.toInt()
+                }
+            }
+            .fold(0) { sum, item -> sum + item }
+            .toString()
 
         saveOrUpdateSubject(subject)
     }
