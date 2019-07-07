@@ -10,48 +10,50 @@
             type="de.ka.simpres.ui.subjects.detail.idealist.IdeaItemViewModel" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <RelativeLayout
         android:id="@+id/item"
-        style="@style/CardStyle.Simpres"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_8"
         android:layout_marginEnd="@dimen/default_8"
+        android:layout_marginTop="@dimen/default_8"
+        android:layout_marginBottom="@dimen/default_8"
+        android:background="@color/colorBackgroundPrimary"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="@dimen/default_corner_radius"
-        app:cardElevation="@dimen/default_4"
-        tools:cardBackgroundColor="@color/defaultBackgroundPrimary">
+        android:foreground="?android:attr/selectableItemBackground">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/sumText"
+            style="@style/TextStyle.Simpres.Default"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/default_32"
+            android:layout_marginStart="@dimen/default_8"
+            android:gravity="center"
+            android:text="@{viewModel.sum}"
+            tools:text="Sum" />
+
+        <TextView
+            style="@style/TextStyle.Simpres.Default"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/default_32"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/default_16"
+            android:layout_marginEnd="@dimen/default_16"
+            android:layout_toStartOf="@+id/check"
+            android:layout_toEndOf="@+id/sumText"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="@{viewModel.title}"
+            tools:text="grgrgrgefw" />
 
-            <TextView
-                android:id="@+id/sumText"
-                android:text="@{viewModel.sum}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_toEndOf="@+id/sumText"
-                android:layout_centerVertical="true"
-                android:layout_width="match_parent"
-                android:padding="@dimen/default_4"
-                android:layout_toStartOf="@+id/check"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.title}"
-                tools:text="grgrgrgefw" />
-
-            <CheckBox
-                android:padding="@dimen/default_4"
-                android:checked="@{viewModel.done}"
-                android:id="@+id/check"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+        <CheckBox
+            android:id="@+id/check"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/default_32"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/default_8"
+            android:checked="@{viewModel.done}" />
+    </RelativeLayout>
 
 </layout>

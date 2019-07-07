@@ -16,7 +16,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/colorBackgroundPrimary"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -27,71 +28,99 @@
                     android:id="@+id/back"
                     android:layout_width="@dimen/default_48"
                     android:layout_height="@dimen/default_48"
-                    android:layout_marginStart="@dimen/default_8"
-                    android:layout_marginTop="@dimen/default_8"
+                    android:layout_marginStart="@dimen/default_12"
+                    android:layout_marginTop="@dimen/default_12"
                     android:background="@drawable/round_button_transparent_selector"
                     android:onClick="@{() -> viewModel.onBack()}"
                     android:src="@drawable/ic_launcher_foreground"
                     android:tint="@color/colorIconTintDefault" />
 
                 <TextView
-                    android:id="@+id/transitionText"
+                    android:id="@+id/titleText"
+                    style="@style/TextStyle.Simpres.Nav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_8"
+                    android:layout_marginEnd="@dimen/default_8"
+                    android:layout_marginTop="@dimen/default_18"
                     android:layout_toEndOf="@+id/back"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="3"
-                    android:minHeight="@dimen/actionBarSize"
                     android:text="@{viewModel.title}"
                     tools:text="Title" />
             </RelativeLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <androidx.cardview.widget.CardView
+                style="@style/CardStyle.Simpres"
+                android:layout_marginTop="@dimen/default_12"
+                android:layout_marginStart="@dimen/default_16"
+                android:layout_marginEnd="@dimen/default_16"
+                android:layout_marginBottom="@dimen/default_16"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:setError="@{viewModel.titleError}"
-                android:hint="Title edit">
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@{viewModel.title}"
-                    app:addTextChangedListener="@{viewModel.getTitleTextChangedListener}"
-                    app:setSelection="@{viewModel.titleSelection}" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:setError="@{viewModel.sumError}"
-                android:hint="Sum edit">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/titleEditContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/default_16"
+                        android:hint="Title edit"
+                        app:setError="@{viewModel.titleError}">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
-                    android:inputType="numberSigned"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@{viewModel.sum}"
-                    app:addTextChangedListener="@{viewModel.getSumTextChangedListener}"
-                    app:setOnEditorActionListener="@{viewModel.getDoneListener}"
-                    app:setSelection="@{viewModel.sumSelection}" />
-            </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapSentences"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="@{viewModel.title}"
+                            app:addTextChangedListener="@{viewModel.getTitleTextChangedListener}"
+                            app:setSelection="@{viewModel.titleSelection}" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:onClick="@{(v)->viewModel.submit(v)}"
-                android:layout_width="wrap_content"
-                android:text="ok"
-                android:layout_height="wrap_content" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/amountEditContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/titleEditContainer"
+                        android:layout_margin="@dimen/default_16"
+                        android:hint="Sum edit"
+                        app:setError="@{viewModel.sumError}">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberSigned"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="@{viewModel.sum}"
+                            app:addTextChangedListener="@{viewModel.getSumTextChangedListener}"
+                            app:setOnEditorActionListener="@{viewModel.getDoneListener}"
+                            app:setSelection="@{viewModel.sumSelection}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        style="@style/ButtonStyle.Simpres"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/amountEditContainer"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="@dimen/default_24"
+                        android:onClick="@{(v)->viewModel.submit(v)}"
+                        android:text="add" />
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
-
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

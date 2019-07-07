@@ -8,9 +8,21 @@
         <item name="cardElevation">@dimen/default_4</item>
     </style>
 
-    <style name="SwipeToRefresh.Simpres" parent="">
-        <item name="android:tint">#009977</item>
+    <style name="ButtonStyle.Simpres" parent="TextAppearance.AppCompat.Button">
+        <item name="android:background">@drawable/button_default_selector</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/colorButtonTextDefault</item>
+        <item name="android:elevation">@dimen/default_8</item>
     </style>
+
+    <style name="ButtonStyle.Simpres.Alternative" parent="TextAppearance.AppCompat.Button">
+        <item name="android:background">@drawable/button_alternative_selector</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/colorButtonTextAlternative</item>
+        <item name="android:elevation">@dimen/default_8</item>
+    </style>
+
+    <!-- Text Styles -->
 
     <style name="TextStyle.Simpres.Default" parent="TextAppearance.AppCompat">
         <item name="android:textSize">@dimen/font_default</item>

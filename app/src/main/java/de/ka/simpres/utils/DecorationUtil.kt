@@ -20,8 +20,14 @@ class DecorationUtil(
         super.getItemOffsets(outRect, view, parent, state)
 
         val itemPosition = parent.getChildViewHolder(view).adapterPosition
+        var child: View?
 
-        val child = view.findViewById<CardView>(R.id.item) ?: return
+
+        try {
+            child = view.findViewById<CardView>(R.id.item) ?: return
+        } catch (e: Exception) {
+            return
+        }
 
         val layoutParams = child.layoutParams as RecyclerView.LayoutParams
 
@@ -58,7 +64,7 @@ class DecorationUtil(
                 }
             }
         } else {
-            if (itemPosition == 0){
+            if (itemPosition == 0) {
                 layoutParams.topMargin = spacingTop
                 layoutParams.leftMargin = spacingLeftAndRight
                 layoutParams.rightMargin = spacingLeftAndRight

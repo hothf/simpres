@@ -135,7 +135,10 @@ class SubjectsDetailViewModel : BaseViewModel() {
         navigateTo(
             R.id.action_subjectsDetailFragment_to_ideaNewEditFragment,
             false,
-            Bundle().apply { putSerializable(NewEditIdeaFragment.IDEA_KEY, ideaItem) },
+            Bundle().apply {
+                putLong(NewEditIdeaFragment.SUBJECT_ID_KEY, currentSubjectId)
+                putSerializable(NewEditIdeaFragment.IDEA_KEY, ideaItem)
+            },
             animType = AnimType.MODAL
         )
     }

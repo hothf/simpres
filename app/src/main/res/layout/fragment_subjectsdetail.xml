@@ -63,10 +63,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/titleText"
-                android:layout_marginTop="@dimen/default_24"
                 android:layout_marginStart="@dimen/default_16"
-                android:layout_marginBottom="@dimen/default_16"
-                android:layout_marginEnd="@dimen/default_16">
+                android:layout_marginTop="@dimen/default_24"
+                android:layout_marginEnd="@dimen/default_16"
+                android:layout_marginBottom="@dimen/default_16">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -85,6 +85,8 @@
                         android:id="@+id/swipeRefresh"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_above="@+id/add_button"
+                        android:layout_marginBottom="@dimen/default_16"
                         android:layout_below="@+id/totalSumText"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior"
                         app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
@@ -103,6 +105,23 @@
                             app:touchHelper="@{viewModel.touchHelper}" />
 
                     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+                    <Button
+                        android:id="@+id/add_button"
+                        style="@style/ButtonStyle.Simpres"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/spacer"
+                        android:layout_marginStart="@dimen/default_16"
+                        android:onClick="@{()->viewModel.onAddClick()}"
+                        android:text="+ Idea" />
+
+                    <View
+                        android:id="@+id/spacer"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/default_16"
+                        android:layout_alignParentBottom="true" />
 
                 </RelativeLayout>
 
@@ -124,17 +143,6 @@
             </RelativeLayout>
 
         </RelativeLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottomBarSize"
-            android:onClick="@{()->viewModel.onAddClick()}"
-            android:src="@drawable/ic_launcher_foreground"
-            app:layout_anchor="@id/subjectDetail"
-            app:layout_anchorGravity="bottom|center_horizontal"
-            app:useCompatPadding="true" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
