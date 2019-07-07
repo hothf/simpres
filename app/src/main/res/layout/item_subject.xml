@@ -19,8 +19,6 @@
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:minHeight="@dimen/default_112"
-        app:cardCornerRadius="@dimen/default_corner_radius"
-        app:cardElevation="@dimen/default_4"
         tools:cardBackgroundColor="@color/defaultBackgroundPrimary">
 
         <RelativeLayout

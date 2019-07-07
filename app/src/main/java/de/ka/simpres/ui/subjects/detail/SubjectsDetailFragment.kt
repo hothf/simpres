@@ -22,7 +22,7 @@ class SubjectsDetailFragment: BaseFragment<FragmentSubjectsdetailBinding, Subjec
            viewModel.setupAdapterAndLoad(viewLifecycleOwner, subjectId)
         }
 
-        getBinding()?.transitionText?.let { ViewCompat.setTransitionName(it, subjectId.toString()) }
+        getBinding()?.detailsCard?.let { ViewCompat.setTransitionName(it, subjectId.toString()) }
         sharedElementEnterTransition =
             TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_element_home_transition)
 
