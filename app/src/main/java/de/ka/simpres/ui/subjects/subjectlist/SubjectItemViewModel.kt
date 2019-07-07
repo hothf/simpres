@@ -1,5 +1,6 @@
 package de.ka.simpres.ui.subjects.subjectlist
 
+import android.graphics.Color
 import android.view.View
 import de.ka.simpres.base.BaseItemViewModel
 import de.ka.simpres.repo.model.SubjectItem
@@ -12,4 +13,6 @@ class SubjectItemViewModel(val item: SubjectItem, val listener: (SubjectItemView
     val sum = item.sum
 
     val date = item.date.toDate()
+
+    val color = Color.parseColor(item.color)
 }

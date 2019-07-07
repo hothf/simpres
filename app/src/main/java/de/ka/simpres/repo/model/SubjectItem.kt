@@ -1,5 +1,6 @@
 package de.ka.simpres.repo.model
 
+import de.ka.simpres.utils.resources.ColorResources
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import java.io.Serializable
@@ -10,5 +11,6 @@ data class SubjectItem(
     @Id var id: Long,
     var title: String = "",
     var sum: String = "0",
-    var date: Long = Calendar.getInstance().timeInMillis
+    var date: Long = Calendar.getInstance().timeInMillis,
+    var color: String = ColorResources.indicatorColors.first()
 ) : Serializable

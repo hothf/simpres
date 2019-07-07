@@ -25,16 +25,11 @@
           "name": "date"
         }
       ],
-      "relations": [
-        {
-          "id": "1:6386165350942569310",
-          "name": "ideas"
-        }
-      ]
+      "relations": []
     },
     {
       "id": "2:3748764761050857159",
-      "lastPropertyId": "4:7672101273216054106",
+      "lastPropertyId": "5:7620834741382393513",
       "name": "IdeaItem",
       "properties": [
         {
@@ -52,6 +47,10 @@
         {
           "id": "4:7672101273216054106",
           "name": "sum"
+        },
+        {
+          "id": "5:7620834741382393513",
+          "name": "subjectId"
         }
       ],
       "relations": []
@@ -66,6 +65,8 @@
   "retiredEntityUids": [],
   "retiredIndexUids": [],
   "retiredPropertyUids": [],
-  "retiredRelationUids": [],
+  "retiredRelationUids": [
+    6386165350942569310
+  ],
   "version": 1
 }

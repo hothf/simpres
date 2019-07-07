@@ -31,33 +31,49 @@
 
             <View
                 android:id="@+id/swipeHandle"
-
                 android:layout_width="1dp"
                 android:layout_height="match_parent" />
 
             <TextView
-                style="@style/TextStyle.Simpres.Default.Large"
                 android:id="@+id/title"
+                style="@style/TextStyle.Simpres.Secondary.Bold.Large"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/default_48"
+                android:layout_margin="@dimen/default_12"
+                android:gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="@{viewModel.title}"
                 tools:text="Title" />
 
-            <TextView
-                style="@style/TextStyle.Simpres.Default"
-                android:id="@+id/sum"
-                android:layout_width="wrap_content"
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title"
+                android:progress="50"
+                android:progressTint="@{viewModel.color}"
+                android:layout_margin="@dimen/default_12" />
+
+            <TextView
+                android:id="@+id/sum"
+                style="@style/TextStyle.Simpres.Default.Small.Caps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/progress"
+                android:layout_margin="@dimen/default_12"
                 android:text="@{viewModel.sum}"
                 tools:text="Sum" />
 
             <TextView
-                style="@style/TextStyle.Simpres.Default.Small"
                 android:id="@+id/date"
+                style="@style/TextStyle.Simpres.Default.Small.Caps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/sum"
+                android:layout_below="@id/progress"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="@dimen/default_12"
                 android:text="@{viewModel.date}"
                 tools:text="Date" />
         </RelativeLayout>

@@ -2,6 +2,7 @@ package de.ka.simpres.ui.subjects.subjectlist.newedit
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
@@ -10,7 +11,10 @@ import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.utils.NavigationUtils.BACK
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
+import de.ka.simpres.utils.resources.ColorResources
+import de.ka.simpres.utils.resources.ResourcesProvider
 import de.ka.simpres.utils.toDate
+import org.koin.standalone.inject
 import java.util.*
 
 class NewEditSubjectViewModel : BaseViewModel() {
@@ -26,6 +30,8 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
     val date = MutableLiveData<String>().apply { value = "" }
+
+    val resourcesProvider: ResourcesProvider by inject()
 
     private var currentSubject: SubjectItem? = null
 
@@ -55,7 +61,9 @@ class NewEditSubjectViewModel : BaseViewModel() {
      * Sets up a new empty subject.
      */
     fun setupNew() {
-        currentSubject = SubjectItem(0)
+        currentSubject = SubjectItem(0).apply {
+            color = ColorResources.getRandomColorString()
+        }
 
         isUpdating = false
 

@@ -2,16 +2,24 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#544EE6</color>
 
-    <color name="colorBackgroundPrimary">#dedede</color>
-    <color name="colorBackgroundSecondary">#fefefe</color>
+    <color name="colorBackgroundPrimary">#EAEBEF</color>
+    <color name="colorBackgroundPrimaryDark">#525252</color>
+    <color name="colorBackgroundSecondary">#ffffff</color>
 
     <color name="colorTextDefault">#888888</color>
     <color name="colorTextSecondaryDefault">#333333</color>
     <color name="colorTextNav">#000000</color>
 
     <color name="colorIconTintDefault">#002200</color>
+
+    <color name="colorIndicatorGreen">#5BB6A6</color>
+    <color name="colorIndicatorYellow">#F7D24B</color>
+    <color name="colorIndicatorBlue">#544EE6</color>
+    <color name="colorIndicatorOrange">#D88C48</color>
+    <color name="colorIndicatorRed">#C2445B</color>
+    <color name="colorIndicatorPurple">#AF62F6</color>
 
 
 

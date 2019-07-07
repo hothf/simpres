@@ -27,10 +27,30 @@
         <item name="android:textSize">@dimen/font_small</item>
     </style>
 
+    <style name="TextStyle.Simpres.Default.Small.Caps" parent="TextStyle.Simpres.Default.Small">
+        <item name="android:textAllCaps">true</item>
+    </style>
+
     <style name="TextStyle.Simpres.Nav" parent="TextStyle.Simpres.Default">
         <item name="android:textSize">@dimen/font_nav</item>
         <item name="android:textColor">@color/colorTextNav</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
+    <style name="TextStyle.Simpres.Secondary" parent="TextStyle.Simpres.Default">
+        <item name="android:textColor">@color/colorTextSecondaryDefault</item>
+    </style>
+
+    <style name="TextStyle.Simpres.Secondary.Bold" parent="TextStyle.Simpres.Secondary">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.Simpres.Secondary.Large" parent="TextStyle.Simpres.Secondary">
+        <item name="android:textSize">@dimen/font_large</item>
+    </style>
+
+    <style name="TextStyle.Simpres.Secondary.Bold.Large" parent="TextStyle.Simpres.Secondary.Bold">
+        <item name="android:textSize">@dimen/font_large</item>
     </style>
 
 </resources>

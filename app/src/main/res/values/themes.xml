@@ -9,7 +9,9 @@
         <item name="colorPrimaryVariant">#003399</item>
 
         <item name="android:statusBarColor">@color/colorBackgroundPrimary</item>
+        <item name="android:navigationBarColor">@color/colorBackgroundPrimaryDark</item>
         <item name="android:windowLightStatusBar">true</item>
+
 
     </style>
 
