@@ -18,9 +18,18 @@ interface Repository {
 
     fun getSubject(subjectId: Long)
 
+    fun moveSubject(
+        subject1: SubjectItem,
+        subject2: SubjectItem,
+        oldPosition: Int,
+        newPosition: Int
+    )
+
     fun removeSubject(subject: SubjectItem)
 
-    fun saveOrUpdateSubject(subject: SubjectItem)
+    fun saveSubject(subject: SubjectItem)
+
+    fun updateSubject(subject: SubjectItem)
 
     fun getIdeasOf(subjectId: Long)
 
@@ -43,6 +52,7 @@ interface Repository {
  * A optional [update] flag can be used to indicate, that the list should only be updated and not extended or
  * manipulated somehow differently.
  * A optional [isFiltered] flag to indicate that the results are filtered.
+ * A [replacementPair] is optional to indicate that two item positions have been changed.
  *
  * All flags default to **false** for a simple list indication, that could contain updated and new data.
  */
@@ -52,5 +62,6 @@ data class IndicatedList<E : Any, T : List<E>>(
     var remove: Boolean = false,
     var addToTop: Boolean = false,
     var update: Boolean = false,
-    var isFiltered: Boolean = false
+    var isFiltered: Boolean = false,
+    var replacementPair: Pair<Int, Int>? = null
 )

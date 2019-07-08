@@ -8,6 +8,8 @@
     <color name="colorBackgroundPrimaryDark">#525252</color>
     <color name="colorBackgroundSecondary">#ffffff</color>
 
+    <color name="colorSelected">#232323</color>
+
     <color name="colorTextDefault">#888888</color>
     <color name="colorTextSecondaryDefault">#333333</color>
     <color name="colorTextNav">#000000</color>

@@ -22,10 +22,10 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         PublishSubject.create<IndicatedList<IdeaItem, List<IdeaItem>>>()
 
     override fun getSubjects() {
-        //TODO evaluate: is objectbox nice for persisting the position? We will need this!
         GlobalScope.launch {
             delay(250)
-            observableSubjects.onNext(IndicatedList(subjectsBox.all.reversed()))
+            val list = subjectsBox.all.sortedBy { it.position }
+            observableSubjects.onNext(IndicatedList(list))
         }
     }
 
@@ -35,24 +35,37 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         }
     }
 
+    override fun moveSubject(subject1: SubjectItem, subject2: SubjectItem, oldPosition: Int, newPosition: Int) {
+        subject1.position = newPosition
+        subject2.position = oldPosition
+        subjectsBox.put(subject1)
+        subjectsBox.put(subject2)
+    }
+
     override fun findSubjectById(subjectId: Long): SubjectItem? {
         return subjectsBox.get(subjectId)
     }
 
-    override fun saveOrUpdateSubject(subject: SubjectItem) {
-        val was = subject.id
-        val id = subjectsBox.put(subject)
-        if (id == was) {
-            observableSubjects.onNext(IndicatedList(listOf(subject), update = true))
-        } else {
-            observableSubjects.onNext(IndicatedList(listOf(subject), addToTop = true))
-        }
+    override fun saveSubject(subject: SubjectItem) {
+        val list = subjectsBox.all.toMutableList()
+        list.forEach { it.position = it.position + 1 }
+        subjectsBox.put(list)
+        subjectsBox.put(subject)
+        observableSubjects.onNext(IndicatedList(listOf(subject), addToTop = true))
+    }
+
+    override fun updateSubject(subject: SubjectItem) {
+        subjectsBox.put(subject)
+        observableSubjects.onNext(IndicatedList(listOf(subject), update = true))
     }
 
     override fun removeSubject(subject: SubjectItem) {
         findSubjectById(subject.id)?.let {
             ideasBox.remove(ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find())
             subjectsBox.remove(it)
+            val list = subjectsBox.all.toMutableList()
+            list.forEach { subject -> subject.position = subject.position - 1 }
+            subjectsBox.put(list)
             observableSubjects.onNext(IndicatedList(listOf(it), remove = true))
         }
     }
@@ -96,6 +109,6 @@ class RepositoryImpl(db: AppDatabase) : Repository {
             .fold(0) { sum, item -> sum + item }
             .toString()
 
-        saveOrUpdateSubject(subject)
+        updateSubject(subject)
     }
 }

@@ -2,7 +2,6 @@ package de.ka.simpres.ui.subjects.subjectlist.newedit
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
@@ -43,11 +42,11 @@ class NewEditSubjectViewModel : BaseViewModel() {
         view?.closeAttachedKeyboard()
 
         currentSubject?.let {
-            repository.saveOrUpdateSubject(it)
-
             if (isUpdating) {
                 navigateTo(BACK)
+                repository.updateSubject(it)
             } else {
+                repository.saveSubject(it)
                 navigateTo(
                     navigationTargetId = R.id.action_subjectNewEditFragment_to_subjectsDetailFragment,
                     args = Bundle().apply { putLong(SubjectsDetailFragment.SUBJECT_ID_KEY, it.id) },

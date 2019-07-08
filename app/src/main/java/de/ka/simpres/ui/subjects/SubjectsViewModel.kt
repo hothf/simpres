@@ -1,14 +1,12 @@
 package de.ka.simpres.ui.subjects
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
@@ -26,7 +24,6 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 import org.koin.standalone.inject
-import timber.log.Timber
 
 /**
  *
@@ -98,9 +95,7 @@ class SubjectsViewModel : BaseViewModel() {
                     adapter.value?.let {
                         val updateOnly = if (result.isFiltered) true else result.update
 
-                        Timber.e("_error $result ... -> resulting")
-
-                        val removedOrAddedCount = it.removeAddOrUpdate(
+                        it.removeAddOrUpdate(
                             result.list,
                             itemClickListener,
                             result.remove,

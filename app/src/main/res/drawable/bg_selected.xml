@@ -5,7 +5,7 @@
     <corners android:radius="@dimen/default_16" />
     <stroke
         android:width="@dimen/default_2"
-        android:color="@color/fontDefault" />
-    <solid android:color="?attr/colorPrimary" />
+        android:color="@color/colorSelected" />
+    <solid android:color="@color/colorBackgroundSecondary" />
 
 </shape>

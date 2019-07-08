@@ -1,19 +1,14 @@
 package de.ka.simpres.base
 
-import android.graphics.drawable.Drawable
 import androidx.databinding.ViewDataBinding
 
 import android.view.LayoutInflater
-import androidx.core.content.ContextCompat
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.*
 import de.ka.simpres.BR
-import de.ka.simpres.R
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
-import de.ka.simpres.utils.DragAndSwipeItemTouchHelperCallback
 import de.ka.simpres.utils.resources.ResourcesProvider
 import java.util.*
 import kotlin.collections.ArrayList
@@ -40,10 +35,13 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
         }
     }
 
-    fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+    open fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         if (diffCallback != null) {
-            Collections.swap(differ!!.currentList.toMutableList(), fromPosition, toPosition)
-            differ?.submitList(differ!!.currentList)
+            val list = differ!!.currentList.toMutableList()
+            Collections.swap(list, fromPosition, toPosition)
+            setItems(list)
+        } else {
+            Collections.swap(items, fromPosition, toPosition)
             notifyItemMoved(fromPosition, toPosition)
         }
         return true
@@ -51,7 +49,7 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
 
     open fun onItemDismiss(position: Int) {
         if (diffCallback != null) {
-            return
+            // let subclasses handle it
         } else {
             items.removeAt(position)
             notifyItemRemoved(position)
@@ -174,11 +172,7 @@ abstract class BaseItemViewModel(val type: Int = 0) : KoinComponent {
     }
 }
 
-class BaseViewHolder<T : ViewDataBinding>(private val binding: T) : RecyclerView.ViewHolder(binding.root) {
-
-    private var cachedBackgroundImage: Drawable? = null
-
-    private var isDragging = false
+open class BaseViewHolder<T : ViewDataBinding>(private val binding: T) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(owner: LifecycleOwner, viewModel: BaseItemViewModel) {
         binding.setVariable(BR.viewModel, viewModel)
@@ -186,24 +180,15 @@ class BaseViewHolder<T : ViewDataBinding>(private val binding: T) : RecyclerView
         binding.executePendingBindings()
     }
 
-    fun onItemDrag() {
-        cachedBackgroundImage = itemView.background
-
-        itemView.background = ContextCompat.getDrawable(itemView.context, R.drawable.bg_selected)
-
-        isDragging = true
+    open fun onItemDrag() {
+        // do implement in sub class
     }
 
-    fun onItemSwipe() {
-
+    open fun onItemSwipe() {
+        // do implement in sub class
     }
 
-
-    fun onItemClear() {
-        if (isDragging) {
-            itemView.background = cachedBackgroundImage
-        }
-
-        isDragging = false
+    open fun onItemClear() {
+        // do implement in sub class
     }
 }

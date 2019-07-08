@@ -2,10 +2,13 @@ package de.ka.simpres.ui.subjects.subjectlist
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
+import de.ka.simpres.R
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
 import de.ka.simpres.databinding.ItemSubjectBinding
@@ -24,7 +27,7 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
     private var dispose: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-        return BaseViewHolder(ItemSubjectBinding.inflate(layoutInflater, parent, false))
+        return SubjectViewHolder(ItemSubjectBinding.inflate(layoutInflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
@@ -39,6 +42,16 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
         }
 
         super.onBindViewHolder(holder, position)
+    }
+
+    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+        repository.moveSubject(
+            getItems()[fromPosition].item,
+            getItems()[toPosition].item,
+            fromPosition,
+            toPosition
+        )
+        return super.onItemMove(fromPosition, toPosition)
     }
 
     override fun onItemDismiss(position: Int) {
@@ -57,24 +70,6 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
      */
     fun markForDisposition() {
         dispose = true
-    }
-
-    /**
-     * Overwrites the current list with the given [newItems] and applies a [itemClickListener] to them.
-     *
-     * @param newItems the new items to append or replace
-     * @param itemClickListener a click listener for individual items
-     */
-    fun overwriteList(
-        newItems: List<SubjectItem>,
-        itemClickListener: (SubjectItemViewModel, View) -> Unit
-    ) {
-        setItems(newItems.map { consensus ->
-            SubjectItemViewModel(
-                consensus,
-                itemClickListener
-            )
-        })
     }
 
     /**
@@ -147,5 +142,31 @@ class SubjectAdapterDiffCallback : DiffUtil.ItemCallback<SubjectItemViewModel>()
         newItem: SubjectItemViewModel
     ): Boolean {
         return oldItem.item == newItem.item
+    }
+}
+
+class SubjectViewHolder<T : ViewDataBinding>(private val binding: T) : BaseViewHolder<T>(binding) {
+    override fun onItemDrag() {
+        super.onItemDrag()
+
+        val viewBinding = binding as ItemSubjectBinding
+        viewBinding.item.setCardBackgroundColor(
+            ContextCompat.getColor(
+                itemView.context,
+                R.color.colorBackgroundPrimary
+            )
+        )
+    }
+
+    override fun onItemClear() {
+        super.onItemClear()
+
+        val viewBinding = binding as ItemSubjectBinding
+        viewBinding.item.setCardBackgroundColor(
+            ContextCompat.getColor(
+                itemView.context,
+                R.color.colorBackgroundSecondary
+            )
+        )
     }
 }
