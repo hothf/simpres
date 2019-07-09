@@ -6,7 +6,8 @@ import de.ka.simpres.base.BaseItemViewModel
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.utils.toDate
 
-class SubjectItemViewModel(val item: SubjectItem, val listener: (SubjectItemViewModel, View) -> Unit) : BaseItemViewModel() {
+class SubjectItemViewModel(val item: SubjectItem, val listener: (SubjectItemViewModel, View) -> Unit) :
+    BaseItemViewModel() {
 
     val title = item.title
 
@@ -15,4 +16,10 @@ class SubjectItemViewModel(val item: SubjectItem, val listener: (SubjectItemView
     val date = item.date.toDate()
 
     val color = Color.parseColor(item.color)
+
+    val progress = if (item.ideasCount > 0) {
+        ((item.ideasDoneCount.toFloat() / item.ideasCount.toFloat()) * 100).toInt()
+    } else {
+        100
+    }
 }

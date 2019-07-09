@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title"
-                android:progress="50"
+                android:progress="@{viewModel.progress}"
                 android:progressTint="@{viewModel.color}"
                 android:layout_margin="@dimen/default_12" />
 

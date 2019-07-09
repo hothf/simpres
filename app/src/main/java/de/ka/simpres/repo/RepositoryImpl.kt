@@ -97,9 +97,11 @@ class RepositoryImpl(db: AppDatabase) : Repository {
 
     private fun recalculateSum(subject: SubjectItem) {
         val ideas = ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find()
+
         subject.sum = ideas
             .filter { !it.done }
             .map {
+
                 if (it.sum.isBlank()) {
                     0
                 } else {
@@ -108,6 +110,8 @@ class RepositoryImpl(db: AppDatabase) : Repository {
             }
             .fold(0) { sum, item -> sum + item }
             .toString()
+        subject.ideasCount = ideas.size
+        subject.ideasDoneCount = ideas.count { it.done }
 
         updateSubject(subject)
     }

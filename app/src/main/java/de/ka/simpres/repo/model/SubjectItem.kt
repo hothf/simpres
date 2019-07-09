@@ -13,5 +13,7 @@ data class SubjectItem(
     var sum: String = "0",
     var date: Long = Calendar.getInstance().timeInMillis,
     var color: String = ColorResources.indicatorColors.first(),
-    var position: Int = 0
+    var position: Int = 0,
+    var ideasCount: Int = 0,
+    var ideasDoneCount: Int = 0
 ) : Serializable

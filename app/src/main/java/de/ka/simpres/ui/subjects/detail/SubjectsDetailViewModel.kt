@@ -1,5 +1,6 @@
 package de.ka.simpres.ui.subjects.detail
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
@@ -19,6 +20,7 @@ import de.ka.simpres.utils.AndroidSchedulerProvider
 import de.ka.simpres.utils.DecorationUtil
 import de.ka.simpres.utils.DragAndSwipeItemTouchHelperCallback
 import de.ka.simpres.utils.NavigationUtils.BACK
+import de.ka.simpres.utils.resources.ColorResources
 import de.ka.simpres.utils.resources.ResourcesProvider
 import de.ka.simpres.utils.with
 import io.reactivex.rxkotlin.addTo
@@ -46,6 +48,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
     val sum = MutableLiveData<String>().apply { value = "" }
+    val color = MutableLiveData<Int>().apply { Color.parseColor(ColorResources.getRandomColorString()) }
 
     fun itemAnimator() = SlideInDownAnimator()
 
@@ -53,7 +56,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
 
     fun onBack() = navigateTo(BACK)
 
-    fun onEdit(){
+    fun onEdit() {
         navigateTo(
             R.id.action_subjectsDetailFragment_to_subjectNewEditFragment,
             false,
@@ -153,6 +156,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
     private fun updateSubject(subject: SubjectItem) {
         title.postValue(subject.title)
         sum.postValue(subject.sum)
+        color.postValue(Color.parseColor(subject.color))
     }
 
     private fun showLoading() {
