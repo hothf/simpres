@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/bottomBarSize"
             android:onClick="@{()->viewModel.onAddClick()}"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/ic_pres"
             app:layout_anchor="@id/swipeRefresh"
             app:layout_anchorGravity="bottom|center_horizontal"
             app:useCompatPadding="true" />

@@ -12,8 +12,8 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:background="@color/colorBackgroundSecondary"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorBackgroundSecondary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,54 +22,59 @@
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:background="@color/colorBackgroundPrimary"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/colorBackgroundPrimary">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/back"
-                    android:layout_width="@dimen/default_48"
-                    android:layout_height="@dimen/default_48"
-                    android:layout_marginStart="@dimen/default_12"
-                    android:layout_marginTop="@dimen/default_12"
-                    android:background="@drawable/round_button_transparent_selector"
-                    android:onClick="@{() -> viewModel.onBack()}"
-                    android:src="@drawable/ic_launcher_foreground"
-                    android:tint="@color/colorIconTintDefault" />
+                    <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="@dimen/default_48"
+                        android:layout_height="@dimen/default_48"
+                        android:layout_marginStart="@dimen/default_12"
+                        android:layout_marginTop="@dimen/default_12"
+                        android:layout_marginBottom="@dimen/default_12"
+                        android:background="@drawable/round_button_transparent_selector"
+                        android:onClick="@{(v) -> viewModel.onBack(v)}"
+                        android:padding="@dimen/default_12"
+                        android:src="@drawable/ic_close"
+                        android:tint="@color/colorIconTintDefault" />
 
-                <TextView
-                    android:id="@+id/transitionText"
-                    style="@style/TextStyle.Simpres.Nav"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_8"
-                    android:layout_marginTop="@dimen/default_24"
-                    android:layout_marginEnd="@dimen/default_8"
-                    android:layout_toEndOf="@+id/back"
-                    android:includeFontPadding="false"
-                    android:ellipsize="end"
-                    android:layout_toStartOf="@+id/saveButton"
-                    android:gravity="center_vertical"
-                    android:maxLines="3"
-                    android:text="@{viewModel.title}"
-                    tools:text="Title" />
+                    <TextView
+                        android:id="@+id/transitionText"
+                        style="@style/TextStyle.Simpres.Nav"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_8"
+                        android:layout_marginTop="@dimen/default_24"
+                        android:layout_marginEnd="@dimen/default_8"
+                        android:layout_toStartOf="@+id/saveButton"
+                        android:layout_toEndOf="@+id/back"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="3"
+                        android:text="@{viewModel.navTitle}"
+                        tools:text="Title" />
 
-                <Button
-                    android:id="@+id/saveButton"
-                    android:layout_gravity="end"
-                    style="@style/ButtonStyle.Simpres"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/default_12"
-                    android:layout_marginEnd="@dimen/default_12"
-                    android:layout_marginBottom="@dimen/default_12"
-                    android:onClick="@{(v)->viewModel.submit(v)}"
-                    android:text="Save" />
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/saveButton"
+                        android:layout_width="@dimen/default_48"
+                        android:layout_height="@dimen/default_48"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/default_12"
+                        android:layout_marginEnd="@dimen/default_12"
+                        android:layout_marginBottom="@dimen/default_12"
+                        android:background="@drawable/round_button_transparent_selector"
+                        android:contentDescription="@string/subject_newedit_save"
+                        android:onClick="@{(v)->viewModel.submit(v)}"
+                        android:padding="@dimen/default_8"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_check"
+                        android:tint="@color/colorAccent" />
+                </RelativeLayout>
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -78,23 +83,13 @@
                 android:layout_height="match_parent"
                 android:padding="@dimen/default_16">
 
-                <ImageView
-                    android:id="@+id/titleIcon"
-                    android:tint="@color/colorIconTintSecondary"
-                    android:layout_marginTop="@dimen/default_36"
-                    android:layout_width="@dimen/default_42"
-                    android:layout_height="@dimen/default_42"
-                    android:src="@drawable/ic_launcher_foreground" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/titleEditContainer"
                     android:layout_width="match_parent"
-                    android:layout_marginStart="@dimen/default_8"
-                    android:layout_marginEnd="@dimen/default_12"
-                    android:layout_marginTop="@dimen/default_24"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/titleIcon"
-                    android:hint="Title edit"
+                    android:layout_margin="@dimen/default_16"
+                    android:hint="@string/subject_newedit_title_hint"
                     app:setError="@{viewModel.titleError}">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -112,39 +107,39 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
-                    android:layout_marginTop="@dimen/default_32"
                     android:id="@+id/dateIcon"
-                    android:tint="@color/colorIconTintSecondary"
                     android:layout_width="@dimen/default_42"
                     android:layout_height="@dimen/default_42"
-                    android:layout_below="@+id/titleIcon"
-                    android:src="@drawable/ic_launcher_foreground" />
-
+                    android:layout_below="@+id/titleEditContainer"
+                    android:layout_marginStart="@dimen/default_8"
+                    android:layout_marginTop="@dimen/default_16"
+                    android:padding="@dimen/default_8"
+                    android:src="@drawable/ic_cal"
+                    android:tint="@color/colorIconTintSecondary" />
 
                 <Button
-                    android:layout_toEndOf="@+id/dateIcon"
                     android:id="@+id/dateSetterButton"
                     style="@style/ButtonStyle.Simpres.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/titleIcon"
-                    android:layout_marginTop="@dimen/default_32"
+                    android:layout_below="@+id/titleEditContainer"
                     android:layout_marginStart="@dimen/default_8"
+                    android:layout_marginTop="@dimen/default_16"
                     android:layout_marginEnd="@dimen/default_16"
+                    android:layout_toEndOf="@+id/dateIcon"
                     android:onClick="@{(v) -> viewModel.onOpenDatePicker(v)}"
                     android:text="@{viewModel.date}"
                     tools:text="Date setting" />
 
                 <CheckBox
                     android:id="@+id/checkPush"
-                    android:layout_toEndOf="@+id/dateIcon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/dateSetterButton"
                     android:layout_below="@+id/dateSetterButton"
+                    android:layout_alignStart="@+id/dateSetterButton"
                     android:layout_marginTop="@dimen/default_8"
-                    android:text="Enable Push Reminder" />
-
+                    android:layout_toEndOf="@+id/dateIcon"
+                    android:text="@string/subject_newedit_push_hint" />
 
 
             </RelativeLayout>

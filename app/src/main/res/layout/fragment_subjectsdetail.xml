@@ -25,10 +25,11 @@
                 android:layout_width="@dimen/default_48"
                 android:layout_height="@dimen/default_48"
                 android:layout_marginStart="@dimen/default_12"
+                android:padding="@dimen/default_12"
                 android:layout_marginTop="@dimen/default_12"
+                android:src="@drawable/ic_back"
                 android:background="@drawable/round_button_transparent_selector"
                 android:onClick="@{() -> viewModel.onBack()}"
-                android:src="@drawable/ic_launcher_foreground"
                 android:tint="@color/colorIconTintDefault" />
 
             <TextView
@@ -51,10 +52,11 @@
                 android:layout_height="@dimen/default_48"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/default_12"
+                android:padding="@dimen/default_12"
                 android:layout_marginEnd="@dimen/default_12"
                 android:background="@drawable/round_button_transparent_selector"
                 android:onClick="@{() -> viewModel.onEdit()}"
-                android:src="@drawable/ic_launcher_foreground"
+                android:src="@drawable/ic_edit"
                 android:tint="@color/colorIconTintDefault" />
 
 

@@ -24,8 +24,9 @@
 
     <style name="ButtonStyle.Simpres.Borderless" parent="TextAppearance.AppCompat.Button">
         <item name="android:background">@drawable/button_transculent_selector</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/colorButtonTextAlternative</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/font_default</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <!-- Text Styles -->

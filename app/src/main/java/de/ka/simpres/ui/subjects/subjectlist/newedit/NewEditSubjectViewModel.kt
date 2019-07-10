@@ -7,6 +7,7 @@ import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
+import de.ka.simpres.utils.NavigationUtils
 import de.ka.simpres.utils.NavigationUtils.BACK
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
@@ -24,7 +25,8 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
         currentSubject?.title = it
     }
-    val getDoneListener = ViewUtils.TextDoneListener { submit() }
+    val getDoneListener = ViewUtils.TextDoneListener { }
+    val navTitle = MutableLiveData<String>().apply { value = "" }
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
@@ -36,7 +38,10 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
     private var isUpdating = false
 
-    fun onBack() = navigateTo(BACK)
+    fun onBack(v: View) {
+        v.closeAttachedKeyboard()
+        navigateTo(NavigationUtils.BACK)
+    }
 
     fun submit(view: View? = null) {
         view?.closeAttachedKeyboard()
@@ -99,6 +104,11 @@ class NewEditSubjectViewModel : BaseViewModel() {
     }
 
     private fun updateTextViews() {
+        if (isUpdating) {
+            navTitle.postValue(resourcesProvider.getString(R.string.subject_newedit_edit))
+        } else {
+            navTitle.postValue(resourcesProvider.getString(R.string.subject_newedit_add))
+        }
         if (currentSubject != null) {
             title.postValue(currentSubject?.title)
             titleSelection.postValue(currentSubject?.title?.length)

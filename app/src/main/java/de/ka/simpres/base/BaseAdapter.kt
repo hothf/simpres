@@ -10,6 +10,7 @@ import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import de.ka.simpres.utils.resources.ResourcesProvider
+import kotlinx.android.synthetic.main.fragment_subjectsdetail.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 

@@ -17,7 +17,7 @@
     <color name="colorButtonTextAlternative">@color/colorAccent</color>
 
     <color name="colorIconTintDefault">#002200</color>
-    <color name="colorIconTintSecondary">#002200</color>
+    <color name="colorIconTintSecondary">#747474</color>
 
     <color name="colorIndicatorGreen">#5BB6A6</color>
     <color name="colorIndicatorYellow">#F7D24B</color>

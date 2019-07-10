@@ -10,6 +10,8 @@ import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.utils.NavigationUtils
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
+import de.ka.simpres.utils.resources.ResourcesProvider
+import org.koin.standalone.inject
 
 class NewEditIdeaViewModel : BaseViewModel() {
 
@@ -29,14 +31,21 @@ class NewEditIdeaViewModel : BaseViewModel() {
     val sum = MutableLiveData<String>().apply { value = "" }
     val sumError = MutableLiveData<String>().apply { value = "" }
     val sumSelection = MutableLiveData<Int>().apply { value = 0 }
+    val navTitle = MutableLiveData<String>().apply { value = "" }
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
 
+    private val resourcesProvider: ResourcesProvider by inject()
+
     private var currentIdea: IdeaItem? = null
     private var currentSubjectId: Long = -1
+    private var isUpdating = false
 
-    fun onBack() = navigateTo(NavigationUtils.BACK)
+    fun onBack(v: View) {
+        v.closeAttachedKeyboard()
+        navigateTo(NavigationUtils.BACK)
+    }
 
     fun submit(view: View? = null) {
 
@@ -59,6 +68,8 @@ class NewEditIdeaViewModel : BaseViewModel() {
         currentIdea = IdeaItem(0, subjectId)
         currentSubjectId = subjectId
 
+        isUpdating = false
+
         updateTextViews()
     }
 
@@ -69,10 +80,17 @@ class NewEditIdeaViewModel : BaseViewModel() {
         currentIdea = idea
         currentSubjectId = subjectId
 
+        isUpdating = true
+
         updateTextViews()
     }
 
     private fun updateTextViews() {
+        if (isUpdating) {
+            navTitle.postValue(resourcesProvider.getString(R.string.idea_newedit_edit))
+        } else {
+            navTitle.postValue(resourcesProvider.getString(R.string.idea_newedit_add))
+        }
         if (currentIdea != null) {
             title.postValue(currentIdea?.title)
             titleSelection.postValue(currentIdea?.title?.length)
