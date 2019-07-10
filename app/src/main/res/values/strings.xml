@@ -12,4 +12,6 @@
     <string name="idea_newedit_save">Save</string>
     <string name="idea_newedit_title_hint">Enter title</string>
     <string name="idea_newedit_sum_hint">Enter sum</string>
+
+    <string name="idea_list_add">+ new Idea</string>
 </resources>

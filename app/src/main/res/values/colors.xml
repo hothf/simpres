@@ -10,7 +10,7 @@
 
     <color name="colorSelected">#232323</color>
 
-    <color name="colorTextDefault">#888888</color>
+    <color name="colorTextDefault">#232323</color>
     <color name="colorTextSecondaryDefault">#333333</color>
     <color name="colorTextNav">#000000</color>
     <color name="colorButtonTextDefault">#ffffff</color>
@@ -25,10 +25,6 @@
     <color name="colorIndicatorOrange">#D88C48</color>
     <color name="colorIndicatorRed">#C2445B</color>
     <color name="colorIndicatorPurple">#AF62F6</color>
-
-
-
-
 
 
     <!-- remove someday! -->

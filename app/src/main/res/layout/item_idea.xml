@@ -10,50 +10,54 @@
             type="de.ka.simpres.ui.subjects.detail.idealist.IdeaItemViewModel" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_8"
-        android:layout_marginEnd="@dimen/default_8"
-        android:layout_marginTop="@dimen/default_8"
-        android:layout_marginBottom="@dimen/default_8"
-        android:background="@color/colorBackgroundPrimary"
+        android:layout_height="@dimen/default_58"
+        android:orientation="horizontal"
+        android:weightSum="1.0"
         android:clickable="true"
         android:focusable="true"
+        android:theme="@style/Theme.Simpres"
+        android:layout_marginStart="@dimen/default_8"
+        android:layout_marginEnd="@dimen/default_8"
         android:foreground="?android:attr/selectableItemBackground">
 
         <TextView
+            android:layout_gravity="center"
             android:id="@+id/sumText"
             style="@style/TextStyle.Simpres.Default"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/default_32"
-            android:layout_marginStart="@dimen/default_8"
+            android:layout_width="0dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_weight="0.2"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:text="@{viewModel.sum}"
             tools:text="Sum" />
 
         <TextView
+            android:layout_gravity="center"
             style="@style/TextStyle.Simpres.Default"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/default_32"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/default_16"
-            android:layout_marginEnd="@dimen/default_16"
-            android:layout_toStartOf="@+id/check"
-            android:layout_toEndOf="@+id/sumText"
-            android:gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:maxLines="1"
+            android:ellipsize="end"
+          android:layout_height="match_parent"
+            android:gravity="start|center_vertical"
             android:singleLine="true"
             android:text="@{viewModel.title}"
             tools:text="grgrgrgefw" />
 
         <CheckBox
+            android:text=""
+            android:layout_gravity="center"
+            android:gravity="center"
             android:id="@+id/check"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/default_32"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/default_8"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="match_parent"
             android:checked="@{viewModel.done}" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>
