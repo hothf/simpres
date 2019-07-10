@@ -83,12 +83,33 @@
                 android:layout_height="match_parent"
                 android:padding="@dimen/default_16">
 
+                <ImageView
+                    android:id="@+id/presIcon"
+                    android:layout_width="@dimen/default_42"
+                    android:layout_height="@dimen/default_42"
+                    android:layout_marginTop="@dimen/default_16"
+                    android:padding="@dimen/default_8"
+                    android:src="@drawable/ic_pres"
+                    android:tint="@color/colorIconTintSecondary" />
+
+                <View
+                    android:id="@+id/presDivider"
+                    android:layout_marginStart="@dimen/default_4"
+                    android:layout_toEndOf="@+id/presIcon"
+                    android:layout_alignTop="@+id/presIcon"
+                    android:layout_alignBottom="@+id/titleEditContainer"
+                    android:layout_width="@dimen/default_2"
+                    android:background="@color/colorIconTintSecondary"
+                    android:layout_height="wrap_content" />
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/titleEditContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_16"
+                    android:layout_toEndOf="@+id/presDivider"
+                    android:layout_marginTop="@dimen/default_16"
+                    android:layout_marginStart="@dimen/default_10"
                     android:hint="@string/subject_newedit_title_hint"
                     app:setError="@{viewModel.titleError}">
 
@@ -111,11 +132,20 @@
                     android:layout_width="@dimen/default_42"
                     android:layout_height="@dimen/default_42"
                     android:layout_below="@+id/titleEditContainer"
-                    android:layout_marginStart="@dimen/default_8"
-                    android:layout_marginTop="@dimen/default_16"
+                    android:layout_marginTop="@dimen/default_32"
                     android:padding="@dimen/default_8"
                     android:src="@drawable/ic_cal"
                     android:tint="@color/colorIconTintSecondary" />
+
+                <View
+                    android:id="@+id/dateDivider"
+                    android:layout_marginStart="@dimen/default_4"
+                    android:layout_toEndOf="@+id/dateIcon"
+                    android:layout_alignTop="@+id/dateIcon"
+                    android:layout_alignBottom="@+id/checkPush"
+                    android:layout_width="@dimen/default_2"
+                    android:background="@color/colorIconTintSecondary"
+                    android:layout_height="wrap_content" />
 
                 <Button
                     android:id="@+id/dateSetterButton"
@@ -123,10 +153,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/titleEditContainer"
-                    android:layout_marginStart="@dimen/default_8"
-                    android:layout_marginTop="@dimen/default_16"
+                    android:layout_marginStart="@dimen/default_12"
+                    android:layout_marginTop="@dimen/default_32"
                     android:layout_marginEnd="@dimen/default_16"
-                    android:layout_toEndOf="@+id/dateIcon"
+                    android:layout_toEndOf="@+id/dateDivider"
                     android:onClick="@{(v) -> viewModel.onOpenDatePicker(v)}"
                     android:text="@{viewModel.date}"
                     tools:text="Date setting" />
@@ -136,9 +166,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/dateSetterButton"
-                    android:layout_alignStart="@+id/dateSetterButton"
+                    android:layout_marginStart="@dimen/default_8"
                     android:layout_marginTop="@dimen/default_8"
-                    android:layout_toEndOf="@+id/dateIcon"
+                    android:layout_toEndOf="@+id/dateDivider"
                     android:text="@string/subject_newedit_push_hint" />
 
 

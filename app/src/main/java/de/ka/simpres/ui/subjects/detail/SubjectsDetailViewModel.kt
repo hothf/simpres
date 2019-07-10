@@ -16,13 +16,10 @@ import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.idealist.IdeaAdapter
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
-import de.ka.simpres.utils.AndroidSchedulerProvider
-import de.ka.simpres.utils.DecorationUtil
-import de.ka.simpres.utils.DragAndSwipeItemTouchHelperCallback
+import de.ka.simpres.utils.*
 import de.ka.simpres.utils.NavigationUtils.BACK
 import de.ka.simpres.utils.resources.ColorResources
 import de.ka.simpres.utils.resources.ResourcesProvider
-import de.ka.simpres.utils.with
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
@@ -129,7 +126,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
             touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
         }
         title.postValue("")
-        sum.postValue("0")
+        sum.postValue("")
 
         refresh()
     }
@@ -155,7 +152,15 @@ class SubjectsDetailViewModel : BaseViewModel() {
 
     private fun updateSubject(subject: SubjectItem) {
         title.postValue(subject.title)
-        sum.postValue(subject.sum)
+
+        if (subject.ideasCount > 0) {
+            if (subject.sum.toInt() > 0) {
+                sum.postValue("${subject.sum.toEuro()}, ${subject.ideasDoneCount}/${subject.ideasCount}")
+            } else {
+                sum.postValue("${subject.ideasDoneCount}/${subject.ideasCount}")
+            }
+        }
+
         color.postValue(Color.parseColor(subject.color))
     }
 

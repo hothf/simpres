@@ -12,6 +12,8 @@ fun Long.toTime(): String = DateFormat.getTimeInstance(DateFormat.SHORT).format(
 
 fun Long.toDateTime(): String = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(this))
 
+fun String.toEuro(): String = "$this $"
+
 
 /**
  * If the soft keyboard is currently open because of this view, it will be closed.
