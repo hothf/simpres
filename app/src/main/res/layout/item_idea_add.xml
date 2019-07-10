@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="de.ka.simpres.ui.subjects.detail.idealist.IdeaItemViewModel" />
+            type="de.ka.simpres.ui.subjects.detail.idealist.IdeaAddItemViewModel" />
     </data>
 
     <RelativeLayout
@@ -21,6 +21,7 @@
         android:foreground="?android:attr/selectableItemBackground">
 
         <TextView
+            android:layout_marginStart="@dimen/default_16"
             android:id="@+id/sumText"
             style="@style/TextStyle.Simpres.Default"
             android:textColor="@color/colorAccent"

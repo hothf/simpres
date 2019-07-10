@@ -3,43 +3,58 @@ package de.ka.simpres.ui.subjects.detail.idealist
 
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
+import de.ka.simpres.databinding.ItemIdeaAddBinding
 import de.ka.simpres.databinding.ItemIdeaBinding
 import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.IdeaItem
+import de.ka.simpres.ui.subjects.detail.idealist.IdeaBaseItemViewModel.Companion.ADD_ID
 import org.koin.standalone.inject
 
 class IdeaAdapter(
     owner: LifecycleOwner,
-    list: ArrayList<IdeaItemViewModel> = arrayListOf(),
+    list: ArrayList<IdeaBaseItemViewModel> = arrayListOf(),
     val listener: (IdeaItem) -> Unit,
     val subjectId: Long
 ) :
-    BaseAdapter<IdeaItemViewModel>(
+    BaseAdapter<IdeaBaseItemViewModel>(
         owner, list,
         IdeaAdapterDiffCallback()
     ) {
 
     private val repository: Repository by inject()
 
-    private var dispose: Boolean = false
+    override fun getItemViewType(position: Int): Int {
+        if (getItems()[position].id == ADD_ID) {
+            return 2
+        }
+
+        return super.getItemViewType(position)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-        return BaseViewHolder(ItemIdeaBinding.inflate(layoutInflater, parent, false))
+        if (viewType == 2) {
+            return BaseViewHolder(ItemIdeaAddBinding.inflate(layoutInflater, parent, false), false)
+        }
+
+        return BaseViewHolder(ItemIdeaBinding.inflate(layoutInflater, parent, false), true)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-        getItems()[position].apply {
+        val viewModel = getItems()[position] as? IdeaItemViewModel
+
+        viewModel?.let {
             DataBindingUtil.getBinding<ItemIdeaBinding>(holder.itemView)?.let { binding ->
                 binding.check.setOnCheckedChangeListener { _, checked ->
-                    item.done = checked
-                    repository.saveOrUpdateIdea(subjectId, item)
+                    viewModel.item.done = checked
+                    repository.saveOrUpdateIdea(subjectId, viewModel.item)
                 }
                 binding.item.setOnClickListener {
-                    listener(item)
+                    listener(viewModel.item)
                 }
             }
         }
@@ -48,21 +63,13 @@ class IdeaAdapter(
     }
 
     override fun onItemDismiss(position: Int) {
-        repository.removeIdea(subjectId, getItems()[position].item)
-        super.onItemDismiss(position)
-    }
+        val viewModel = getItems()[position] as? IdeaItemViewModel
 
-    /**
-     * Marks the list items for disposition. Only useful with lists that will be dynamically changed and if this adapter
-     * is reused.
-     *
-     * When the list is marked for disposition, the next call to [removeAddOrUpdate] will not update items, as they are
-     * disposed, leading to removing all items passed as parameter or removing all items.
-     * This is useful, if the adapter should be aware of a reset of all items but should not immediately remove all
-     * items to allow for a diff on the next [removeAddOrUpdate] call.
-     */
-    fun markForDisposition() {
-        dispose = true
+        viewModel?.let {
+            repository.removeIdea(subjectId, viewModel.item)
+        }
+
+        super.onItemDismiss(position)
     }
 
     /**
@@ -74,78 +81,24 @@ class IdeaAdapter(
     fun overwriteList(
         newItems: List<IdeaItem>
     ) {
-        setItems(newItems.map { detail -> IdeaItemViewModel(detail) })
-    }
-
-    /**
-     * Removes the specified [updatedItems] or inserts them or updates a part of it, depending on the flags given
-     * as parameters in this method and applies a [itemClickListener] if possible.
-     * Returns eventually added and removed items count summed up. Does not include a item updated count.
-     *
-     * **Note that if a prior call to [markForDisposition] has been made, this will remove all items of the list or add
-     * the items, regardless of update intentions, as the previously added items are all  marked for disposition.
-     * The marking itself is removed afterwards.**
-     *
-     * @param updatedItems the updated items to either remove, add, update or mix
-     * @param itemClickListener a item click listener to apply
-     * @param remove the flag to indicate that items should be removed
-     * @param onlyUpdate a flag to indicate that only updates should be made and no items should be added
-     * @param addToTop a flag indicating if adding a new item, it is added to the top of the list
-     * @param filter a optional filter for removing unwanted items
-     * @return the items removed and added count, updated items are not counted
-     */
-    fun removeAddOrUpdate(
-        updatedItems: List<IdeaItem>,
-        remove: Boolean,
-        onlyUpdate: Boolean,
-        addToTop: Boolean,
-        filter: ((IdeaItem) -> Boolean)? = null
-    ): Int {
-        val items: MutableList<IdeaItemViewModel> = getItems().toMutableList()
-        var itemsRemovedAndAddedCount = 0
-
-        if (dispose) {
-            items.clear()
-            dispose = false
-        }
-
-        updatedItems
-            .forEach { item ->
-                val foundIndex = items.indexOfFirst { it.item.id == item.id }
-                if (foundIndex > -1 && items.isNotEmpty()) {
-                    if (remove || (filter != null && !filter(item))) {          // remove
-                        items.removeAt(foundIndex)
-                        itemsRemovedAndAddedCount--
-                    } else {                                                    // update
-                        items[foundIndex] = IdeaItemViewModel(item)
-                    }
-                } else if ((!onlyUpdate && filter == null) || (filter != null && filter(item))) {   // add
-                    itemsRemovedAndAddedCount++
-                    if (addToTop) {
-                        items.add(0, IdeaItemViewModel(item))
-                    } else {
-                        items.add(IdeaItemViewModel(item))
-                    }
-                }
-            }
-
-        setItems(items.toList())
-
-        return itemsRemovedAndAddedCount
+        val newList: MutableList<IdeaBaseItemViewModel> =
+            newItems.map { detail -> IdeaItemViewModel(detail) }.toMutableList()
+        newList.add(0, IdeaAddItemViewModel())
+        setItems(newList)
     }
 }
 
-class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaItemViewModel>() {
+class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaBaseItemViewModel>() {
 
-    override fun areItemsTheSame(oldItem: IdeaItemViewModel, newItem: IdeaItemViewModel): Boolean {
-        return oldItem.item.id == newItem.item.id
+    override fun areItemsTheSame(oldItem: IdeaBaseItemViewModel, newItem: IdeaBaseItemViewModel): Boolean {
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-        oldItem: IdeaItemViewModel,
-        newItem: IdeaItemViewModel
+        oldItem: IdeaBaseItemViewModel,
+        newItem: IdeaBaseItemViewModel
     ): Boolean {
-        return oldItem.item == newItem.item
+        return oldItem == newItem
     }
 
 }

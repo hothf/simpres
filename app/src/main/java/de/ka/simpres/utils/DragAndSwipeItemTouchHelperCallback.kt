@@ -12,6 +12,10 @@ import kotlin.math.abs
  * An implementation of [ItemTouchHelper.Callback] that enables basic drag & drop and
  * swipe-to-dismiss. Drag events are automatically started by an item long-press.<br></br>
  *
+ * This callback will only work in conjunction with the usage of a [BaseAdapter] and [BaseViewHolder].
+ * If you want to disable the movement callbacks for certain viewHolders, create [BaseViewHolder] with its isMovable
+ * field set to false.
+ *
  * Converted to kotlin and edited for this project use by Thomas Hofmann.
  *
  * @author mainly Paul Burke (ipaulpro) on gihub
@@ -29,15 +33,19 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         // Set movement flags based on the layout manager
-        return if (recyclerView.layoutManager is GridLayoutManager) {
-            val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-            val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-            makeMovementFlags(dragFlags, swipeFlags)
-        } else {
-            val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-            val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-            makeMovementFlags(dragFlags, swipeFlags)
+        if (viewHolder is BaseViewHolder<*> && viewHolder.isMovable) {
+            return if (recyclerView.layoutManager is GridLayoutManager) {
+                val dragFlags =
+                    ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+                makeMovementFlags(dragFlags, swipeFlags)
+            } else {
+                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+                makeMovementFlags(dragFlags, swipeFlags)
+            }
         }
+        return makeMovementFlags(0, 0)
     }
 
     override fun onMove(recyclerView: RecyclerView, source: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder):

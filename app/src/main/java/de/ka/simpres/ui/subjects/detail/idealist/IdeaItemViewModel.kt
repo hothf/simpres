@@ -1,10 +1,11 @@
 package de.ka.simpres.ui.subjects.detail.idealist
 
-import de.ka.simpres.base.BaseItemViewModel
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.utils.toEuro
 
-class IdeaItemViewModel(val item: IdeaItem): BaseItemViewModel(){
+class IdeaItemViewModel(override val item: IdeaItem): IdeaBaseItemViewModel(){
+
+    override val id = item.id.toInt()
 
     val title = item.title
 

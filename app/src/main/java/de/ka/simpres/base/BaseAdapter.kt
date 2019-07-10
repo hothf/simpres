@@ -173,7 +173,8 @@ abstract class BaseItemViewModel(val type: Int = 0) : KoinComponent {
     }
 }
 
-open class BaseViewHolder<T : ViewDataBinding>(private val binding: T) : RecyclerView.ViewHolder(binding.root) {
+open class BaseViewHolder<T : ViewDataBinding>(private val binding: T, val isMovable: Boolean = true) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(owner: LifecycleOwner, viewModel: BaseItemViewModel) {
         binding.setVariable(BR.viewModel, viewModel)
