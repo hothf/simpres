@@ -10,7 +10,6 @@ import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import de.ka.simpres.utils.resources.ResourcesProvider
-import kotlinx.android.synthetic.main.fragment_subjectsdetail.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -173,7 +172,9 @@ abstract class BaseItemViewModel(val type: Int = 0) : KoinComponent {
     }
 }
 
-open class BaseViewHolder<T : ViewDataBinding>(private val binding: T, val isMovable: Boolean = true) :
+open class BaseViewHolder<T : ViewDataBinding>(
+    private val binding: T, val isDraggable: Boolean = true, val
+    isSwipeable: Boolean = true) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(owner: LifecycleOwner, viewModel: BaseItemViewModel) {

@@ -76,7 +76,6 @@
                 style="@style/CardStyle.Simpres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/add_button"
                 android:layout_below="@+id/titleText"
                 android:layout_marginStart="@dimen/default_16"
                 android:layout_marginTop="@dimen/default_24"
@@ -92,18 +91,14 @@
                         android:id="@+id/swipeRefresh"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
-                        android:layout_marginBottom="@dimen/default_16"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior"
                         app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
                         app:setRefreshing="@{viewModel.refresh}">
-
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerIdeas"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="@dimen/default_12"
                             android:adapter="@{viewModel.adapter}"
                             app:addItemDecoration="@{viewModel.itemDecoration}"
                             app:layoutManager="@{viewModel.layoutManager()}"
@@ -122,24 +117,6 @@
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
-
-
-            <Button
-                android:id="@+id/add_button"
-                style="@style/ButtonStyle.Simpres"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/spacer"
-                android:layout_marginStart="@dimen/default_16"
-                android:onClick="@{()->viewModel.onAddClick()}"
-                android:text="+ Idea" />
-
-            <View
-                android:id="@+id/spacer"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/default_16"
-                android:layout_alignParentBottom="true" />
-
 
         </RelativeLayout>
 

@@ -3,7 +3,7 @@ package de.ka.simpres.ui.subjects.detail.idealist
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.utils.toEuro
 
-class IdeaItemViewModel(override val item: IdeaItem): IdeaBaseItemViewModel(){
+class IdeaItemViewModel(val item: IdeaItem): IdeaBaseItemViewModel(){
 
     override val id = item.id.toInt()
 

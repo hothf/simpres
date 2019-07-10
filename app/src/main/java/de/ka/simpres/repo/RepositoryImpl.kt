@@ -71,7 +71,7 @@ class RepositoryImpl(db: AppDatabase) : Repository {
     }
 
     override fun getIdeasOf(subjectId: Long) {
-        val items = ideasBox.query().equal(IdeaItem_.subjectId, subjectId).build().find()
+        val items = ideasBox.query().equal(IdeaItem_.subjectId, subjectId).build().find().sortedBy { it.done }
         observableIdeas.onNext(IndicatedList(items))
     }
 

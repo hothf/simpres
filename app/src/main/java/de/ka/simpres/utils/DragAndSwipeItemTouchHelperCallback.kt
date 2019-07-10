@@ -13,13 +13,12 @@ import kotlin.math.abs
  * swipe-to-dismiss. Drag events are automatically started by an item long-press.<br></br>
  *
  * This callback will only work in conjunction with the usage of a [BaseAdapter] and [BaseViewHolder].
- * If you want to disable the movement callbacks for certain viewHolders, create [BaseViewHolder] with its isMovable
- * field set to false.
+ * If you want to disable the movement callbacks for certain viewHolders, create [BaseViewHolder] with its isDraggable
+ * field and isSwipeable set to false.
  *
- * Converted to kotlin and edited for this project use by Thomas Hofmann.
+ * Converted to kotlin and heavily edited for this project use by Thomas Hofmann.
  *
- * @author mainly Paul Burke (ipaulpro) on gihub
- * (https://github.com/iPaulPro/Android-ItemTouchHelper-Demo/tree/master/app/src/main/java/com/paulburke/android/itemtouchhelperdemo/helper)
+ * @author mainly Paul Burke (ipaulpro) on gihub, Thomas Hofmann
  */
 class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) : ItemTouchHelper.Callback() {
 
@@ -32,20 +31,23 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
     }
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-        // Set movement flags based on the layout manager
-        if (viewHolder is BaseViewHolder<*> && viewHolder.isMovable) {
-            return if (recyclerView.layoutManager is GridLayoutManager) {
-                val dragFlags =
+        var dragFlags = 0
+        var swipeFlags = 0
+        if (viewHolder is BaseViewHolder<*>) {
+            if (recyclerView.layoutManager is GridLayoutManager) {
+                dragFlags =
                     ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-                makeMovementFlags(dragFlags, swipeFlags)
+                swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
             } else {
-                val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-                val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
-                makeMovementFlags(dragFlags, swipeFlags)
+                dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
+                swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
             }
+            return makeMovementFlags(
+                if (viewHolder.isDraggable) dragFlags else 0,
+                if (viewHolder.isSwipeable) swipeFlags else 0
+            )
         }
-        return makeMovementFlags(0, 0)
+        return makeMovementFlags(dragFlags, swipeFlags)
     }
 
     override fun onMove(recyclerView: RecyclerView, source: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder):
@@ -54,13 +56,11 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
             return false
         }
 
-        // Notify the adapter of the move
         mAdapter.onItemMove(source.adapterPosition, target.adapterPosition)
         return true
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, i: Int) {
-        // Notify the adapter of the dismissal
         mAdapter.onItemDismiss(viewHolder.adapterPosition)
     }
 
@@ -84,17 +84,12 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
     }
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-        // We only want the active item to change
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE && viewHolder is BaseViewHolder<*>) {
-            // Let the view holder know that this item is being moved or dragged
-
             if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
                 viewHolder.onItemDrag()
             } else if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                 viewHolder.onItemSwipe()
             }
-
-
         }
 
         super.onSelectedChanged(viewHolder, actionState)
@@ -106,7 +101,6 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
         viewHolder.itemView.alpha = ALPHA_FULL
 
         if (viewHolder is BaseViewHolder<*>) {
-            // Tell the view holder it's time to restore the idle state
             viewHolder.onItemClear()
         }
     }

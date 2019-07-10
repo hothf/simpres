@@ -92,17 +92,17 @@ class NewEditIdeaViewModel : BaseViewModel() {
             navTitle.postValue(resourcesProvider.getString(R.string.idea_newedit_add))
         }
         if (currentIdea != null) {
-            title.postValue(currentIdea?.title)
-            titleSelection.postValue(currentIdea?.title?.length)
+            title.value =(currentIdea?.title)
+//            titleSelection.postValue( title.value?.length)
             titleError.postValue("")
-            sum.postValue(currentIdea?.sum)
-            sumSelection.postValue(currentIdea?.sum?.length)
+            sum.value = (currentIdea?.sum)
+//            sumSelection.postValue(sum.value?.length)
             sumError.postValue("")
         } else {
             title.postValue("")
             titleSelection.postValue(0)
             titleError.postValue("")
-            sum.postValue("")
+            sum.value = ("")
             sumSelection.postValue(0)
             sumError.postValue("")
         }

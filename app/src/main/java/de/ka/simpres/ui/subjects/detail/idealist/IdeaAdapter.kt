@@ -3,7 +3,6 @@ package de.ka.simpres.ui.subjects.detail.idealist
 
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import de.ka.simpres.base.BaseAdapter
@@ -19,12 +18,9 @@ class IdeaAdapter(
     owner: LifecycleOwner,
     list: ArrayList<IdeaBaseItemViewModel> = arrayListOf(),
     val listener: (IdeaItem) -> Unit,
+    val add: () -> Unit,
     val subjectId: Long
-) :
-    BaseAdapter<IdeaBaseItemViewModel>(
-        owner, list,
-        IdeaAdapterDiffCallback()
-    ) {
+) : BaseAdapter<IdeaBaseItemViewModel>(owner, list, IdeaAdapterDiffCallback()) {
 
     private val repository: Repository by inject()
 
@@ -38,16 +34,30 @@ class IdeaAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         if (viewType == 2) {
-            return BaseViewHolder(ItemIdeaAddBinding.inflate(layoutInflater, parent, false), false)
+            return BaseViewHolder(
+                ItemIdeaAddBinding.inflate(layoutInflater, parent, false),
+                isDraggable = false,
+                isSwipeable = false
+            )
         }
 
-        return BaseViewHolder(ItemIdeaBinding.inflate(layoutInflater, parent, false), true)
+        return BaseViewHolder(
+            ItemIdeaBinding.inflate(layoutInflater, parent, false),
+            isDraggable = false,
+            isSwipeable = true
+        )
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-        val viewModel = getItems()[position] as? IdeaItemViewModel
+        val viewModel = getItems()[position]
 
-        viewModel?.let {
+        if (viewModel is IdeaAddItemViewModel) {
+            DataBindingUtil.getBinding<ItemIdeaAddBinding>(holder.itemView)?.let { binding ->
+                binding.item.setOnClickListener {
+                    add()
+                }
+            }
+        } else if (viewModel is IdeaItemViewModel) {
             DataBindingUtil.getBinding<ItemIdeaBinding>(holder.itemView)?.let { binding ->
                 binding.check.setOnCheckedChangeListener { _, checked ->
                     viewModel.item.done = checked
@@ -73,10 +83,9 @@ class IdeaAdapter(
     }
 
     /**
-     * Overwrites the current list with the given [newItems] and applies a [itemClickListener] to them.
+     * Overwrites the current list with the given [newItems].
      *
      * @param newItems the new items to append or replace
-     * @param itemClickListener a click listener for individual items
      */
     fun overwriteList(
         newItems: List<IdeaItem>

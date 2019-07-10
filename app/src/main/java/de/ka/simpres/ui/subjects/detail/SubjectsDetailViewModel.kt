@@ -121,7 +121,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         currentSubjectId = subjectId
 
         // resets all current saved details, should be fairly impossible to get here without a deep link / wrong id
-        adapter.value = IdeaAdapter(owner = owner, subjectId = subjectId, listener = ::onIdeaClick)
+        adapter.value = IdeaAdapter(owner = owner, subjectId = subjectId, listener = ::onIdeaClick, add = ::onAddClick)
         adapter.value?.apply {
             touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
         }
