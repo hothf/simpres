@@ -16,11 +16,11 @@
 
         <ImageView
             android:id="@+id/deleteIcon"
-            android:tint="@color/colorIconTintSecondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_pres" />
+            android:src="@drawable/ic_delete"
+            android:tint="@color/colorAccent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/item"

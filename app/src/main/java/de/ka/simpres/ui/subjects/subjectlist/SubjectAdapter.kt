@@ -164,6 +164,7 @@ class SubjectViewHolder<T : ItemSubjectBinding>(private val binding: T) : BaseVi
 
     override fun onHolderClear() {
         binding.deleteIcon.alpha = 0.0f
+        binding.deleteIcon.alpha = 1.0f
 
         binding.item.setCardBackgroundColor(
             ContextCompat.getColor(
@@ -177,8 +178,9 @@ class SubjectViewHolder<T : ItemSubjectBinding>(private val binding: T) : BaseVi
 
     override fun onHolderSwipe(dX: Float, dY: Float, actionState: Int) {
         swipeableView?.let {
-            val alpha = 0.0f + abs(dX) / it.width
-            binding.deleteIcon.alpha = alpha
+            val change = abs(dX) / it.width
+            binding.deleteIcon.alpha = 0.0f + change
+            binding.item.alpha = 1.0f - change
         }
 
         super.onHolderSwipe(dX, dY, actionState)
