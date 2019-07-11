@@ -12,8 +12,11 @@ import kotlinx.coroutines.launch
 
 class RepositoryImpl(db: AppDatabase) : Repository {
 
-    private val subjectsBox = db.get().boxFor<SubjectItem>()
     private val ideasBox = db.get().boxFor<IdeaItem>()
+    private val subjectsBox = db.get().boxFor<SubjectItem>()
+
+    private var lastRemovedIdea: IdeaItem? = null
+    private var lastRemovedSubjectItem: SubjectItem? = null
 
     override val observableSubjects =
         PublishSubject.create<IndicatedList<SubjectItem, List<SubjectItem>>>()
@@ -63,6 +66,7 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         findSubjectById(subject.id)?.let {
             ideasBox.remove(ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find())
             subjectsBox.remove(it)
+            lastRemovedSubjectItem = it
             val list = subjectsBox.all.toMutableList()
             list.forEach { subject -> subject.position = subject.position - 1 }
             subjectsBox.put(list)
@@ -78,6 +82,7 @@ class RepositoryImpl(db: AppDatabase) : Repository {
     override fun removeIdea(subjectId: Long, ideaItem: IdeaItem) {
         findSubjectById(subjectId)?.let { subject ->
             ideasBox.remove(ideaItem)
+            lastRemovedIdea = ideaItem
 
             getIdeasOf(subjectId)
 
@@ -95,13 +100,22 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         }
     }
 
+    override fun undoDeleteSubject() {
+        lastRemovedSubjectItem?.let {
+            val list = subjectsBox.all.toMutableList()
+            list.forEach { it.position = it.position + 1 }
+            subjectsBox.put(list)
+            subjectsBox.put(it)
+            getSubjects()
+        }
+    }
+
     private fun recalculateSum(subject: SubjectItem) {
         val ideas = ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find()
 
         subject.sum = ideas
             .filter { !it.done }
             .map {
-
                 if (it.sum.isBlank()) {
                     0
                 } else {

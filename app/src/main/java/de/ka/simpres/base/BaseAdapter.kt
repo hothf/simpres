@@ -207,5 +207,8 @@ abstract class BaseViewHolder<T : ViewDataBinding>(private val binding: T) :
 
     @CallSuper
     open fun onHolderClear() {
+        swipeableView?.let {
+            it.translationX = 0.0f
+        }
     }
 }

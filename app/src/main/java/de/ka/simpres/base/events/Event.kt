@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
+import de.ka.simpres.utils.Snacker
 import kotlin.reflect.KClass
 
 /**
@@ -12,7 +13,9 @@ import kotlin.reflect.KClass
 sealed class Event
 
 data class ShowSnack(
-    val message: String
+    val message: String,
+    val type: Snacker.SnackType,
+    val action: (() -> Unit)? = null
 ) : Event()
 
 data class Back(val fired: Boolean) : Event()

@@ -74,6 +74,8 @@ abstract class BaseFragment<out T : ViewDataBinding, E : BaseViewModel>(clazz: K
 
                 when (it) {
                     is NavigateTo -> navigateTo(it)
+                    is ShowSnack -> (requireActivity() as? BaseActivity<*, *>)
+                        ?.onShowSnack(view?.findFocus() ?: binding.root, it)
                     is Open -> open(it)
                     is Handle<*> -> handle(it.element)
                 }
@@ -103,7 +105,7 @@ abstract class BaseFragment<out T : ViewDataBinding, E : BaseViewModel>(clazz: K
         }
     }
 
-    fun navigateTo(navigateToEvent: NavigateTo) {
+    private fun navigateTo(navigateToEvent: NavigateTo) {
 
         val navController = view?.findNavController()
 

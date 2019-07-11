@@ -38,6 +38,11 @@ interface Repository {
     fun saveOrUpdateIdea(subjectId: Long, idea: IdeaItem)
 
     fun findSubjectById(subjectId: Long): SubjectItem?
+
+    /**
+     * Will try to undo the last removed subject action. This is only possible for a limited data set and time frame.
+     */
+    fun undoDeleteSubject()
 }
 
 /**

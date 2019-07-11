@@ -152,26 +152,16 @@ class SubjectViewHolder<T : ItemSubjectBinding>(private val binding: T) : BaseVi
     override var isSwipeable = true
 
     override fun onHolderDrag() {
-        binding.item.setCardBackgroundColor(
-            ContextCompat.getColor(
-                itemView.context,
-                R.color.colorBackgroundPrimary
-            )
-        )
+        binding.item.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorBackgroundPrimary))
 
         super.onHolderDrag()
     }
 
     override fun onHolderClear() {
         binding.deleteIcon.alpha = 0.0f
-        binding.deleteIcon.alpha = 1.0f
+        swipeableView?.alpha = 1.0f
 
-        binding.item.setCardBackgroundColor(
-            ContextCompat.getColor(
-                itemView.context,
-                R.color.colorBackgroundSecondary
-            )
-        )
+        binding.item.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorBackgroundSecondary))
 
         super.onHolderClear()
     }

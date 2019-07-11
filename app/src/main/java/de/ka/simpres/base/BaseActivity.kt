@@ -35,7 +35,7 @@ abstract class BaseActivity<out T : ViewDataBinding, E : BaseViewModel>(clazz: K
 
         binding.apply {
             setVariable(BR.viewModel, viewModel)
-            setLifecycleOwner(this@BaseActivity)
+            lifecycleOwner = this@BaseActivity
             executePendingBindings()
         }
 

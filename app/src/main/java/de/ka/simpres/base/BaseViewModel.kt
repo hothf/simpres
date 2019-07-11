@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import de.ka.simpres.base.events.*
 import de.ka.simpres.repo.Repository
+import de.ka.simpres.utils.Snacker
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -49,6 +50,14 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
                 navigationPopupToId = popupToId
             )
         )
+    }
+
+    fun showSnack(
+        message: String,
+        snackType: Snacker.SnackType = Snacker.SnackType.DEFAULT,
+        action: (() -> Unit)? = null
+    ) {
+        queueEvent(ShowSnack(message, snackType, action))
     }
 
     /**

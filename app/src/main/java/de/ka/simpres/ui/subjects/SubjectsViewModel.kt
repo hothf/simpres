@@ -15,11 +15,8 @@ import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.ui.subjects.subjectlist.SubjectAdapter
 import de.ka.simpres.ui.subjects.subjectlist.SubjectItemViewModel
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
-import de.ka.simpres.utils.AndroidSchedulerProvider
-import de.ka.simpres.utils.DecorationUtil
-import de.ka.simpres.utils.DragAndSwipeItemTouchHelperCallback
+import de.ka.simpres.utils.*
 import de.ka.simpres.utils.resources.ResourcesProvider
-import de.ka.simpres.utils.with
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
@@ -94,6 +91,10 @@ class SubjectsViewModel : BaseViewModel() {
                     hideLoading()
                     adapter.value?.let {
                         val updateOnly = if (result.isFiltered) true else result.update
+
+                        if (result.remove) {
+                            showSnack("Redo this shit", Snacker.SnackType.DEFAULT) { repository.undoDeleteSubject()  }
+                        }
 
                         it.removeAddOrUpdate(
                             result.list,

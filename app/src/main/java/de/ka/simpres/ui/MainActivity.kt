@@ -1,14 +1,11 @@
 package de.ka.simpres.ui
 
-import android.graphics.Color
-import android.os.Bundle
+import android.view.View
 import androidx.navigation.Navigation.findNavController
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseActivity
 import de.ka.simpres.databinding.ActivityMainBinding
-import android.view.WindowManager
-
-
+import de.ka.simpres.base.events.ShowSnack
 
 
 class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>(MainViewModel::class) {
@@ -17,7 +14,7 @@ class MainActivity: BaseActivity<ActivityMainBinding, MainViewModel>(MainViewMod
 
     override fun onSupportNavigateUp() = findNavController(this, R.id.main_nav_host_fragment).navigateUp()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onShowSnack(view: View, showSnack: ShowSnack) {
+        getBinding()?.mainSnacker?.reveal(showSnack)
     }
 }
