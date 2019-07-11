@@ -2,6 +2,7 @@ package de.ka.simpres.utils
 
 import android.graphics.Rect
 import android.view.View
+import android.widget.RelativeLayout
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import de.ka.simpres.R
@@ -29,10 +30,10 @@ class DecorationUtil(
             return
         }
 
-        val layoutParams = child.layoutParams as RecyclerView.LayoutParams
+        val layoutParams = child.layoutParams as? RelativeLayout.LayoutParams
 
         // no position, leave it alone
-        if (itemPosition == RecyclerView.NO_POSITION) {
+        if (itemPosition == RecyclerView.NO_POSITION || layoutParams == null) {
             return
         }
 

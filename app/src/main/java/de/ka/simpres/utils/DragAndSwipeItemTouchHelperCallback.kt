@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
-import kotlin.math.abs
 
 /**
  * An implementation of [ItemTouchHelper.Callback] that enables basic drag & drop and
@@ -73,11 +72,8 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-            // Fade out the view as it is swiped out of the parent's bounds
-            val alpha = ALPHA_FULL - abs(dX) / viewHolder.itemView.width
-            viewHolder.itemView.alpha = alpha
-            viewHolder.itemView.translationX = dX
+        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE && viewHolder is BaseViewHolder<*>) {
+            viewHolder.onHolderSwipe(dX, dY, actionState)
         } else {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         }
@@ -86,9 +82,7 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE && viewHolder is BaseViewHolder<*>) {
             if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-                viewHolder.onItemDrag()
-            } else if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                viewHolder.onItemSwipe()
+                viewHolder.onHolderDrag()
             }
         }
 
@@ -98,14 +92,8 @@ class DragAndSwipeItemTouchHelperCallback(private val mAdapter: BaseAdapter<*>) 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
 
-        viewHolder.itemView.alpha = ALPHA_FULL
-
         if (viewHolder is BaseViewHolder<*>) {
-            viewHolder.onItemClear()
+            viewHolder.onHolderClear()
         }
-    }
-
-    companion object {
-        const val ALPHA_FULL = 1.0f
     }
 }

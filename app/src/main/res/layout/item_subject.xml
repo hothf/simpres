@@ -10,70 +10,83 @@
             type="de.ka.simpres.ui.subjects.subjectlist.SubjectItemViewModel" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/item"
-        style="@style/CardStyle.Simpres"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:minHeight="@dimen/default_112"
-        tools:cardBackgroundColor="@color/defaultBackgroundPrimary">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:id="@+id/gg"
+        <ImageView
+            android:id="@+id/deleteIcon"
+            android:tint="@color/colorIconTintSecondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_pres" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/item"
+            style="@style/CardStyle.Simpres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_8">
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:minHeight="@dimen/default_112"
+            tools:cardBackgroundColor="@color/defaultBackgroundPrimary">
 
-            <View
-                android:id="@+id/swipeHandle"
-                android:layout_width="1dp"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:id="@+id/title"
-                style="@style/TextStyle.Simpres.Secondary.Bold.Large"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/default_48"
-                android:layout_margin="@dimen/default_12"
-                android:gravity="center_vertical"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="@{viewModel.title}"
-                tools:text="Title" />
-
-            <ProgressBar
-                android:id="@+id/progress"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            <RelativeLayout
+                android:id="@+id/gg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
-                android:progress="@{viewModel.progress}"
-                android:progressTint="@{viewModel.color}"
-                android:layout_margin="@dimen/default_12" />
+                android:layout_margin="@dimen/default_8">
 
-            <TextView
-                android:id="@+id/sum"
-                style="@style/TextStyle.Simpres.Default.Small.Caps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/progress"
-                android:layout_margin="@dimen/default_12"
-                android:text="@{viewModel.sum}"
-                tools:text="Sum" />
+                <View
+                    android:id="@+id/swipeHandle"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/date"
-                style="@style/TextStyle.Simpres.Default.Small.Caps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/progress"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="@dimen/default_12"
-                android:text="@{viewModel.date}"
-                tools:text="Date" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/TextStyle.Simpres.Secondary.Bold.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/default_48"
+                    android:layout_margin="@dimen/default_12"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:text="@{viewModel.title}"
+                    tools:text="Title" />
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/title"
+                    android:layout_margin="@dimen/default_12"
+                    android:progress="@{viewModel.progress}"
+                    android:progressTint="@{viewModel.color}" />
+
+                <TextView
+                    android:id="@+id/sum"
+                    style="@style/TextStyle.Simpres.Default.Small.Caps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/progress"
+                    android:layout_margin="@dimen/default_12"
+                    android:text="@{viewModel.sum}"
+                    tools:text="Sum" />
+
+                <TextView
+                    android:id="@+id/date"
+                    style="@style/TextStyle.Simpres.Default.Small.Caps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/progress"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/default_12"
+                    android:text="@{viewModel.date}"
+                    tools:text="Date" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 </layout>

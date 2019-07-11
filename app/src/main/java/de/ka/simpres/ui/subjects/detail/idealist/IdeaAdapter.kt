@@ -1,8 +1,10 @@
 package de.ka.simpres.ui.subjects.detail.idealist
 
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import de.ka.simpres.base.BaseAdapter
@@ -11,7 +13,6 @@ import de.ka.simpres.databinding.ItemIdeaAddBinding
 import de.ka.simpres.databinding.ItemIdeaBinding
 import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.IdeaItem
-import de.ka.simpres.ui.subjects.detail.idealist.IdeaBaseItemViewModel.Companion.ADD_ID
 import org.koin.standalone.inject
 
 class IdeaAdapter(
@@ -25,7 +26,7 @@ class IdeaAdapter(
     private val repository: Repository by inject()
 
     override fun getItemViewType(position: Int): Int {
-        if (getItems()[position].id == ADD_ID) {
+        if (getItems()[position] is IdeaAddItemViewModel) {
             return 2
         }
 
@@ -33,19 +34,11 @@ class IdeaAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-        if (viewType == 2) {
-            return BaseViewHolder(
-                ItemIdeaAddBinding.inflate(layoutInflater, parent, false),
-                isDraggable = false,
-                isSwipeable = false
-            )
+        return if (viewType == 2) {
+            AddIdeaViewHolder(ItemIdeaAddBinding.inflate(layoutInflater, parent, false))
+        } else {
+            IdeaViewHolder(ItemIdeaBinding.inflate(layoutInflater, parent, false))
         }
-
-        return BaseViewHolder(
-            ItemIdeaBinding.inflate(layoutInflater, parent, false),
-            isDraggable = false,
-            isSwipeable = true
-        )
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
@@ -110,4 +103,16 @@ class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaBaseItemViewModel>() {
         return oldItem == newItem
     }
 
+}
+
+class IdeaViewHolder<T : ItemIdeaBinding>(binding: T) : BaseViewHolder<T>(binding) {
+    override var swipeableView: View? = binding.swipeAble
+    override var isDraggable = false
+    override var isSwipeable = true
+}
+
+class AddIdeaViewHolder<T : ViewDataBinding>(binding: T) : BaseViewHolder<T>(binding) {
+    override var swipeableView: View? = null
+    override var isDraggable = false
+    override var isSwipeable = false
 }

@@ -3,6 +3,8 @@ package de.ka.simpres.base
 import androidx.databinding.ViewDataBinding
 
 import android.view.LayoutInflater
+import android.view.View
+import androidx.annotation.CallSuper
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.*
 import de.ka.simpres.BR
@@ -12,7 +14,7 @@ import org.koin.standalone.inject
 import de.ka.simpres.utils.resources.ResourcesProvider
 import java.util.*
 import kotlin.collections.ArrayList
-
+import kotlin.math.abs
 
 abstract class BaseAdapter<E : BaseItemViewModel>(
     private val owner: LifecycleOwner,
@@ -35,6 +37,7 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
         }
     }
 
+    @CallSuper
     open fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
         if (diffCallback != null) {
             val list = differ!!.currentList.toMutableList()
@@ -47,6 +50,7 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
         return true
     }
 
+    @CallSuper
     open fun onItemDismiss(position: Int) {
         if (diffCallback != null) {
             // let subclasses handle it
@@ -155,6 +159,7 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
     }
 }
 
+
 /**
  * These viewModels are not created through the android viewmodel framework but still may be used
  * with [MutableLiveData<T>].
@@ -172,10 +177,12 @@ abstract class BaseItemViewModel(val type: Int = 0) : KoinComponent {
     }
 }
 
-open class BaseViewHolder<T : ViewDataBinding>(
-    private val binding: T, val isDraggable: Boolean = true, val
-    isSwipeable: Boolean = true) :
+abstract class BaseViewHolder<T : ViewDataBinding>(private val binding: T) :
     RecyclerView.ViewHolder(binding.root) {
+
+    abstract var isDraggable: Boolean
+    abstract var isSwipeable: Boolean
+    abstract var swipeableView: View?
 
     fun bind(owner: LifecycleOwner, viewModel: BaseItemViewModel) {
         binding.setVariable(BR.viewModel, viewModel)
@@ -183,15 +190,22 @@ open class BaseViewHolder<T : ViewDataBinding>(
         binding.executePendingBindings()
     }
 
-    open fun onItemDrag() {
+    open fun onHolderDrag() {
         // do implement in sub class
     }
 
-    open fun onItemSwipe() {
-        // do implement in sub class
+    @CallSuper
+    open fun onHolderSwipe(
+        dX: Float,
+        dY: Float,
+        actionState: Int
+    ) {
+        swipeableView?.let {
+            it.translationX = dX
+        }
     }
 
-    open fun onItemClear() {
-        // do implement in sub class
+    @CallSuper
+    open fun onHolderClear() {
     }
 }

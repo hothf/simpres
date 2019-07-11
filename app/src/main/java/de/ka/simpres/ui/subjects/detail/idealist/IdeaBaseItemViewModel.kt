@@ -14,8 +14,4 @@ abstract class IdeaBaseItemViewModel : BaseItemViewModel() {
     override fun hashCode(): Int {
         return id.hashCode()
     }
-
-    companion object {
-        const val ADD_ID = -999
-    }
 }

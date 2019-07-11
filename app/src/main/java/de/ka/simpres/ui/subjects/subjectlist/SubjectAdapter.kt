@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import de.ka.simpres.R
@@ -15,6 +14,7 @@ import de.ka.simpres.databinding.ItemSubjectBinding
 import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.SubjectItem
 import org.koin.standalone.inject
+import kotlin.math.abs
 
 /**
  * Adapter for displaying [SubjectItemViewModel]s.
@@ -145,28 +145,42 @@ class SubjectAdapterDiffCallback : DiffUtil.ItemCallback<SubjectItemViewModel>()
     }
 }
 
-class SubjectViewHolder<T : ViewDataBinding>(private val binding: T) : BaseViewHolder<T>(binding) {
-    override fun onItemDrag() {
-        super.onItemDrag()
+class SubjectViewHolder<T : ItemSubjectBinding>(private val binding: T) : BaseViewHolder<T>(binding) {
 
-        val viewBinding = binding as ItemSubjectBinding
-        viewBinding.item.setCardBackgroundColor(
+    override var swipeableView: View? = binding.item
+    override var isDraggable = true
+    override var isSwipeable = true
+
+    override fun onHolderDrag() {
+        binding.item.setCardBackgroundColor(
             ContextCompat.getColor(
                 itemView.context,
                 R.color.colorBackgroundPrimary
             )
         )
+
+        super.onHolderDrag()
     }
 
-    override fun onItemClear() {
-        super.onItemClear()
+    override fun onHolderClear() {
+        binding.deleteIcon.alpha = 0.0f
 
-        val viewBinding = binding as ItemSubjectBinding
-        viewBinding.item.setCardBackgroundColor(
+        binding.item.setCardBackgroundColor(
             ContextCompat.getColor(
                 itemView.context,
                 R.color.colorBackgroundSecondary
             )
         )
+
+        super.onHolderClear()
+    }
+
+    override fun onHolderSwipe(dX: Float, dY: Float, actionState: Int) {
+        swipeableView?.let {
+            val alpha = 0.0f + abs(dX) / it.width
+            binding.deleteIcon.alpha = alpha
+        }
+
+        super.onHolderSwipe(dX, dY, actionState)
     }
 }
