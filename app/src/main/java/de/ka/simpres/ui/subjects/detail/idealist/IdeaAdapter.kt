@@ -89,9 +89,20 @@ class IdeaAdapter(
     fun overwriteList(
         newItems: List<IdeaItem>
     ) {
+        var indexOfFirstDone = -1
         val newList: MutableList<IdeaBaseItemViewModel> =
-            newItems.map { detail -> IdeaItemViewModel(detail) }.toMutableList()
-        newList.add(0, IdeaAddItemViewModel())
+            newItems.mapIndexed { index, detail ->
+                if (detail.done && indexOfFirstDone == -1) {
+                    indexOfFirstDone = index
+                }
+                IdeaItemViewModel(detail)
+            }.toMutableList()
+
+        if (indexOfFirstDone != -1) {
+            newList.add(indexOfFirstDone, IdeaAddItemViewModel())
+        } else {
+            newList.add(IdeaAddItemViewModel())
+        }
         setItems(newList)
     }
 }
@@ -108,7 +119,6 @@ class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaBaseItemViewModel>() {
     ): Boolean {
         return oldItem == newItem
     }
-
 }
 
 class IdeaViewHolder<T : ItemIdeaBinding>(val binding: T) : BaseViewHolder<T>(binding) {
@@ -129,7 +139,7 @@ class IdeaViewHolder<T : ItemIdeaBinding>(val binding: T) : BaseViewHolder<T>(bi
     override fun onHolderSwipe(dX: Float, dY: Float, actionState: Int) {
         swipeableView?.let {
             val change = abs(dX) / it.width
-            if (dX > 0){
+            if (dX > 0) {
                 binding.deleteIconRight.alpha = 0.0f
                 binding.deleteIconLeft.alpha = 0.5f + change
                 binding.deleteIconLeft.scaleX = min(0.5f + change, 1.0f)
@@ -140,9 +150,6 @@ class IdeaViewHolder<T : ItemIdeaBinding>(val binding: T) : BaseViewHolder<T>(bi
                 binding.deleteIconRight.scaleX = min(0.5f + change, 1.0f)
                 binding.deleteIconRight.scaleY = min(0.5f + change, 1.0f)
             }
-
-
-
         }
 
         super.onHolderSwipe(dX, dY, actionState)

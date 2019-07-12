@@ -14,14 +14,12 @@
         android:id="@+id/item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_58"
-        android:layout_marginStart="@dimen/default_8"
-        android:layout_marginEnd="@dimen/default_8"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground">
 
         <TextView
-            android:layout_marginStart="@dimen/default_16"
+            android:layout_marginStart="@dimen/default_62"
             android:id="@+id/sumText"
             style="@style/TextStyle.Simpres.Default"
             android:textColor="@color/colorAccent"

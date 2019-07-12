@@ -12,7 +12,7 @@ fun Long.toTime(): String = DateFormat.getTimeInstance(DateFormat.SHORT).format(
 
 fun Long.toDateTime(): String = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(this))
 
-fun String.toEuro(): String = "$this $"
+fun String.toEuro(): String = "$this €"
 
 
 /**
