@@ -167,7 +167,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/dateSetterButton"
                     android:layout_marginStart="@dimen/default_8"
+                    android:onCheckedChanged="@{viewModel.getCheckedChangeListener}"
                     android:layout_marginTop="@dimen/default_8"
+                    android:checked="@{viewModel.pushEnabled}"
                     android:layout_toEndOf="@+id/dateDivider"
                     android:text="@string/subject_newedit_push_hint" />
 

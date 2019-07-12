@@ -2,6 +2,7 @@ package de.ka.simpres.ui.subjects.subjectlist.newedit
 
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
@@ -25,12 +26,16 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
         currentSubject?.title = it
     }
+    val getCheckedChangeListener = CompoundButton.OnCheckedChangeListener { _, checked ->
+        currentSubject?.pushEnabled = checked
+    }
     val getDoneListener = ViewUtils.TextDoneListener { }
     val navTitle = MutableLiveData<String>().apply { value = "" }
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
     val date = MutableLiveData<String>().apply { value = "" }
+    val pushEnabled = MutableLiveData<Boolean>().apply { value = false }
 
     val resourcesProvider: ResourcesProvider by inject()
 
@@ -117,11 +122,13 @@ class NewEditSubjectViewModel : BaseViewModel() {
             titleSelection.postValue(currentSubject?.title?.length)
             titleError.postValue("")
             date.postValue(currentSubject?.date?.toDate())
+            pushEnabled.postValue(currentSubject?.pushEnabled)
         } else {
             title.postValue("")
             titleSelection.postValue(0)
             titleError.postValue("")
             date.postValue(System.currentTimeMillis().toDate())
+            pushEnabled.postValue(true)
         }
     }
 
