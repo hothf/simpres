@@ -15,6 +15,7 @@ import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.SubjectItem
 import org.koin.standalone.inject
 import kotlin.math.abs
+import kotlin.math.min
 
 /**
  * Adapter for displaying [SubjectItemViewModel]s.
@@ -105,6 +106,8 @@ class SubjectViewHolder<T : ItemSubjectBinding>(private val binding: T) : BaseVi
 
     override fun onHolderClear() {
         binding.deleteIcon.alpha = 0.0f
+        binding.deleteIcon.scaleX = 0.0f
+        binding.deleteIcon.scaleY = 0.0f
         swipeableView?.alpha = 1.0f
 
         binding.item.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorBackgroundSecondary))
@@ -116,6 +119,8 @@ class SubjectViewHolder<T : ItemSubjectBinding>(private val binding: T) : BaseVi
         swipeableView?.let {
             val change = abs(dX) / it.width
             binding.deleteIcon.alpha = 0.0f + change
+            binding.deleteIcon.scaleX = min(0.0f + change, 1.0f)
+            binding.deleteIcon.scaleY = min(0.0f + change, 1.0f)
             binding.item.alpha = 1.0f - change
         }
 
