@@ -34,7 +34,7 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
                 val sharedTransitionView = binding.item
                 ViewCompat.setTransitionName(sharedTransitionView, this.item.id.toString())
                 binding.item.setOnClickListener {
-                    listener(this, sharedTransitionView)
+                    click(this, sharedTransitionView)
                 }
             }
         }
@@ -53,7 +53,9 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
     }
 
     override fun onItemDismiss(position: Int) {
-        repository.removeSubject(getItems()[position].item)
+        val viewModel = getItems()[position]
+        repository.removeSubject(viewModel.item)
+        viewModel.remove(viewModel)
         super.onItemDismiss(position)
     }
 
@@ -61,13 +63,16 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
      * Overwrites the current list with the given [newItems].
      *
      * @param newItems the new items to append, update or replace
+     * @param click a click listener
+     * @param remove a listener for a request to remove the item
      */
     fun overwriteList(
         newItems: List<SubjectItem>,
-        listener: (SubjectItemViewModel, View) -> Unit
+        click: (SubjectItemViewModel, View) -> Unit,
+        remove: (SubjectItemViewModel) -> Unit
     ) {
         val newList: MutableList<SubjectItemViewModel> =
-            newItems.map { SubjectItemViewModel(it, listener) }.toMutableList()
+            newItems.map { SubjectItemViewModel(it, click, remove) }.toMutableList()
         setItems(newList)
     }
 }

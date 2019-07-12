@@ -7,8 +7,11 @@ import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.utils.toDate
 import de.ka.simpres.utils.toEuro
 
-class SubjectItemViewModel(val item: SubjectItem, val listener: (SubjectItemViewModel, View) -> Unit) :
-    BaseItemViewModel() {
+class SubjectItemViewModel(
+    val item: SubjectItem,
+    val click: (SubjectItemViewModel, View) -> Unit,
+    val remove: (SubjectItemViewModel) -> Unit
+) : BaseItemViewModel() {
 
     val title = item.title
 

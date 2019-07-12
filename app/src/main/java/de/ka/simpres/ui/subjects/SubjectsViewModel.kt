@@ -50,6 +50,9 @@ class SubjectsViewModel : BaseViewModel() {
             FragmentNavigatorExtras(view to view.transitionName)
         )
     }
+    private val removeListener = { vm: SubjectItemViewModel ->
+        showSnack("Redo this shit ${vm.item.title}", Snacker.SnackType.DEFAULT) { repository.undoDeleteSubject() }
+    }
 
     fun layoutManager() = GridLayoutManager(resourcesProvider.getApplicationContext(), COLUMNS_COUNT)
 
@@ -90,13 +93,7 @@ class SubjectsViewModel : BaseViewModel() {
                 onNext = { result ->
                     hideLoading()
                     adapter.value?.let {
-                        //                        val updateOnly = if (result.isFiltered) true else result.update
-//
-//                        if (result.remove) {
-//                            showSnack("Redo this shit", Snacker.SnackType.DEFAULT) { repository.undoDeleteSubject()  }
-//                        }
-
-                        it.overwriteList(result, itemClickListener)
+                        it.overwriteList(result, itemClickListener, removeListener)
 
                         if (it.isEmpty) {
                             blankVisibility.postValue(View.VISIBLE)
