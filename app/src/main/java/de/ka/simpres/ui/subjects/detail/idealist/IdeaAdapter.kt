@@ -3,10 +3,12 @@ package de.ka.simpres.ui.subjects.detail.idealist
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
+import de.ka.simpres.R
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
 import de.ka.simpres.databinding.ItemIdeaAddBinding
@@ -14,6 +16,8 @@ import de.ka.simpres.databinding.ItemIdeaBinding
 import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.IdeaItem
 import org.koin.standalone.inject
+import kotlin.math.abs
+import kotlin.math.min
 
 class IdeaAdapter(
     owner: LifecycleOwner,
@@ -107,10 +111,42 @@ class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaBaseItemViewModel>() {
 
 }
 
-class IdeaViewHolder<T : ItemIdeaBinding>(binding: T) : BaseViewHolder<T>(binding) {
+class IdeaViewHolder<T : ItemIdeaBinding>(val binding: T) : BaseViewHolder<T>(binding) {
     override var swipeableView: View? = binding.swipeAble
     override var isDraggable = false
     override var isSwipeable = true
+
+    override fun onHolderClear() {
+        binding.deleteIconLeft.alpha = 0.0f
+        binding.deleteIconLeft.scaleX = 0.0f
+        binding.deleteIconLeft.scaleY = 0.0f
+        binding.deleteIconRight.alpha = 0.0f
+        binding.deleteIconRight.scaleX = 0.0f
+        binding.deleteIconRight.scaleY = 0.0f
+        super.onHolderClear()
+    }
+
+    override fun onHolderSwipe(dX: Float, dY: Float, actionState: Int) {
+        swipeableView?.let {
+            val change = abs(dX) / it.width
+            if (dX > 0){
+                binding.deleteIconRight.alpha = 0.0f
+                binding.deleteIconLeft.alpha = 0.5f + change
+                binding.deleteIconLeft.scaleX = min(0.5f + change, 1.0f)
+                binding.deleteIconLeft.scaleY = min(0.5f + change, 1.0f)
+            } else {
+                binding.deleteIconLeft.alpha = 0.0f
+                binding.deleteIconRight.alpha = 0.5f + change
+                binding.deleteIconRight.scaleX = min(0.5f + change, 1.0f)
+                binding.deleteIconRight.scaleY = min(0.5f + change, 1.0f)
+            }
+
+
+
+        }
+
+        super.onHolderSwipe(dX, dY, actionState)
+    }
 }
 
 class AddIdeaViewHolder<T : ViewDataBinding>(binding: T) : BaseViewHolder<T>(binding) {
