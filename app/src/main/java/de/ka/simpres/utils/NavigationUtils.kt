@@ -5,6 +5,8 @@ import androidx.navigation.NavOptions
 import de.ka.simpres.R
 import de.ka.simpres.base.events.AnimType
 import de.ka.simpres.base.events.NavigateTo
+import timber.log.Timber
+import java.lang.Exception
 
 object NavigationUtils {
 
@@ -42,12 +44,16 @@ object NavigationUtils {
             navigateToEvent.animType
         )
 
-        navController.navigate(
-            navigateToEvent.navigationTargetId,
-            navigateToEvent.args,
-            navOptions,
-            navigateToEvent.extras
-        )
+        try {
+            navController.navigate(
+                navigateToEvent.navigationTargetId,
+                navigateToEvent.args,
+                navOptions,
+                navigateToEvent.extras
+            )
+        } catch (e: Exception) {
+            Timber.e(e, "Could somehow not navigate because of unknown nav destination.")
+        }
     }
 
     private fun setupOptions(

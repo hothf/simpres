@@ -54,6 +54,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/default_16"
+                android:alpha="@{viewModel.doneAlpha}"
                 android:checked="@{viewModel.done}"
                 android:gravity="center"
                 android:text="" />
@@ -66,6 +67,7 @@
                 android:layout_marginStart="@dimen/default_4"
                 android:layout_toStartOf="@+id/sumText"
                 android:layout_toEndOf="@+id/check"
+                android:alpha="@{viewModel.doneAlpha}"
                 android:ellipsize="end"
                 android:gravity="start|center_vertical"
                 android:maxLines="1"
@@ -80,6 +82,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
+                android:alpha="@{viewModel.doneAlpha}"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="1"
