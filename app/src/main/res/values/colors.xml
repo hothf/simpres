@@ -10,9 +10,9 @@
 
     <color name="colorSelected">#232323</color>
 
-    <color name="colorTextDefault">#232323</color>
+    <color name="colorTextDefault">#747474</color>
     <color name="colorTextSecondaryDefault">#333333</color>
-    <color name="colorTextNav">#000000</color>
+    <color name="colorTextNav">#232323</color>
     <color name="colorButtonTextDefault">#ffffff</color>
     <color name="colorButtonTextAlternative">@color/colorAccent</color>
 
@@ -29,7 +29,7 @@
 
     <!-- remove someday! -->
 
-    <color name="fontNav">#232323</color>
+    <color name="fontNav">#476874</color>
     <color name="fontTitle">#333333</color>
     <color name="fontDefault">#476874</color>
     <color name="fontDisabled">#33888888</color>

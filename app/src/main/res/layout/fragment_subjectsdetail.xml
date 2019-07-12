@@ -12,36 +12,38 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorBackgroundPrimary">
 
         <RelativeLayout
             android:id="@+id/subjectDetail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorBackgroundPrimary">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/back"
                 android:layout_width="@dimen/default_48"
                 android:layout_height="@dimen/default_48"
                 android:layout_marginStart="@dimen/default_12"
-                android:layout_marginTop="@dimen/default_12"
+                android:layout_marginTop="@dimen/default_24"
                 android:background="@drawable/round_button_transparent_selector"
                 android:onClick="@{() -> viewModel.onBack()}"
                 android:padding="@dimen/default_12"
                 android:src="@drawable/ic_back"
-                android:tint="@color/colorBackgroundPrimaryDark" />
+                android:tint="@color/colorIconTintDefault" />
 
             <TextView
                 android:id="@+id/titleText"
                 style="@style/TextStyle.Simpres.Nav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/back"
-                android:layout_marginStart="@dimen/default_32"
-                android:layout_marginTop="@dimen/default_8"
+                android:layout_marginStart="@dimen/default_8"
+                android:layout_marginTop="@dimen/default_32"
+                android:layout_marginEnd="@dimen/default_8"
+                android:layout_toStartOf="@+id/edit"
+                android:layout_toEndOf="@+id/back"
                 android:ellipsize="end"
-                android:gravity="center_vertical"
+                android:gravity="start|center_vertical"
                 android:maxLines="3"
                 android:text="@{viewModel.title}"
                 tools:text="Detail Title" />
@@ -51,37 +53,31 @@
                 android:layout_width="@dimen/default_48"
                 android:layout_height="@dimen/default_48"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/default_12"
+                android:layout_marginTop="@dimen/default_24"
                 android:layout_marginEnd="@dimen/default_12"
                 android:background="@drawable/round_button_transparent_selector"
                 android:onClick="@{() -> viewModel.onEditSubject()}"
                 android:padding="@dimen/default_12"
                 android:src="@drawable/ic_edit"
-                android:tint="@color/colorBackgroundPrimaryDark" />
-
+                android:tint="@color/colorIconTintDefault" />
 
             <TextView
                 android:id="@+id/totalSumText"
-                style="@style/TextStyle.Simpres.Nav"
+                style="@style/TextStyle.Simpres.Default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/default_24"
+                android:layout_marginTop="@dimen/default_4"
+                android:textStyle="bold"
+                android:layout_alignStart="@+id/titleText"
+                android:layout_alignEnd="@+id/titleText"
+                android:layout_below="@+id/titleText"
                 android:text="@{viewModel.sum}"
                 android:textColor="@{viewModel.color}"
                 tools:text="Total Sum" />
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefresh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/titleText"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
-                app:setRefreshing="@{viewModel.refresh}">
-
                 <RelativeLayout
                     android:id="@+id/blankView"
+                    android:layout_below="@+id/totalSumText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -95,18 +91,16 @@
                         android:layout_marginEnd="@dimen/default_16"
                         android:layout_marginBottom="@dimen/default_16">
 
-
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerIdeas"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:adapter="@{viewModel.adapter}"
-                            android:minHeight="@dimen/default_134"
+                            android:minHeight="@dimen/default_58"
                             app:addItemDecoration="@{viewModel.itemDecoration}"
                             app:layoutManager="@{viewModel.layoutManager()}"
                             app:setItemAnimator="@{viewModel.itemAnimator}"
                             app:touchHelper="@{viewModel.touchHelper}" />
-
 
                     </androidx.cardview.widget.CardView>
 
@@ -120,10 +114,6 @@
 
                 </RelativeLayout>
 
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
         </RelativeLayout>
-
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
