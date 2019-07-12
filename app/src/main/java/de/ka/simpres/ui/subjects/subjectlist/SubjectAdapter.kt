@@ -94,6 +94,10 @@ class SubjectAdapterDiffCallback : DiffUtil.ItemCallback<SubjectItemViewModel>()
 
 class SubjectViewHolder<T : ItemSubjectBinding>(private val binding: T) : BaseViewHolder<T>(binding) {
 
+    init {
+        binding.deleteIcon.alpha = 0.0f
+    }
+
     override var swipeableView: View? = binding.item
     override var isDraggable = true
     override var isSwipeable = true
