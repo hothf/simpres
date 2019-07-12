@@ -53,11 +53,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
 
         currentIdea?.let { idea ->
             repository.saveOrUpdateIdea(currentSubjectId, idea)
-            navigateTo(
-                navigationTargetId = R.id.action_ideaNewEditFragment_to_subjectsDetailFragment,
-                args = Bundle().apply { putLong(SubjectsDetailFragment.SUBJECT_ID_KEY, currentSubjectId) },
-                popupToId = R.id.subjectsDetailFragment
-            )
+            navigateTo(NavigationUtils.BACK)
         }
     }
 

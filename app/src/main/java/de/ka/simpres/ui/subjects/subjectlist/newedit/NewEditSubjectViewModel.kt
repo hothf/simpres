@@ -54,7 +54,10 @@ class NewEditSubjectViewModel : BaseViewModel() {
                 repository.saveSubject(it)
                 navigateTo(
                     navigationTargetId = R.id.action_subjectNewEditFragment_to_subjectsDetailFragment,
-                    args = Bundle().apply { putLong(SubjectsDetailFragment.SUBJECT_ID_KEY, it.id) },
+                    args = Bundle().apply {
+                        putLong(SubjectsDetailFragment.SUBJECT_ID_KEY, it.id)
+                        putBoolean(SubjectsDetailFragment.SUBJECT_IS_NEW, true)
+                    },
                     popupToId = R.id.subjectNewEditFragment
                 )
             }
