@@ -108,11 +108,19 @@ class RepositoryImpl(db: AppDatabase) : Repository {
     override fun undoDeleteSubject() {
         lastRemovedSubjectItem?.let {
             val list = subjectsBox.all.toMutableList()
-            list.forEach { it.position = it.position + 1 }
+            list.forEach { subject -> subject.position = subject.position + 1 }
             subjectsBox.put(list)
             subjectsBox.put(it)
 
             getSubjects()
+        }
+    }
+
+    override fun undoDeleteIdea() {
+        lastRemovedIdea?.let {
+            ideasBox.put(it)
+
+            getIdeasOf(it.subjectId)
         }
     }
 

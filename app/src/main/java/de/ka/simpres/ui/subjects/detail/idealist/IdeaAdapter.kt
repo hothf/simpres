@@ -20,7 +20,8 @@ class IdeaAdapter(
     list: ArrayList<IdeaBaseItemViewModel> = arrayListOf(),
     val listener: (IdeaItem) -> Unit,
     val add: () -> Unit,
-    val subjectId: Long
+    val subjectId: Long,
+    val remove: (IdeaBaseItemViewModel) -> Unit
 ) : BaseAdapter<IdeaBaseItemViewModel>(owner, list, IdeaAdapterDiffCallback()) {
 
     private val repository: Repository by inject()
@@ -56,7 +57,7 @@ class IdeaAdapter(
                     viewModel.item.done = checked
                     repository.saveOrUpdateIdea(subjectId, viewModel.item)
                 }
-                binding.item.setOnClickListener {
+                binding.swipeAble.setOnClickListener {
                     listener(viewModel.item)
                 }
             }
@@ -70,6 +71,7 @@ class IdeaAdapter(
 
         viewModel?.let {
             repository.removeIdea(subjectId, viewModel.item)
+            remove(it)
         }
 
         super.onItemDismiss(position)

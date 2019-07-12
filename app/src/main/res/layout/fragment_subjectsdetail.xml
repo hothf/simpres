@@ -55,7 +55,7 @@
                 android:padding="@dimen/default_12"
                 android:layout_marginEnd="@dimen/default_12"
                 android:background="@drawable/round_button_transparent_selector"
-                android:onClick="@{() -> viewModel.onEdit()}"
+                android:onClick="@{() -> viewModel.onEditSubject()}"
                 android:src="@drawable/ic_edit"
                 android:tint="@color/colorIconTintDefault" />
 

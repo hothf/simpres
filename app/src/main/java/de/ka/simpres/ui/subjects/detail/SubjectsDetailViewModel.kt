@@ -14,6 +14,7 @@ import de.ka.simpres.base.events.AnimType
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.idealist.IdeaAdapter
+import de.ka.simpres.ui.subjects.detail.idealist.IdeaBaseItemViewModel
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
 import de.ka.simpres.utils.*
@@ -46,6 +47,36 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val title = MutableLiveData<String>()
     val sum = MutableLiveData<String>().apply { value = "" }
     val color = MutableLiveData<Int>().apply { Color.parseColor(ColorResources.getRandomColorString()) }
+    private val removeListener = { _: IdeaBaseItemViewModel ->
+        showSnack(
+            resourcesProvider.getString(R.string.idea_delete_undo_title),
+            Snacker.SnackType.DEFAULT,
+            { repository.undoDeleteIdea() },
+            resourcesProvider.getString(R.string.idea_delete_undo_action)
+        )
+    }
+    private val addListener = {
+        navigateTo(
+            R.id.ideaNewEditFragment,
+            args = Bundle().apply {
+                putLong(NewEditIdeaFragment.SUBJECT_ID_KEY, currentSubjectId)
+                putBoolean(NewEditIdeaFragment.NEW_KEY, true)
+            },
+            animType = AnimType.MODAL
+        )
+    }
+    private val ideaClickListener = { ideaItem: IdeaItem ->
+        navigateTo(
+            R.id.action_subjectsDetailFragment_to_ideaNewEditFragment,
+            false,
+            Bundle().apply {
+                putLong(NewEditIdeaFragment.SUBJECT_ID_KEY, currentSubjectId)
+                putSerializable(NewEditIdeaFragment.IDEA_KEY, ideaItem)
+            },
+            animType = AnimType.MODAL
+        )
+    }
+
 
     fun itemAnimator() = SlideInDownAnimator()
 
@@ -53,22 +84,11 @@ class SubjectsDetailViewModel : BaseViewModel() {
 
     fun onBack() = navigateTo(BACK)
 
-    fun onEdit() {
+    fun onEditSubject() {
         navigateTo(
             R.id.action_subjectsDetailFragment_to_subjectNewEditFragment,
             false,
             Bundle().apply { putLong(NewEditSubjectFragment.SUBJECT_ID_KEY, currentSubjectId) },
-            animType = AnimType.MODAL
-        )
-    }
-
-    fun onAddClick() {
-        navigateTo(
-            R.id.ideaNewEditFragment,
-            args = Bundle().apply {
-                putLong(NewEditIdeaFragment.SUBJECT_ID_KEY, currentSubjectId)
-                putBoolean(NewEditIdeaFragment.NEW_KEY, true)
-            },
             animType = AnimType.MODAL
         )
     }
@@ -116,7 +136,12 @@ class SubjectsDetailViewModel : BaseViewModel() {
         currentSubjectId = subjectId
 
         // resets all current saved details, should be fairly impossible to get here without a deep link / wrong id
-        adapter.value = IdeaAdapter(owner = owner, subjectId = subjectId, listener = ::onIdeaClick, add = ::onAddClick)
+        adapter.value = IdeaAdapter(
+            owner = owner,
+            subjectId = subjectId,
+            listener = ideaClickListener,
+            add = addListener,
+            remove = removeListener)
         adapter.value?.apply {
             touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
         }
@@ -124,18 +149,6 @@ class SubjectsDetailViewModel : BaseViewModel() {
         sum.postValue("")
 
         refresh()
-    }
-
-    private fun onIdeaClick(ideaItem: IdeaItem) {
-        navigateTo(
-            R.id.action_subjectsDetailFragment_to_ideaNewEditFragment,
-            false,
-            Bundle().apply {
-                putLong(NewEditIdeaFragment.SUBJECT_ID_KEY, currentSubjectId)
-                putSerializable(NewEditIdeaFragment.IDEA_KEY, ideaItem)
-            },
-            animType = AnimType.MODAL
-        )
     }
 
     private fun refresh() {

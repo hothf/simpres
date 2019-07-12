@@ -17,4 +17,7 @@
     <string name="idea_newedit_sum_hint">Enter sum</string>
 
     <string name="idea_list_add">+ new Idea</string>
+
+    <string name="idea_delete_undo_title">Idea deleted</string>
+    <string name="idea_delete_undo_action">Undo</string>
 </resources>
