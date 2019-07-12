@@ -50,8 +50,13 @@ class SubjectsViewModel : BaseViewModel() {
             FragmentNavigatorExtras(view to view.transitionName)
         )
     }
-    private val removeListener = { vm: SubjectItemViewModel ->
-        showSnack("Redo this shit ${vm.item.title}", Snacker.SnackType.DEFAULT) { repository.undoDeleteSubject() }
+    private val removeListener = { _: SubjectItemViewModel ->
+        showSnack(
+            resourcesProvider.getString(R.string.subject_delete_undo_title),
+            Snacker.SnackType.DEFAULT,
+            { repository.undoDeleteSubject() },
+            resourcesProvider.getString(R.string.subject_delete_undo_action)
+        )
     }
 
     fun layoutManager() = GridLayoutManager(resourcesProvider.getApplicationContext(), COLUMNS_COUNT)

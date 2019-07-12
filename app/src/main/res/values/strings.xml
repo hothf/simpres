@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Simpres</string>
 
+    <string name="subject_delete_undo_title">Item deleted</string>
+    <string name="subject_delete_undo_action">Undo</string>
+
     <string name="subject_newedit_add">Add new</string>
     <string name="subject_newedit_edit">Edit</string>
     <string name="subject_newedit_save">Save</string>

@@ -55,9 +55,10 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
     fun showSnack(
         message: String,
         snackType: Snacker.SnackType = Snacker.SnackType.DEFAULT,
-        action: (() -> Unit)? = null
+        action: (() -> Unit)? = null,
+        actionText: String? = null
     ) {
-        queueEvent(ShowSnack(message, snackType, action))
+        queueEvent(ShowSnack(message, snackType, action, actionText))
     }
 
     /**
@@ -65,10 +66,6 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
      */
     fun handleGeneralError(throwable: Throwable) {
         Timber.e("_error: $throwable")
-    }
-
-    fun handleBack() {
-        queueEvent(Back(true))
     }
 
     fun open(url: String? = null, clazz: KClass<*>? = null, args: Bundle? = null) = queueEvent(

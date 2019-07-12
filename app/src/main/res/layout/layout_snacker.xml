@@ -16,11 +16,28 @@
             android:id="@+id/snackText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/default_16"
-            android:paddingTop="@dimen/default_8"
-            android:paddingEnd="@dimen/default_16"
-            android:paddingBottom="@dimen/default_8"
+            android:paddingStart="@dimen/default_12"
+            android:paddingTop="@dimen/default_12"
+            android:textSize="@dimen/font_default"
+            android:paddingEnd="@dimen/default_12"
+            android:paddingBottom="@dimen/default_12"
             tools:text="This is a really nice snacker. " />
+
+        <TextView
+            android:id="@+id/snackAction"
+            android:textColor="@color/colorIndicatorOrange"
+            android:layout_width="wrap_content"
+            android:layout_toEndOf="@+id/snackText"
+            android:textSize="@dimen/font_default"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:paddingStart="@dimen/default_12"
+            android:paddingTop="@dimen/default_12"
+            android:paddingEnd="@dimen/default_12"
+            tools:visibility="visible"
+            android:foreground="?attr/selectableItemBackground"
+            android:paddingBottom="@dimen/default_12"
+            tools:text="Snack Action " />
 
     </RelativeLayout>
 

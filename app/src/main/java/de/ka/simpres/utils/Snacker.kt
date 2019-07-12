@@ -1,13 +1,11 @@
 package de.ka.simpres.utils
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Context
-import android.graphics.Rect
 import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorRes
@@ -33,21 +31,18 @@ class Snacker @JvmOverloads constructor(
 
     private val snackHandler = Handler()
 
-    private var isHidingStopped = false
-    private var snackText: TextView
     private var container: View
+    private var snackText: TextView
+    private var snackAction: TextView
+    private var isHidingStopped = false
 
     init {
         inflate(context, R.layout.layout_snacker, this)
 
         container = findViewById(R.id.snacker)
         snackText = findViewById(R.id.snackText)
+        snackAction = findViewById(R.id.snackAction)
         visibility = View.INVISIBLE
-
-        post {
-            createCenteredHide(container)
-            createCenteredReveal(container)
-        }
     }
 
     /**
@@ -57,11 +52,23 @@ class Snacker @JvmOverloads constructor(
         snackHandler.removeCallbacksAndMessages(null)
         isHidingStopped = true
 
+        if (showSnack.action != null && showSnack.actionText != null) {
+            snackAction.text = showSnack.actionText
+            snackAction.visibility = View.VISIBLE
+        } else {
+            snackAction.visibility = View.GONE
+        }
+
         container.setOnClickListener {
-            snackHandler.removeCallbacksAndMessages(null)
+            if (snackAction.visibility == GONE) {
+                snackHandler.removeCallbacksAndMessages(null)
+                hide()
+            }
+        }
 
+        snackAction.setOnClickListener {
             showSnack.action?.invoke()
-
+            snackHandler.removeCallbacksAndMessages(null)
             hide()
         }
 
@@ -70,7 +77,7 @@ class Snacker @JvmOverloads constructor(
         snackText.text = showSnack.message
 
         visibility = View.VISIBLE
-        createCenteredReveal(container)
+        createReveal(container)
 
         val timeMs = if (showSnack.type == SnackType.ERROR) HIDE_TIME_MS * 2 else HIDE_TIME_MS
 
@@ -79,53 +86,28 @@ class Snacker @JvmOverloads constructor(
         }, timeMs)
     }
 
-    private fun hide(){
+    private fun hide() {
         isHidingStopped = false
-        createCenteredHide(container)
+        createHide(container)
     }
 
-    // caution: these are one shot animations, they can not be reused / stopped / paused!
-    private fun createCenteredReveal(view: View) {
-        if (!view.isAttachedToWindow){
+    private fun createReveal(view: View) {
+        if (!view.isAttachedToWindow) {
             return
         }
 
-        val bounds = Rect()
-        view.getDrawingRect(bounds)
-        val finalRadius = Math.max(bounds.width(), bounds.height())
-        ViewAnimationUtils.createCircularReveal(view, bounds.centerX(), bounds.centerY(), 0f, finalRadius.toFloat())
-            .start()
+        view.animate().translationY(0.0f).setInterpolator(AccelerateInterpolator())
     }
 
-    private fun createCenteredHide(view: View) {
-        if (!view.isAttachedToWindow){
+    private fun createHide(view: View) {
+        if (!view.isAttachedToWindow) {
             return
         }
 
-        val bounds = Rect()
-        view.getDrawingRect(bounds)
-        val initialRadius = view.width / 2
-
-        ViewAnimationUtils.createCircularReveal(
-            view,
-            bounds.centerX(),
-            bounds.centerY(),
-            initialRadius.toFloat(),
-            0f
-        ).apply {
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    super.onAnimationEnd(animation)
-                    if (!isHidingStopped) {
-                        visibility = View.INVISIBLE
-                    }
-                }
-            })
-            start()
-        }
+        view.animate().translationY(view.height.toFloat()).setInterpolator(DecelerateInterpolator())
     }
 
     companion object {
-        const val HIDE_TIME_MS = 2_500.toLong()
+        const val HIDE_TIME_MS = 3_500.toLong()
     }
 }

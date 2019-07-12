@@ -15,10 +15,9 @@ sealed class Event
 data class ShowSnack(
     val message: String,
     val type: Snacker.SnackType,
-    val action: (() -> Unit)? = null
+    val action: (() -> Unit)? = null,
+    val actionText: String? = null
 ) : Event()
-
-data class Back(val fired: Boolean) : Event()
 
 enum class AnimType {
     DEFAULT, MODAL, NONE

@@ -51,7 +51,6 @@ abstract class BaseActivity<out T : ViewDataBinding, E : BaseViewModel>(clazz: K
                     is NavigateTo -> onNavigateTo(it)
                     is Open -> onOpen(it)
                     is Handle<*> -> onHandle(it.element)
-                    is Back -> if (it.fired) onBackPressed()
                 }
             }
         )
