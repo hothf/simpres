@@ -24,8 +24,6 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
 
     private val repository: Repository by inject()
 
-    private var dispose: Boolean = false
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         return SubjectViewHolder(ItemSubjectBinding.inflate(layoutInflater, parent, false))
     }
@@ -60,74 +58,17 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
     }
 
     /**
-     * Marks the list items for disposition. Only useful with lists that will be dynamically changed and if this adapter
-     * is reused.
+     * Overwrites the current list with the given [newItems].
      *
-     * When the list is marked for disposition, the next call to [removeAddOrUpdate] will not update items, as they are
-     * disposed, leading to removing all items passed as parameter or removing all items.
-     * This is useful, if the adapter should be aware of a reset of all items but should not immediately remove all
-     * items to allow for a diff on the next [removeAddOrUpdate] call.
+     * @param newItems the new items to append, update or replace
      */
-    fun markForDisposition() {
-        dispose = true
-    }
-
-    /**
-     * Removes the specified [updatedItems] or inserts them or updates a part of it, depending on the flags given
-     * as parameters in this method and applies a [itemClickListener] if possible.
-     * Returns eventually added and removed items count summed up. Does not include a item updated count.
-     *
-     * **Note that if a prior call to [markForDisposition] has been made, this will remove all items of the list or add
-     * the items, regardless of update intentions, as the previously added items are all  marked for disposition.
-     * The marking itself is removed afterwards.**
-     *
-     * @param updatedItems the updated items to either remove, add, update or mix
-     * @param itemClickListener a item click listener to apply
-     * @param remove the flag to indicate that items should be removed
-     * @param onlyUpdate a flag to indicate that only updates should be made and no items should be added
-     * @param addToTop a flag indicating if adding a new item, it is added to the top of the list
-     * @param filter a optional filter for removing unwanted items
-     * @return the items removed and added count, updated items are not counted
-     */
-    fun removeAddOrUpdate(
-        updatedItems: List<SubjectItem>,
-        itemClickListener: (SubjectItemViewModel, View) -> Unit,
-        remove: Boolean,
-        onlyUpdate: Boolean,
-        addToTop: Boolean,
-        filter: ((SubjectItem) -> Boolean)? = null
-    ): Int {
-        val items: MutableList<SubjectItemViewModel> = getItems().toMutableList()
-        var itemsRemovedAndAddedCount = 0
-
-        if (dispose) {
-            items.clear()
-            dispose = false
-        }
-
-        updatedItems
-            .forEach { item ->
-                val foundIndex = items.indexOfFirst { it.item.id == item.id }
-                if (foundIndex > -1 && items.isNotEmpty()) {
-                    if (remove || (filter != null && !filter(item))) {          // remove
-                        items.removeAt(foundIndex)
-                        itemsRemovedAndAddedCount--
-                    } else {                                                    // update
-                        items[foundIndex] = SubjectItemViewModel(item, itemClickListener)
-                    }
-                } else if ((!onlyUpdate && filter == null) || (filter != null && filter(item))) {   // add
-                    itemsRemovedAndAddedCount++
-                    if (addToTop) {
-                        items.add(0, SubjectItemViewModel(item, itemClickListener))
-                    } else {
-                        items.add(SubjectItemViewModel(item, itemClickListener))
-                    }
-                }
-            }
-
-        setItems(items.toList())
-
-        return itemsRemovedAndAddedCount
+    fun overwriteList(
+        newItems: List<SubjectItem>,
+        listener: (SubjectItemViewModel, View) -> Unit
+    ) {
+        val newList: MutableList<SubjectItemViewModel> =
+            newItems.map { SubjectItemViewModel(it, listener) }.toMutableList()
+        setItems(newList)
     }
 }
 

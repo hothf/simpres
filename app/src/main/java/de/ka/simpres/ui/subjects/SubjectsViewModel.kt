@@ -90,19 +90,13 @@ class SubjectsViewModel : BaseViewModel() {
                 onNext = { result ->
                     hideLoading()
                     adapter.value?.let {
-                        val updateOnly = if (result.isFiltered) true else result.update
+                        //                        val updateOnly = if (result.isFiltered) true else result.update
+//
+//                        if (result.remove) {
+//                            showSnack("Redo this shit", Snacker.SnackType.DEFAULT) { repository.undoDeleteSubject()  }
+//                        }
 
-                        if (result.remove) {
-                            showSnack("Redo this shit", Snacker.SnackType.DEFAULT) { repository.undoDeleteSubject()  }
-                        }
-
-                        it.removeAddOrUpdate(
-                            result.list,
-                            itemClickListener,
-                            result.remove,
-                            updateOnly,
-                            result.addToTop
-                        )
+                        it.overwriteList(result, itemClickListener)
 
                         if (it.isEmpty) {
                             blankVisibility.postValue(View.VISIBLE)
@@ -119,16 +113,15 @@ class SubjectsViewModel : BaseViewModel() {
     }
 
     /**
-     * Loads all home items. This will be a paginated process, as long as [reset] is set to false.
+     * Loads all items.
      * Calling this with [reset] set to true will immediately cancel all requests and try to fetch from start.
      *
-     * @param reset set to true to reset the current state of consensus pagination loading and force a fresh reload
+     * @param reset set to true to reset the current state and force a fresh reload
      */
     private fun loadSubjects(reset: Boolean) {
         if (reset) {
             isLoading = false
             compositeDisposable.clear()
-            adapter.value?.markForDisposition()
             startObserving()
         }
 
@@ -137,7 +130,8 @@ class SubjectsViewModel : BaseViewModel() {
         }
 
         showLoading()
-        repository.getSubjects()
+
+        repository.getSubjects(reset)
     }
 
     private fun hideLoading() {

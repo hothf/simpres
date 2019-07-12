@@ -10,13 +10,10 @@ import io.reactivex.Observable
  */
 interface Repository {
 
-    val observableSubjects: Observable<IndicatedList<SubjectItem, List<SubjectItem>>>
+    val observableIdeas: Observable<List<IdeaItem>>
+    val observableSubjects: Observable<List<SubjectItem>>
 
-    val observableIdeas: Observable<IndicatedList<IdeaItem, List<IdeaItem>>>
-
-    fun getSubjects()
-
-    fun getSubject(subjectId: Long)
+    fun getSubjects(wait: Boolean = false)
 
     fun moveSubject(
         subject1: SubjectItem,
@@ -44,29 +41,3 @@ interface Repository {
      */
     fun undoDeleteSubject()
 }
-
-/**
- * A [List] container.
- *
- *
- * With an optional [invalidate] flag for giving the hint, that the list has invalidated data and
- * should be re-fetched.
- * A optional [remove] flag can be used to indicate, that the list contains items to be removed.
- * A optional [addToTop] flag can be used to indicate, that new items should be added to the top (instead of default
- * behaviour, which may be bottom).
- * A optional [update] flag can be used to indicate, that the list should only be updated and not extended or
- * manipulated somehow differently.
- * A optional [isFiltered] flag to indicate that the results are filtered.
- * A [replacementPair] is optional to indicate that two item positions have been changed.
- *
- * All flags default to **false** for a simple list indication, that could contain updated and new data.
- */
-data class IndicatedList<E : Any, T : List<E>>(
-    val list: T,
-    var invalidate: Boolean = false,
-    var remove: Boolean = false,
-    var addToTop: Boolean = false,
-    var update: Boolean = false,
-    var isFiltered: Boolean = false,
-    var replacementPair: Pair<Int, Int>? = null
-)

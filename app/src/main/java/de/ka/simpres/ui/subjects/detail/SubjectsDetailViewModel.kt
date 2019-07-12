@@ -79,18 +79,13 @@ class SubjectsDetailViewModel : BaseViewModel() {
             .subscribeBy(
                 onError = ::handleGeneralError,
                 onNext = { result ->
-                    if (result.invalidate) {
-                        refresh()
-                    } else {
-                        adapter.value?.let {
-                            it.overwriteList(result.list)
+                    adapter.value?.let {
+                        it.overwriteList(result)
 
-                            if (it.isEmpty) {
-                                blankVisibility.postValue(View.VISIBLE)
-                            } else {
-                                blankVisibility.postValue(View.GONE)
-                            }
-
+                        if (it.isEmpty) {
+                            blankVisibility.postValue(View.VISIBLE)
+                        } else {
+                            blankVisibility.postValue(View.GONE)
                         }
                     }
                 }
@@ -101,7 +96,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
             .with(AndroidSchedulerProvider())
             .subscribeBy(
                 onError = ::handleGeneralError,
-                onNext = { it.list.find { subject -> subject.id == currentSubjectId }?.let(::updateSubject) }
+                onNext = { it.find { subject -> subject.id == currentSubjectId }?.let(::updateSubject) }
             )
             .addTo(compositeDisposable)
     }
@@ -145,7 +140,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
 
     private fun refresh() {
         showLoading()
-        repository.getSubject(currentSubjectId)
+        repository.findSubjectById(currentSubjectId)?.let(::updateSubject)
         repository.getIdeasOf(currentSubjectId)
         hideLoading()
     }

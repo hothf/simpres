@@ -19,23 +19,25 @@ class RepositoryImpl(db: AppDatabase) : Repository {
     private var lastRemovedSubjectItem: SubjectItem? = null
 
     override val observableSubjects =
-        PublishSubject.create<IndicatedList<SubjectItem, List<SubjectItem>>>()
+        PublishSubject.create<List<SubjectItem>>()
 
     override val observableIdeas =
-        PublishSubject.create<IndicatedList<IdeaItem, List<IdeaItem>>>()
+        PublishSubject.create<List<IdeaItem>>()
 
-    override fun getSubjects() {
-        GlobalScope.launch {
-            delay(250)
-            val list = subjectsBox.all.sortedBy { it.position }
-            observableSubjects.onNext(IndicatedList(list))
+    override fun getSubjects(wait: Boolean) {
+        if (wait) {
+            GlobalScope.launch {
+                delay(250)
+                getSubjectsInternally()
+            }
+        } else {
+            getSubjectsInternally()
         }
     }
 
-    override fun getSubject(subjectId: Long) {
-        findSubjectById(subjectId)?.let {
-            observableSubjects.onNext(IndicatedList(listOf(it), update = true))
-        }
+    private fun getSubjectsInternally() {
+        val list = subjectsBox.all.sortedBy { it.position }
+        observableSubjects.onNext(list)
     }
 
     override fun moveSubject(subject1: SubjectItem, subject2: SubjectItem, oldPosition: Int, newPosition: Int) {
@@ -54,12 +56,14 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         list.forEach { it.position = it.position + 1 }
         subjectsBox.put(list)
         subjectsBox.put(subject)
-        observableSubjects.onNext(IndicatedList(listOf(subject), addToTop = true))
+
+        getSubjects()
     }
 
     override fun updateSubject(subject: SubjectItem) {
         subjectsBox.put(subject)
-        observableSubjects.onNext(IndicatedList(listOf(subject), update = true))
+
+        getSubjects()
     }
 
     override fun removeSubject(subject: SubjectItem) {
@@ -70,13 +74,14 @@ class RepositoryImpl(db: AppDatabase) : Repository {
             val list = subjectsBox.all.toMutableList()
             list.forEach { subject -> subject.position = subject.position - 1 }
             subjectsBox.put(list)
-            observableSubjects.onNext(IndicatedList(listOf(it), remove = true))
+
+            getSubjects()
         }
     }
 
     override fun getIdeasOf(subjectId: Long) {
         val items = ideasBox.query().equal(IdeaItem_.subjectId, subjectId).build().find().sortedBy { it.done }
-        observableIdeas.onNext(IndicatedList(items))
+        observableIdeas.onNext(items)
     }
 
     override fun removeIdea(subjectId: Long, ideaItem: IdeaItem) {
@@ -106,6 +111,7 @@ class RepositoryImpl(db: AppDatabase) : Repository {
             list.forEach { it.position = it.position + 1 }
             subjectsBox.put(list)
             subjectsBox.put(it)
+
             getSubjects()
         }
     }
