@@ -21,6 +21,8 @@ class SubjectItemViewModel(
         ""
     }
 
+    val doneAmount = if (item.ideasCount > 0) "${item.ideasDoneCount} of ${item.ideasCount}" else ""
+
     val date = item.date.toDate()
 
     val color = Color.parseColor(item.color)
@@ -30,4 +32,6 @@ class SubjectItemViewModel(
     } else {
         100
     }
+
+    val progressVisibility = if (item.ideasCount > 0) View.VISIBLE else View.GONE
 }

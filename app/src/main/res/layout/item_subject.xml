@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/default_168">
 
         <ImageView
             android:id="@+id/deleteIcon"
@@ -26,18 +26,16 @@
             android:id="@+id/item"
             style="@style/CardStyle.Simpres"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
-            android:minHeight="@dimen/default_112"
-            tools:cardBackgroundColor="@color/defaultBackgroundPrimary">
+            android:minHeight="@dimen/default_168">
 
             <RelativeLayout
                 android:id="@+id/gg"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_8">
+                android:layout_height="match_parent">
 
                 <View
                     android:id="@+id/swipeHandle"
@@ -46,15 +44,19 @@
 
                 <TextView
                     android:id="@+id/title"
-                    style="@style/TextStyle.Simpres.Secondary.Bold.Large"
+                    style="@style/TextStyle.Simpres.Default.Large"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/default_48"
-                    android:layout_margin="@dimen/default_12"
+                    android:layout_marginStart="@dimen/default_16"
+                    android:layout_marginTop="@dimen/default_12"
+                    android:layout_marginEnd="@dimen/default_16"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="2"
                     android:text="@{viewModel.title}"
+                    android:textStyle="bold"
                     tools:text="Title" />
+
 
                 <ProgressBar
                     android:id="@+id/progress"
@@ -62,30 +64,56 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title"
-                    android:layout_margin="@dimen/default_12"
+                    android:layout_marginStart="@dimen/default_16"
+                    android:layout_marginTop="@dimen/default_8"
+                    android:layout_marginEnd="@dimen/default_16"
+                    android:max="100"
                     android:progress="@{viewModel.progress}"
-                    android:progressTint="@{viewModel.color}" />
+                    android:progressTint="@{viewModel.color}"
+                    android:visibility="@{viewModel.progressVisibility}" />
+
+                <TextView
+                    android:id="@+id/doneAmountText"
+                    style="@style/TextStyle.Simpres.Secondary.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/progress"
+                    android:layout_alignStart="@+id/progress"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:includeFontPadding="false"
+                    android:text="@{viewModel.doneAmount}"
+                    tools:text="1 of 2" />
+
 
                 <TextView
                     android:id="@+id/sum"
-                    style="@style/TextStyle.Simpres.Default.Small.Caps"
+                    style="@style/TextStyle.Simpres.Secondary.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/progress"
-                    android:layout_margin="@dimen/default_12"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/default_16"
+                    android:layout_marginEnd="@dimen/default_16"
+                    android:layout_marginBottom="@dimen/default_12"
                     android:text="@{viewModel.sum}"
+
                     tools:text="Sum" />
 
                 <TextView
                     android:id="@+id/date"
-                    style="@style/TextStyle.Simpres.Default.Small.Caps"
+                    style="@style/TextStyle.Simpres.Secondary.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/progress"
+                    android:textAllCaps="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="@dimen/default_12"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/default_16"
+                    android:layout_marginEnd="@dimen/default_16"
+                    android:layout_marginBottom="@dimen/default_12"
                     android:text="@{viewModel.date}"
                     tools:text="Date" />
+
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>

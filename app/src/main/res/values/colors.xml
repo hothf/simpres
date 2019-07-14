@@ -4,19 +4,20 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#544EE6</color>
 
-    <color name="colorBackgroundPrimary">#EAEBEF</color>
+    <color name="colorBackgroundPrimary">#ffffff</color>
     <color name="colorBackgroundPrimaryDark">#525252</color>
     <color name="colorBackgroundSecondary">#ffffff</color>
+    <color name="colorBackgroundSecondaryDark">#cfcfcf</color>
 
     <color name="colorSelected">#232323</color>
 
-    <color name="colorTextDefault">#747474</color>
-    <color name="colorTextSecondaryDefault">#333333</color>
-    <color name="colorTextNav">#232323</color>
+    <color name="colorTextDefault">#656565</color>
+    <color name="colorTextSecondaryDefault">#AAAAAA</color>
+    <color name="colorTextNav">#656565</color>
     <color name="colorButtonTextDefault">#ffffff</color>
     <color name="colorButtonTextAlternative">@color/colorAccent</color>
 
-    <color name="colorIconTintDefault">#002200</color>
+    <color name="colorIconTintDefault">#AAAAAA</color>
     <color name="colorIconTintSecondary">#747474</color>
 
     <color name="colorIndicatorGreen">#5BB6A6</color>

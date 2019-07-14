@@ -5,6 +5,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.SharedElementCallback
 import androidx.core.view.ViewCompat
 import androidx.transition.TransitionInflater
 import de.ka.simpres.R
@@ -31,14 +32,14 @@ class SubjectsDetailFragment :
                     TransitionInflater.from(requireContext())
                         .inflateTransition(R.transition.shared_element_home_transition)
                 postponeEnterTransition()
-
                 Handler().postDelayed(
                     { startPostponedEnterTransition() },
                     75
                 ) // simply wait for laying out the recycler
+
+
             }
         }
-
         return view
     }
 

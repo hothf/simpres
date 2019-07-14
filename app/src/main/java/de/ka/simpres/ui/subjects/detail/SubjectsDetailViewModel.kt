@@ -46,6 +46,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
     val sum = MutableLiveData<String>().apply { value = "" }
+    val doneAmount = MutableLiveData<String>().apply { value = "" }
     val color = MutableLiveData<Int>().apply { Color.parseColor(ColorResources.getRandomColorString()) }
     private val removeListener = { _: IdeaBaseItemViewModel ->
         showSnack(
@@ -55,6 +56,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
             resourcesProvider.getString(R.string.idea_delete_undo_action)
         )
     }
+
     private val addListener = {
         navigateTo(
             R.id.ideaNewEditFragment,
@@ -77,6 +79,9 @@ class SubjectsDetailViewModel : BaseViewModel() {
         )
     }
 
+    fun onAddClick() {
+        addListener()
+    }
 
     fun itemAnimator() = SlideInDownAnimator()
 
@@ -146,7 +151,8 @@ class SubjectsDetailViewModel : BaseViewModel() {
             touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
         }
         title.postValue("")
-        sum.postValue("")
+        sum.postValue("-")
+        doneAmount.postValue("-")
 
         refresh()
     }
@@ -162,10 +168,14 @@ class SubjectsDetailViewModel : BaseViewModel() {
         title.postValue(subject.title)
 
         if (subject.ideasCount > 0) {
+
+            doneAmount.postValue("${subject.ideasDoneCount} of ${subject.ideasCount}")
+
+
             if (subject.sum.toInt() > 0) {
-                sum.postValue("${subject.sum.toEuro()}, ${subject.ideasDoneCount}/${subject.ideasCount}")
+                sum.postValue("${subject.sum.toEuro()}")
             } else {
-                sum.postValue("${subject.ideasDoneCount}/${subject.ideasCount}")
+                sum.postValue("-")
             }
         }
 

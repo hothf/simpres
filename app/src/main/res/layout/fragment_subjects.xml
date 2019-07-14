@@ -64,7 +64,7 @@
             android:visibility="@{viewModel.blankVisibility}">
 
             <TextView
-                style="@style/TextStyle.Simpres.Default"
+                style="@style/TextStyle.Simpres.Secondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -79,6 +79,7 @@
             android:layout_marginBottom="@dimen/bottomBarSize"
             android:onClick="@{()->viewModel.onAddClick()}"
             android:src="@drawable/ic_pres"
+            app:fabSize="normal"
             app:layout_anchor="@id/swipeRefresh"
             app:layout_anchorGravity="bottom|center_horizontal"
             app:useCompatPadding="true" />
