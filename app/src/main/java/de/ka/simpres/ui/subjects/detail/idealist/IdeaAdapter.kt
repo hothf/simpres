@@ -98,6 +98,8 @@ class IdeaAdapter(
                 IdeaItemViewModel(detail)
             }.toMutableList()
 
+        newList.add(0,IdeaAddItemViewModel())
+//
 //        if (indexOfFirstDone != -1) {
 //            newList.add(indexOfFirstDone, IdeaAddItemViewModel())
 //        } else {
