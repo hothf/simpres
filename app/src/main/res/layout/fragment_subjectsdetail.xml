@@ -46,6 +46,7 @@
                 android:gravity="start|center_vertical"
                 android:maxLines="3"
                 android:text="@{viewModel.title}"
+                android:textColor="@{viewModel.color}"
                 tools:text="Detail Title" />
 
             <ImageView
@@ -174,9 +175,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/divider"
-                        android:layout_margin="@dimen/default_36"
+                        android:layout_marginStart="@dimen/default_24"
+                        android:layout_marginTop="@dimen/default_68"
+                        android:layout_marginEnd="@dimen/default_24"
+                        android:layout_marginBottom="@dimen/default_68"
                         android:gravity="center"
-                        android:text="Nothing here, try to add something!"
+                        android:text="@string/subject_detail_empty"
                         android:visibility="@{viewModel.blankVisibility}" />
 
 

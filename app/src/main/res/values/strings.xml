@@ -4,6 +4,8 @@
     <string name="subject_delete_undo_title">Item deleted</string>
     <string name="subject_delete_undo_action">Undo</string>
 
+    <string name="subject_detail_empty">No ideas listed yet. Add some ideas!</string>
+
     <string name="subject_newedit_add">Add new</string>
     <string name="subject_newedit_edit">Edit</string>
     <string name="subject_newedit_save">Save</string>
