@@ -52,7 +52,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         showSnack(
             resourcesProvider.getString(R.string.idea_delete_undo_title),
             Snacker.SnackType.DEFAULT,
-            { repository.undoDeleteIdea() },
+            { repository.undoDeleteIdea(currentSubjectId) },
             resourcesProvider.getString(R.string.idea_delete_undo_action)
         )
     }
@@ -121,7 +121,11 @@ class SubjectsDetailViewModel : BaseViewModel() {
             .with(AndroidSchedulerProvider())
             .subscribeBy(
                 onError = ::handleGeneralError,
-                onNext = { it.find { subject -> subject.id == currentSubjectId }?.let(::updateSubject) }
+                onNext = {
+                    it.find { subject -> subject.id == currentSubjectId }?.let { subject ->
+                        updateSubject(subject, true)
+                    }
+                }
             )
             .addTo(compositeDisposable)
     }
@@ -140,15 +144,19 @@ class SubjectsDetailViewModel : BaseViewModel() {
 
         currentSubjectId = subjectId
 
-        // resets all current saved details, should be fairly impossible to get here without a deep link / wrong id
-        adapter.value = IdeaAdapter(
+        val ideaAdapter = IdeaAdapter(
             owner = owner,
             subjectId = subjectId,
             listener = ideaClickListener,
             add = addListener,
-            remove = removeListener)
-        adapter.value?.apply {
-            touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
+            remove = removeListener
+        )
+        adapter.value = ideaAdapter
+
+        touchHelper.apply {
+            value?.attachToRecyclerView(null)
+            value = null
+            postValue(ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(ideaAdapter)))
         }
         title.postValue("")
         sum.postValue("-")
@@ -159,12 +167,12 @@ class SubjectsDetailViewModel : BaseViewModel() {
 
     private fun refresh() {
         showLoading()
-        repository.findSubjectById(currentSubjectId)?.let(::updateSubject)
+        repository.findSubjectById(currentSubjectId)?.let { updateSubject(it) }
         repository.getIdeasOf(currentSubjectId)
         hideLoading()
     }
 
-    private fun updateSubject(subject: SubjectItem) {
+    private fun updateSubject(subject: SubjectItem, showHint: Boolean = false) {
         title.postValue(subject.title)
 
         if (subject.ideasCount > 0) {
@@ -173,7 +181,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
 
 
             if (subject.sum.toInt() > 0) {
-                sum.postValue("${subject.sum.toEuro()}")
+                sum.postValue(subject.sum.toEuro())
             } else {
                 sum.postValue("-")
             }

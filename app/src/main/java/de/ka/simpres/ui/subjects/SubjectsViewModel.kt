@@ -86,8 +86,12 @@ class SubjectsViewModel : BaseViewModel() {
             adapter.value = subjectAdapter
             loadSubjects(true)
         }
-        adapter.value?.apply {
-            touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
+        adapter.value?.let {
+            touchHelper.apply {
+                value?.attachToRecyclerView(null)
+                value = null
+                postValue(ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(it)))
+            }
         }
     }
 

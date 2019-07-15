@@ -59,6 +59,16 @@
                 android:gravity="center"
                 android:text="" />
 
+            <View
+                android:id="@+id/checkAccessor"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/check"
+                android:layout_alignTop="@+id/check"
+                android:layout_alignEnd="@+id/check"
+                android:layout_alignBottom="@+id/check" />
+
             <TextView
                 style="@style/TextStyle.Simpres.Default.Bold"
                 android:layout_width="wrap_content"

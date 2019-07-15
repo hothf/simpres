@@ -44,5 +44,5 @@ interface Repository {
     /**
      * Will try to undo the last removed idea action.
      */
-    fun undoDeleteIdea()
+    fun undoDeleteIdea(subjectId: Long)
 }

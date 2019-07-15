@@ -57,8 +57,8 @@ class IdeaAdapter(
             }
         } else if (viewModel is IdeaItemViewModel) {
             DataBindingUtil.getBinding<ItemIdeaBinding>(holder.itemView)?.let { binding ->
-                binding.check.setOnCheckedChangeListener { _, checked ->
-                    viewModel.checkDone(checked)
+                binding.checkAccessor.setOnClickListener {
+                    viewModel.toggleDone()
                     repository.saveOrUpdateIdea(subjectId, viewModel.item)
                 }
                 binding.swipeAble.setOnClickListener {
