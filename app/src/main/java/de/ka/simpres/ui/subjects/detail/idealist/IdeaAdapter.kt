@@ -87,7 +87,8 @@ class IdeaAdapter(
      * @param newItems the new items to append or replace
      */
     fun overwriteList(
-        newItems: List<IdeaItem>
+        newItems: List<IdeaItem>,
+        color: String
     ) {
         var indexOfFirstDone = -1
         val newList: MutableList<IdeaBaseItemViewModel> =
@@ -95,7 +96,7 @@ class IdeaAdapter(
                 if (detail.done && indexOfFirstDone == -1) {
                     indexOfFirstDone = index
                 }
-                IdeaItemViewModel(detail)
+                IdeaItemViewModel(detail, color)
             }.toMutableList()
 
 //        newList.add(0,IdeaAddItemViewModel())

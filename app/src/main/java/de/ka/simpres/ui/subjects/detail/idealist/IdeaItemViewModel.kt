@@ -1,13 +1,15 @@
 package de.ka.simpres.ui.subjects.detail.idealist
 
+import android.graphics.Color
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.utils.toEuro
 
-class IdeaItemViewModel(val item: IdeaItem) : IdeaBaseItemViewModel() {
+class IdeaItemViewModel(val item: IdeaItem, color: String) : IdeaBaseItemViewModel() {
 
     val doneAlpha = MutableLiveData<Float>().apply { postValue(alphaForDone()) }
     val done = MutableLiveData<Boolean>().apply { postValue(item.done) }
+    val color =  Color.parseColor(color)
 
     override val id = item.id.toInt()
 

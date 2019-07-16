@@ -105,7 +105,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
                 onError = ::handleGeneralError,
                 onNext = { result ->
                     adapter.value?.let {
-                        it.overwriteList(result)
+                        it.overwriteList(result, ColorResources.getRandomColorString())
 
                         if (it.isEmpty) {
                             blankVisibility.postValue(View.VISIBLE)
@@ -176,9 +176,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         title.postValue(subject.title)
 
         if (subject.ideasCount > 0) {
-
             doneAmount.postValue("${subject.ideasDoneCount} of ${subject.ideasCount}")
-
 
             if (subject.sum.toInt() > 0) {
                 sum.postValue(subject.sum.toEuro())

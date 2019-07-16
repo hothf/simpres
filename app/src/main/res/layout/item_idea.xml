@@ -48,6 +48,14 @@
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
+            <View
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/default_8"
+                android:layout_width="@dimen/default_36"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@{viewModel.color}"
+                android:layout_height="@dimen/default_36" />
+
             <CheckBox
                 android:id="@+id/check"
                 android:layout_width="@dimen/default_42"
