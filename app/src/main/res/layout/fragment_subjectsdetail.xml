@@ -15,6 +15,19 @@
         android:layout_height="match_parent"
         android:background="@color/colorBackgroundPrimary">
 
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/default_48"
+            android:background="@color/colorBackgroundSecondary" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_112"
+            android:layout_marginTop="@dimen/default_32"
+            android:background="@drawable/bg_round_bottom" />
+
         <RelativeLayout
             android:id="@+id/subjectDetail"
             android:layout_width="match_parent"
@@ -96,9 +109,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/totalIdeasValueText"
-                        android:layout_toStartOf="@+id/center"
-                        android:layout_marginBottom="@dimen/default_24"
                         android:layout_marginTop="@dimen/default_4"
+                        android:layout_marginBottom="@dimen/default_24"
+                        android:layout_toStartOf="@+id/center"
                         android:gravity="center"
                         android:text="Done"
                         android:textStyle="bold" />
@@ -128,9 +141,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/totalSumValueText"
-                        android:layout_toEndOf="@+id/center"
                         android:layout_marginTop="@dimen/default_4"
                         android:layout_marginBottom="@dimen/default_24"
+                        android:layout_toEndOf="@+id/center"
                         android:gravity="center"
                         android:text="Sum"
 
@@ -152,30 +165,26 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/ideasHeader"
-                android:layout_below="@id/detailsCard"
-                style="@style/TextStyle.Simpres.Secondary.Small"
+                android:id="@+id/blankText"
+                style="@style/TextStyle.Simpres.Secondary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_2"
-                android:paddingStart="@dimen/default_24"
-                android:paddingTop="@dimen/default_16"
-                android:paddingEnd="@dimen/default_24"
-                android:textAllCaps="true"
-                android:textStyle="bold"
-                android:text="Ideas"
-                />
-
+                android:layout_below="@id/detailsCard"
+                android:layout_marginStart="@dimen/default_16"
+                android:layout_marginTop="@dimen/default_68"
+                android:layout_marginEnd="@dimen/default_16"
+                android:layout_marginBottom="@dimen/default_68"
+                android:gravity="center"
+                android:text="@string/subject_detail_empty"
+                android:visibility="@{viewModel.blankVisibility}" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginStart="@dimen/default_16"
+                android:layout_marginEnd="@dimen/default_16"
                 android:id="@+id/recyclerIdeas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ideasHeader"
-                android:layout_marginStart="@dimen/default_16"
-                android:layout_marginTop="@dimen/default_16"
-                android:layout_marginEnd="@dimen/default_16"
-                android:layout_marginBottom="@dimen/default_16"
+                android:layout_below="@+id/blankText"
                 android:adapter="@{viewModel.adapter}"
                 android:minHeight="@dimen/default_58"
                 app:addItemDecoration="@{viewModel.itemDecoration}"
@@ -183,17 +192,6 @@
                 app:setItemAnimator="@{viewModel.itemAnimator}"
                 app:touchHelper="@{viewModel.touchHelper}" />
 
-            <TextView
-                style="@style/TextStyle.Simpres.Secondary"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_24"
-                android:layout_marginTop="@dimen/default_68"
-                android:layout_marginEnd="@dimen/default_24"
-                android:layout_marginBottom="@dimen/default_68"
-                android:gravity="center"
-                android:text="@string/subject_detail_empty"
-                android:visibility="@{viewModel.blankVisibility}" />
 
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

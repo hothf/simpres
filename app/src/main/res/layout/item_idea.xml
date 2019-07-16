@@ -14,7 +14,8 @@
         android:id="@+id/item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_58"
-        android:background="@color/colorBackgroundPrimary"
+        android:background="@drawable/bg_round"
+        android:backgroundTint="@color/colorBackgroundPrimary"
         android:theme="@style/Theme.Simpres">
 
         <ImageView
@@ -42,7 +43,7 @@
             android:id="@+id/swipeAble"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorBackgroundSecondary"
+            android:background="@drawable/bg_round"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
@@ -70,7 +71,7 @@
                 android:layout_alignBottom="@+id/check" />
 
             <TextView
-                style="@style/TextStyle.Simpres.Default.Bold"
+                style="@style/TextStyle.Simpres.Default.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -88,13 +89,14 @@
             <TextView
                 android:id="@+id/sumText"
                 style="@style/TextStyle.Simpres.Secondary"
-                android:layout_width="@dimen/default_68"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="@dimen/default_8"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center"
                 android:alpha="@{viewModel.doneAlpha}"
                 android:ellipsize="end"
-                android:gravity="center"
+                android:gravity="end|center_vertical"
                 android:maxLines="1"
                 android:text="@{viewModel.sum}"
                 tools:text="Sum" />

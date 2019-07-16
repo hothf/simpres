@@ -13,24 +13,32 @@
     <RelativeLayout
         android:id="@+id/item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/default_58"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:layout_height="@dimen/default_68">
 
-        <TextView
-            android:layout_marginStart="@dimen/default_62"
-            android:id="@+id/sumText"
-            style="@style/TextStyle.Simpres.Default.Bold"
-            android:textColor="@color/colorAccent"
-            android:textAllCaps="true"
+        <androidx.cardview.widget.CardView
+            style="@style/CardStyle.Simpres"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@string/idea_list_add" />
+            android:layout_height="@dimen/default_42"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/default_16"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/sumText"
+                style="@style/TextStyle.Simpres.Default"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_round"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingStart="@dimen/default_16"
+                android:paddingEnd="@dimen/default_16"
+                android:text="@string/idea_list_add"
+                android:textColor="@color/colorAccent" />
+
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 
