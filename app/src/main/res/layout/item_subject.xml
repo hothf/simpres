@@ -42,14 +42,36 @@
                     android:layout_width="1dp"
                     android:layout_height="match_parent" />
 
+                <View
+                    android:id="@+id/subjectHeader"
+                    android:layout_width="@dimen/default_48"
+                    android:layout_height="@dimen/default_48"
+                    android:layout_marginStart="@dimen/default_8"
+                    android:layout_marginTop="@dimen/default_8"
+                    android:background="@drawable/bg_circle"
+                    android:backgroundTint="@{viewModel.color}" />
+
                 <TextView
-                    android:id="@+id/title"
                     style="@style/TextStyle.Simpres.Default.Large"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/default_48"
-                    android:layout_marginStart="@dimen/default_16"
-                    android:layout_marginTop="@dimen/default_12"
-                    android:layout_marginEnd="@dimen/default_16"
+                    android:layout_height="match_parent"
+                    android:layout_alignStart="@+id/subjectHeader"
+                    android:layout_alignTop="@+id/subjectHeader"
+                    android:layout_alignEnd="@+id/subjectHeader"
+                    android:layout_alignBottom="@+id/subjectHeader"
+                    android:gravity="center"
+                    android:text="@{viewModel.shortTitle}"
+                    android:textColor="@color/colorBackgroundSecondary"
+                    tools:text="F" />
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/TextStyle.Simpres.Default"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/default_58"
+                    android:layout_below="@+id/subjectHeader"
+                    android:layout_marginStart="@dimen/default_12"
+                    android:layout_marginEnd="@dimen/default_12"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="2"
@@ -57,59 +79,46 @@
                     android:textStyle="bold"
                     tools:text="Title" />
 
-                <ProgressBar
-                    android:id="@+id/progress"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                <TextView
+                    android:id="@+id/sum"
+                    style="@style/TextStyle.Simpres.Secondary"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/title"
-                    android:layout_marginStart="@dimen/default_16"
+                    android:layout_height="@dimen/default_48"
+                    android:layout_marginStart="@dimen/default_8"
+                    android:visibility="gone"
                     android:layout_marginTop="@dimen/default_8"
-                    android:layout_marginEnd="@dimen/default_16"
-                    android:max="100"
-                    android:progress="@{viewModel.progress}"
-                    android:progressTint="@{viewModel.color}"
-                    android:visibility="@{viewModel.progressVisibility}" />
+                    android:layout_marginEnd="@dimen/default_8"
+                    android:layout_toEndOf="@+id/subjectHeader"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@{viewModel.sum}"
+                    tools:text="20 €" />
 
                 <TextView
                     android:id="@+id/doneAmountText"
                     style="@style/TextStyle.Simpres.Secondary.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/progress"
-                    android:layout_alignStart="@+id/progress"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:includeFontPadding="false"
-                    android:text="@{viewModel.doneAmount}"
-                    tools:text="1 of 2" />
-
-
-                <TextView
-                    android:id="@+id/sum"
-                    style="@style/TextStyle.Simpres.Secondary.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/default_16"
-                    android:layout_marginEnd="@dimen/default_16"
+                    android:layout_marginStart="@dimen/default_12"
                     android:layout_marginBottom="@dimen/default_12"
-                    android:text="@{viewModel.sum}"
-
-                    tools:text="Sum" />
+                    android:text="@{viewModel.doneAmount}"
+                    android:textStyle="bold"
+                    tools:text="1 of 2" />
 
                 <TextView
                     android:id="@+id/date"
                     style="@style/TextStyle.Simpres.Secondary.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/default_16"
-                    android:layout_marginEnd="@dimen/default_16"
+                    android:layout_marginStart="@dimen/default_12"
+                    android:layout_marginEnd="@dimen/default_12"
                     android:layout_marginBottom="@dimen/default_12"
                     android:text="@{viewModel.date}"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
                     tools:text="Date" />
 
 

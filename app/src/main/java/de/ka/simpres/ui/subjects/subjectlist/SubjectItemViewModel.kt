@@ -21,6 +21,8 @@ class SubjectItemViewModel(
         ""
     }
 
+    val shortTitle = if (item.title.isNotEmpty()) item.title.first().toString() else ""
+
     val doneAmount = if (item.ideasCount > 0) "${item.ideasDoneCount} of ${item.ideasCount}" else ""
 
     val date = item.date.toDate()
