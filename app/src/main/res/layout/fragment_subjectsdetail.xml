@@ -82,7 +82,7 @@
                         style="@style/TextStyle.Simpres.Default.Large"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_16"
+                        android:layout_marginTop="@dimen/default_24"
                         android:layout_toStartOf="@+id/center"
                         android:gravity="center"
                         android:text="@{viewModel.doneAmount}"
@@ -97,9 +97,10 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/totalIdeasValueText"
                         android:layout_toStartOf="@+id/center"
+                        android:layout_marginBottom="@dimen/default_24"
+                        android:layout_marginTop="@dimen/default_4"
                         android:gravity="center"
                         android:text="Done"
-                        android:textAllCaps="true"
                         android:textStyle="bold" />
 
                     <View
@@ -113,7 +114,7 @@
                         style="@style/TextStyle.Simpres.Default.Large"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_16"
+                        android:layout_marginTop="@dimen/default_24"
                         android:layout_toEndOf="@+id/center"
                         android:gravity="center"
                         android:text="@{viewModel.sum}"
@@ -128,25 +129,17 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/totalSumValueText"
                         android:layout_toEndOf="@+id/center"
+                        android:layout_marginTop="@dimen/default_4"
+                        android:layout_marginBottom="@dimen/default_24"
                         android:gravity="center"
                         android:text="Sum"
-                        android:textAllCaps="true"
-                        android:textStyle="bold" />
 
-                    <View
-                        android:id="@+id/divider"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/default_1"
-                        android:layout_below="@+id/totalIdeasInfoText"
-                        android:layout_marginStart="@dimen/default_8"
-                        android:layout_marginTop="@dimen/default_16"
-                        android:layout_marginEnd="@dimen/default_8" />
+                        android:textStyle="bold" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/addButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/divider"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="-25dp"
                         android:onClick="@{()->viewModel.onAddClick()}"

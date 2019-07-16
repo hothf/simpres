@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/default_168">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/deleteIcon"
@@ -29,27 +29,81 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:minHeight="@dimen/default_168">
+            android:foreground="?android:attr/selectableItemBackground">
 
             <RelativeLayout
-                android:id="@+id/gg"
+                android:id="@+id/contentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <View
-                    android:id="@+id/swipeHandle"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/TextStyle.Simpres.Default.Large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_16"
+                    android:layout_marginTop="@dimen/default_16"
+                    android:layout_marginEnd="@dimen/default_16"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:text="@{viewModel.title}"
+                    android:textStyle="bold"
+                    tools:text="Title" />
+
+                <TextView
+                    android:id="@+id/date"
+                    style="@style/TextStyle.Simpres.Secondary.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/title"
+                    android:layout_marginStart="@dimen/default_16"
+                    android:layout_marginEnd="@dimen/default_16"
+                    android:text="@{viewModel.date}"
+                    tools:text="Date" />
+
+                <TextView
+                    android:id="@+id/sum"
+
+                    style="@style/TextStyle.Simpres.Secondary.Small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/doneAmountText"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/default_16"
+                    android:layout_marginEnd="@dimen/default_16"
+                    android:layout_marginBottom="@dimen/default_2"
+                    android:gravity="end"
+                    android:text="@{viewModel.sum}"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:text="20 €" />
+
+                <TextView
+                    android:id="@+id/doneAmountText"
+                    style="@style/TextStyle.Simpres.Secondary.Small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/subjectHeader"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/default_16"
+                    android:gravity="end"
+                    android:includeFontPadding="false"
+                    android:text="@{viewModel.doneAmount}"
+                    android:textStyle="bold"
+                    tools:text="1 of 2" />
 
                 <View
                     android:id="@+id/subjectHeader"
                     android:layout_width="@dimen/default_48"
                     android:layout_height="@dimen/default_48"
-                    android:layout_marginStart="@dimen/default_8"
-                    android:layout_marginTop="@dimen/default_8"
+                    android:layout_below="@+id/date"
+                    android:layout_marginStart="@dimen/default_16"
+                    android:layout_marginTop="@dimen/default_24"
+                    android:layout_marginBottom="@dimen/default_16"
                     android:background="@drawable/bg_circle"
                     android:backgroundTint="@{viewModel.color}" />
+
 
                 <TextView
                     style="@style/TextStyle.Simpres.Default.Large"
@@ -64,65 +118,9 @@
                     android:textColor="@color/colorBackgroundSecondary"
                     tools:text="F" />
 
-                <TextView
-                    android:id="@+id/title"
-                    style="@style/TextStyle.Simpres.Default"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/default_58"
-                    android:layout_below="@+id/subjectHeader"
-                    android:layout_marginStart="@dimen/default_12"
-                    android:layout_marginEnd="@dimen/default_12"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="2"
-                    android:text="@{viewModel.title}"
-                    android:textStyle="bold"
-                    tools:text="Title" />
-
-                <TextView
-                    android:id="@+id/sum"
-                    style="@style/TextStyle.Simpres.Secondary"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/default_48"
-                    android:layout_marginStart="@dimen/default_8"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/default_8"
-                    android:layout_marginEnd="@dimen/default_8"
-                    android:layout_toEndOf="@+id/subjectHeader"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@{viewModel.sum}"
-                    tools:text="20 €" />
-
-                <TextView
-                    android:id="@+id/doneAmountText"
-                    style="@style/TextStyle.Simpres.Secondary.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/default_12"
-                    android:layout_marginBottom="@dimen/default_12"
-                    android:text="@{viewModel.doneAmount}"
-                    android:textStyle="bold"
-                    tools:text="1 of 2" />
-
-                <TextView
-                    android:id="@+id/date"
-                    style="@style/TextStyle.Simpres.Secondary.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/default_12"
-                    android:layout_marginEnd="@dimen/default_12"
-                    android:layout_marginBottom="@dimen/default_12"
-                    android:text="@{viewModel.date}"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
-                    tools:text="Date" />
-
-
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
+
+
     </RelativeLayout>
 </layout>
