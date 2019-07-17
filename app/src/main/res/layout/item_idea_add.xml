@@ -13,6 +13,7 @@
     <RelativeLayout
         android:id="@+id/item"
         android:layout_width="match_parent"
+        android:background="@drawable/bg_round_dashed"
         android:layout_height="@dimen/default_68">
 
         <androidx.cardview.widget.CardView

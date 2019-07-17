@@ -11,13 +11,13 @@
 
     <color name="colorSelected">#232323</color>
 
-    <color name="colorTextDefault">#656565</color>
+    <color name="colorTextDefault">#111E40</color>
     <color name="colorTextSecondaryDefault">#AAAAAA</color>
-    <color name="colorTextNav">#656565</color>
+    <color name="colorTextNav">#111E40</color>
     <color name="colorButtonTextDefault">#ffffff</color>
     <color name="colorButtonTextAlternative">@color/colorAccent</color>
 
-    <color name="colorIconTintDefault">#656565</color>
+    <color name="colorIconTintDefault">#111E40</color>
     <color name="colorIconTintSecondary">#747474</color>
 
     <color name="colorIndicatorGreen">#5BB6A6</color>
