@@ -91,9 +91,9 @@ class IdeaAdapter(
 //        newList.add(0,IdeaAddItemViewModel())
 
         if (indexOfFirstDone != -1) {
-            newList.add(indexOfFirstDone, IdeaAddItemViewModel())
+            newList.add(indexOfFirstDone, IdeaAddItemViewModel(color))
         } else {
-            newList.add(IdeaAddItemViewModel())
+            newList.add(IdeaAddItemViewModel(color))
         }
         setItems(newList)
     }

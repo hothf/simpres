@@ -36,7 +36,7 @@
                 android:paddingStart="@dimen/default_16"
                 android:paddingEnd="@dimen/default_16"
                 android:text="@string/idea_list_add"
-                android:textColor="@color/colorAccent" />
+                android:textColor="@{viewModel.color}" />
 
         </androidx.cardview.widget.CardView>
 
