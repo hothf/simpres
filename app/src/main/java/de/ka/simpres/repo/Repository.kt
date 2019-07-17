@@ -30,9 +30,9 @@ interface Repository {
 
     fun getIdeasOf(subjectId: Long)
 
-    fun removeIdea(subjectId: Long, ideaItem: IdeaItem)
+    fun removeIdea(ideaItem: IdeaItem)
 
-    fun saveOrUpdateIdea(subjectId: Long, idea: IdeaItem)
+    fun saveOrUpdateIdea(idea: IdeaItem)
 
     fun findSubjectById(subjectId: Long): SubjectItem?
 
@@ -44,5 +44,5 @@ interface Repository {
     /**
      * Will try to undo the last removed idea action.
      */
-    fun undoDeleteIdea(subjectId: Long)
+    fun undoDeleteIdea()
 }

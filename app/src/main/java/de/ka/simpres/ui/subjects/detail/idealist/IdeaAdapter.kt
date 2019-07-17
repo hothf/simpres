@@ -3,19 +3,15 @@ package de.ka.simpres.ui.subjects.detail.idealist
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
-import de.ka.simpres.R
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
 import de.ka.simpres.databinding.ItemIdeaAddBinding
 import de.ka.simpres.databinding.ItemIdeaBinding
-import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.IdeaItem
-import org.koin.standalone.inject
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -25,10 +21,8 @@ class IdeaAdapter(
     val listener: (IdeaItem) -> Unit,
     val add: () -> Unit,
     val subjectId: Long,
-    val remove: (IdeaBaseItemViewModel) -> Unit
+    val remove: (IdeaItemViewModel) -> Unit
 ) : BaseAdapter<IdeaBaseItemViewModel>(owner, list, IdeaAdapterDiffCallback()) {
-
-    private val repository: Repository by inject()
 
     override fun getItemViewType(position: Int): Int {
         if (getItems()[position] is IdeaAddItemViewModel) {
@@ -57,10 +51,6 @@ class IdeaAdapter(
             }
         } else if (viewModel is IdeaItemViewModel) {
             DataBindingUtil.getBinding<ItemIdeaBinding>(holder.itemView)?.let { binding ->
-                binding.checkAccessor.setOnClickListener {
-                    viewModel.toggleDone()
-                    repository.saveOrUpdateIdea(subjectId, viewModel.item)
-                }
                 binding.swipeAble.setOnClickListener {
                     listener(viewModel.item)
                 }
@@ -74,7 +64,6 @@ class IdeaAdapter(
         val viewModel = getItems()[position] as? IdeaItemViewModel
 
         viewModel?.let {
-            repository.removeIdea(subjectId, viewModel.item)
             remove(it)
         }
 
@@ -113,14 +102,17 @@ class IdeaAdapter(
 class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaBaseItemViewModel>() {
 
     override fun areItemsTheSame(oldItem: IdeaBaseItemViewModel, newItem: IdeaBaseItemViewModel): Boolean {
-        return oldItem.id == newItem.id
+        if ( oldItem.id == newItem.id) return true
+        return false
     }
 
     override fun areContentsTheSame(
         oldItem: IdeaBaseItemViewModel,
         newItem: IdeaBaseItemViewModel
     ): Boolean {
-        return oldItem == newItem
+        if (oldItem is IdeaAddItemViewModel && newItem is IdeaAddItemViewModel && oldItem.id == newItem.id) return true
+        if (oldItem is IdeaItemViewModel && newItem is IdeaItemViewModel && oldItem.item == newItem.item) return true
+        return false
     }
 }
 

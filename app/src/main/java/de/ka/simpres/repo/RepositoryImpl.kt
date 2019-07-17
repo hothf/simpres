@@ -84,22 +84,22 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         observableIdeas.onNext(items)
     }
 
-    override fun removeIdea(subjectId: Long, ideaItem: IdeaItem) {
-        findSubjectById(subjectId)?.let { subject ->
+    override fun removeIdea(ideaItem: IdeaItem) {
+        findSubjectById(ideaItem.subjectId)?.let { subject ->
             ideasBox.remove(ideaItem)
             lastRemovedIdea = ideaItem
 
-            getIdeasOf(subjectId)
+            getIdeasOf(subject.id)
 
             recalculateSum(subject)
         }
     }
 
-    override fun saveOrUpdateIdea(subjectId: Long, idea: IdeaItem) {
-        findSubjectById(subjectId)?.let { subject ->
+    override fun saveOrUpdateIdea(idea: IdeaItem) {
+        findSubjectById(idea.subjectId)?.let { subject ->
             ideasBox.put(idea)
 
-            getIdeasOf(subjectId)
+            getIdeasOf(subject.id)
 
             recalculateSum(subject)
         }
@@ -111,9 +111,9 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         }
     }
 
-    override fun undoDeleteIdea(subjectId: Long) {
+    override fun undoDeleteIdea() {
         lastRemovedIdea?.let {
-            saveOrUpdateIdea(subjectId, it)
+            saveOrUpdateIdea(it)
         }
     }
 

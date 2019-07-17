@@ -14,7 +14,7 @@ import de.ka.simpres.base.events.AnimType
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.idealist.IdeaAdapter
-import de.ka.simpres.ui.subjects.detail.idealist.IdeaBaseItemViewModel
+import de.ka.simpres.ui.subjects.detail.idealist.IdeaItemViewModel
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
 import de.ka.simpres.utils.*
@@ -48,11 +48,12 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val sum = MutableLiveData<String>().apply { value = "" }
     val doneAmount = MutableLiveData<String>().apply { value = "" }
     val color = MutableLiveData<Int>().apply { Color.parseColor(ColorResources.getRandomColorString()) }
-    private val removeListener = { _: IdeaBaseItemViewModel ->
+    private val removeListener = { viewModel: IdeaItemViewModel ->
+        repository.removeIdea(viewModel.item)
         showSnack(
             resourcesProvider.getString(R.string.idea_delete_undo_title),
             Snacker.SnackType.DEFAULT,
-            { repository.undoDeleteIdea(currentSubjectId) },
+            repository::undoDeleteIdea,
             resourcesProvider.getString(R.string.idea_delete_undo_action)
         )
     }

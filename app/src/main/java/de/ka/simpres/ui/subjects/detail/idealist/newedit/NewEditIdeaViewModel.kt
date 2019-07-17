@@ -1,11 +1,9 @@
 package de.ka.simpres.ui.subjects.detail.idealist.newedit
 
-import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
-import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.utils.NavigationUtils
 import de.ka.simpres.utils.ViewUtils
@@ -52,7 +50,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
         view?.closeAttachedKeyboard()
 
         currentIdea?.let { idea ->
-            repository.saveOrUpdateIdea(currentSubjectId, idea)
+            repository.saveOrUpdateIdea(idea)
             navigateTo(NavigationUtils.BACK)
         }
     }
