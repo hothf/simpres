@@ -12,32 +12,33 @@ import kotlinx.coroutines.launch
 
 class RepositoryImpl(db: AppDatabase) : Repository {
 
-    private val ideasBox = db.get().boxFor<IdeaItem>()
     private val subjectsBox = db.get().boxFor<SubjectItem>()
+    private val ideasBox = db.get().boxFor<IdeaItem>()
 
     private var lastRemovedIdea: IdeaItem? = null
     private var lastRemovedSubjectItem: SubjectItem? = null
+    private var lastRemovedIdeas: List<IdeaItem> = listOf()
 
     override val observableSubjects =
-        PublishSubject.create<List<SubjectItem>>()
+        PublishSubject.create<IndicatedList<SubjectItem>>()
 
     override val observableIdeas =
-        PublishSubject.create<List<IdeaItem>>()
+        PublishSubject.create<IndicatedList<IdeaItem>>()
 
     override fun getSubjects(wait: Boolean) {
         if (wait) {
             GlobalScope.launch {
                 delay(250)
-                getSubjectsInternally()
+                getSubjectsInternally(false)
             }
         } else {
-            getSubjectsInternally()
+            getSubjectsInternally(false)
         }
     }
 
-    private fun getSubjectsInternally() {
+    private fun getSubjectsInternally(isUpdate: Boolean) {
         val list = subjectsBox.all.sortedBy { it.position }
-        observableSubjects.onNext(list)
+        observableSubjects.onNext(IndicatedList(list, isUpdate))
     }
 
     override fun moveSubject(subject1: SubjectItem, subject2: SubjectItem, oldPosition: Int, newPosition: Int) {
@@ -57,31 +58,36 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         subjectsBox.put(list)
         subjectsBox.put(subject)
 
-        getSubjects()
+        getSubjectsInternally(false)
     }
 
     override fun updateSubject(subject: SubjectItem) {
         subjectsBox.put(subject)
 
-        getSubjects()
+        getSubjectsInternally(true)
     }
 
     override fun removeSubject(subject: SubjectItem) {
         findSubjectById(subject.id)?.let {
-            ideasBox.remove(ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find())
+            lastRemovedIdeas = ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find()
+            ideasBox.remove(lastRemovedIdeas)
             subjectsBox.remove(it)
             lastRemovedSubjectItem = it
             val list = subjectsBox.all.toMutableList()
             list.forEach { subject -> subject.position = subject.position - 1 }
             subjectsBox.put(list)
 
-            getSubjects()
+            getSubjectsInternally(false)
         }
     }
 
     override fun getIdeasOf(subjectId: Long) {
+        getIdeasOfInternally(subjectId, false)
+    }
+
+    private fun getIdeasOfInternally(subjectId: Long, isUpdate: Boolean) {
         val items = ideasBox.query().equal(IdeaItem_.subjectId, subjectId).build().find().sortedBy { it.done }
-        observableIdeas.onNext(items)
+        observableIdeas.onNext(IndicatedList(items, isUpdate))
     }
 
     override fun removeIdea(ideaItem: IdeaItem) {
@@ -89,7 +95,7 @@ class RepositoryImpl(db: AppDatabase) : Repository {
             ideasBox.remove(ideaItem)
             lastRemovedIdea = ideaItem
 
-            getIdeasOf(subject.id)
+            getIdeasOfInternally(subject.id, false)
 
             recalculateSum(subject)
         }
@@ -97,9 +103,11 @@ class RepositoryImpl(db: AppDatabase) : Repository {
 
     override fun saveOrUpdateIdea(idea: IdeaItem) {
         findSubjectById(idea.subjectId)?.let { subject ->
+            val update = idea.id != 0L
+
             ideasBox.put(idea)
 
-            getIdeasOf(subject.id)
+            getIdeasOfInternally(subject.id, update)
 
             recalculateSum(subject)
         }
@@ -108,6 +116,7 @@ class RepositoryImpl(db: AppDatabase) : Repository {
     override fun undoDeleteSubject() {
         lastRemovedSubjectItem?.let {
             saveSubject(it)
+            ideasBox.put(lastRemovedIdeas)
         }
     }
 
@@ -134,6 +143,7 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         subject.ideasCount = ideas.size
         subject.ideasDoneCount = ideas.count { it.done }
 
-        updateSubject(subject)
+        subjectsBox.put(subject)
+        getSubjectsInternally(false)
     }
 }

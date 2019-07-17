@@ -10,8 +10,8 @@ import io.reactivex.Observable
  */
 interface Repository {
 
-    val observableIdeas: Observable<List<IdeaItem>>
-    val observableSubjects: Observable<List<SubjectItem>>
+    val observableSubjects: Observable<IndicatedList<SubjectItem>>
+    val observableIdeas: Observable<IndicatedList<IdeaItem>>
 
     fun getSubjects(wait: Boolean = false)
 
@@ -46,3 +46,12 @@ interface Repository {
      */
     fun undoDeleteIdea()
 }
+
+/**
+ * An array [List] container.
+ *
+ * A optional [update] flag can be used to indicate, that the list is only a update.
+ *
+ * All flags default to **false** for a simple list indication, that could contain removed, updated and new data.
+ */
+data class IndicatedList<T : Any>(val list: List<T>, var update: Boolean = false) : ArrayList<T>(list)

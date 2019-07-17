@@ -28,6 +28,7 @@ import org.koin.standalone.inject
 
 class SubjectsDetailViewModel : BaseViewModel() {
 
+    private var currentColor = ColorResources.getRandomColorString()
     private var currentSubjectId = -1L
     private var isLoading = false
 
@@ -47,7 +48,8 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val title = MutableLiveData<String>()
     val sum = MutableLiveData<String>().apply { value = "" }
     val doneAmount = MutableLiveData<String>().apply { value = "" }
-    val color = MutableLiveData<Int>().apply { Color.parseColor(ColorResources.getRandomColorString()) }
+    val color = MutableLiveData<Int>().apply { value = Color.parseColor(currentColor) }
+
     private val removeListener = { viewModel: IdeaItemViewModel ->
         repository.removeIdea(viewModel.item)
         showSnack(
@@ -106,7 +108,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
                 onError = ::handleGeneralError,
                 onNext = { result ->
                     adapter.value?.let {
-                        it.overwriteList(result, ColorResources.getRandomColorString())
+                        it.overwriteList(result, currentColor)
 
                         if (it.isEmpty) {
                             blankVisibility.postValue(View.VISIBLE)
@@ -123,8 +125,8 @@ class SubjectsDetailViewModel : BaseViewModel() {
             .subscribeBy(
                 onError = ::handleGeneralError,
                 onNext = {
-                    it.find { subject -> subject.id == currentSubjectId }?.let { subject ->
-                        updateSubject(subject, true)
+                    it.list.find { subject -> subject.id == currentSubjectId }?.let { subject ->
+                        updateSubject(subject, it.update)
                     }
                 }
             )
@@ -168,12 +170,11 @@ class SubjectsDetailViewModel : BaseViewModel() {
 
     private fun refresh() {
         showLoading()
-        repository.findSubjectById(currentSubjectId)?.let { updateSubject(it) }
-        repository.getIdeasOf(currentSubjectId)
+        repository.findSubjectById(currentSubjectId)?.let { updateSubject(it, false) }
         hideLoading()
     }
 
-    private fun updateSubject(subject: SubjectItem, showHint: Boolean = false) {
+    private fun updateSubject(subject: SubjectItem, isUpdate: Boolean = false) {
         title.postValue(subject.title)
 
         if (subject.ideasCount > 0) {
@@ -186,7 +187,15 @@ class SubjectsDetailViewModel : BaseViewModel() {
             }
         }
 
-        color.postValue(Color.parseColor(subject.color))
+        currentColor = subject.color
+
+        color.postValue(Color.parseColor(currentColor))
+
+        repository.getIdeasOf(currentSubjectId)
+
+        if (isUpdate){
+            showSnack("Updated")
+        }
     }
 
     private fun showLoading() {
