@@ -102,7 +102,7 @@ class IdeaAdapter(
 class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaBaseItemViewModel>() {
 
     override fun areItemsTheSame(oldItem: IdeaBaseItemViewModel, newItem: IdeaBaseItemViewModel): Boolean {
-        if ( oldItem.id == newItem.id) return true
+        if (oldItem.id == newItem.id) return true
         return false
     }
 
@@ -110,8 +110,6 @@ class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaBaseItemViewModel>() {
         oldItem: IdeaBaseItemViewModel,
         newItem: IdeaBaseItemViewModel
     ): Boolean {
-        if (oldItem is IdeaAddItemViewModel && newItem is IdeaAddItemViewModel && oldItem.id == newItem.id) return true
-        if (oldItem is IdeaItemViewModel && newItem is IdeaItemViewModel && oldItem.item == newItem.item) return true
         return false
     }
 }

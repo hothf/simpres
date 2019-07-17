@@ -14,7 +14,6 @@ import org.koin.standalone.inject
 import de.ka.simpres.utils.resources.ResourcesProvider
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.abs
 
 abstract class BaseAdapter<E : BaseItemViewModel>(
     private val owner: LifecycleOwner,
