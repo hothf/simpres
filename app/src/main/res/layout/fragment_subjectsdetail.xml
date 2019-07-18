@@ -27,7 +27,6 @@
             android:layout_height="@dimen/default_112"
             android:layout_marginTop="@dimen/default_32"
             android:background="@drawable/bg_round_bottom" />
-
         <RelativeLayout
             android:id="@+id/subjectDetail"
             android:layout_width="match_parent"
@@ -51,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_8"
-                android:layout_marginTop="@dimen/default_34"
+                android:layout_marginTop="@dimen/default_36"
                 android:layout_marginEnd="@dimen/default_8"
                 android:layout_toStartOf="@+id/edit"
                 android:layout_toEndOf="@+id/back"
@@ -114,6 +113,32 @@
                         android:layout_toStartOf="@+id/center"
                         android:gravity="center"
                         android:text="Done"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/totalDateValueText"
+                        style="@style/TextStyle.Simpres.Default.Large"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/default_24"
+                        android:gravity="center"
+                        android:text="@{viewModel.date}"
+                        android:textColor="@{viewModel.color}"
+                        android:textStyle="bold"
+                        tools:text="12.12.2019" />
+
+                    <TextView
+                        android:id="@+id/totalDateInfoText"
+                        style="@style/TextStyle.Simpres.Secondary.Small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/totalDateValueText"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/default_4"
+                        android:layout_marginBottom="@dimen/default_24"
+                        android:gravity="center"
+                        android:text="Date"
                         android:textStyle="bold" />
 
                     <View
@@ -179,12 +204,12 @@
                 android:visibility="@{viewModel.blankVisibility}" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginStart="@dimen/default_16"
-                android:layout_marginEnd="@dimen/default_16"
                 android:id="@+id/recyclerIdeas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/blankText"
+                android:layout_marginStart="@dimen/default_16"
+                android:layout_marginEnd="@dimen/default_16"
                 android:adapter="@{viewModel.adapter}"
                 android:minHeight="@dimen/default_58"
                 app:addItemDecoration="@{viewModel.itemDecoration}"

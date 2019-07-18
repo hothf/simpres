@@ -15,6 +15,18 @@
         android:layout_height="match_parent"
         android:background="@color/colorBackgroundPrimary">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/default_48"
+            android:background="@color/colorBackgroundSecondary" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/default_112"
+            android:layout_marginTop="@dimen/default_32"
+            android:background="@drawable/bg_round_bottom" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_8"
-                    android:layout_marginTop="@dimen/default_34"
+                    android:layout_marginTop="@dimen/default_36"
                     android:layout_marginEnd="@dimen/default_8"
                     android:layout_toStartOf="@+id/saveButton"
                     android:layout_toEndOf="@+id/back"
@@ -53,17 +65,20 @@
                     android:text="@{viewModel.navTitle}"
                     tools:text="Title" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <ImageButton
                     android:id="@+id/saveButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/default_48"
+                    android:layout_height="@dimen/default_48"
+                    android:layout_marginEnd="@dimen/default_12"
+                    android:layout_marginTop="@dimen/default_22"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/default_4"
-                    android:layout_marginEnd="@dimen/default_4"
+                    android:scaleType="centerInside"
+                    android:padding="@dimen/default_8"
+                    android:background="@drawable/round_button_transparent_selector"
                     android:onClick="@{(v)->viewModel.submit(v)}"
+                    android:tint="@color/colorAccent"
                     android:src="@drawable/ic_check"
-                    app:fabSize="mini"
-                    app:useCompatPadding="true" />
+                  />
 
             </RelativeLayout>
 

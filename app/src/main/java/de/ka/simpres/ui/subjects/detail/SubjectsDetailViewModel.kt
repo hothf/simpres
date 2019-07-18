@@ -46,9 +46,10 @@ class SubjectsDetailViewModel : BaseViewModel() {
     )
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
-    val sum = MutableLiveData<String>().apply { value = "" }
-    val doneAmount = MutableLiveData<String>().apply { value = "" }
+    val sum = MutableLiveData<String>().apply { value = "-" }
+    val doneAmount = MutableLiveData<String>().apply { value = "-" }
     val color = MutableLiveData<Int>().apply { value = Color.parseColor(currentColor) }
+    val date = MutableLiveData<String>().apply { value = "-" }
 
     private val removeListener = { viewModel: IdeaItemViewModel ->
         repository.removeIdea(viewModel.item)
@@ -164,6 +165,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         title.postValue("")
         sum.postValue("-")
         doneAmount.postValue("-")
+        date.postValue("-")
 
         refresh()
     }
@@ -190,6 +192,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         currentColor = subject.color
 
         color.postValue(Color.parseColor(currentColor))
+        date.postValue(subject.date.toDate())
 
         repository.getIdeasOf(currentSubjectId)
 
