@@ -17,19 +17,23 @@
         <item name="elevation">0dp</item>
     </style>
 
-    <style name="CardStyle.Simpres" parent="CardView.Light">
+    <style name="CardStyle.Simpres" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/colorBackgroundSecondary</item>
         <item name="android:textColor">@color/colorTextDefault</item>
         <item name="android:textColorHighlight">@color/colorTextDefault</item>
         <item name="cardCornerRadius">@dimen/default_corner_radius</item>
         <item name="cardElevation">@dimen/default_4</item>
+        <item name="android:theme">@style/Theme.Simpres</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
-    <style name="ButtonStyle.Simpres" parent="TextAppearance.AppCompat.Button">
-        <item name="android:background">@drawable/button_default_selector</item>
+    <style name="ButtonStyle.Simpres.Nav" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">@dimen/default_16</item>
+        <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:textColor">@color/colorButtonTextDefault</item>
-        <item name="android:elevation">@dimen/default_8</item>
+        <item name="iconTint">@color/colorIconTintDefault</item>
+
     </style>
 
     <style name="ButtonStyle.Simpres.Alternative" parent="TextAppearance.AppCompat.Button">
@@ -39,7 +43,7 @@
         <item name="android:elevation">@dimen/default_8</item>
     </style>
 
-    <style name="ButtonStyle.Simpres.Borderless" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="ButtonStyle.Simpres.Bordered" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="cornerRadius">@dimen/default_2</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/font_default</item>

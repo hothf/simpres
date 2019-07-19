@@ -32,18 +32,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/back"
+                style="@style/ButtonStyle.Simpres.Nav"
                 android:layout_width="@dimen/default_48"
                 android:layout_height="@dimen/default_48"
                 android:layout_marginStart="@dimen/default_12"
                 android:layout_marginTop="@dimen/default_24"
-                android:background="@drawable/round_button_transparent_selector"
                 android:contentDescription="@string/app_general_back"
                 android:onClick="@{() -> viewModel.onBack()}"
-                android:padding="@dimen/default_12"
-                android:src="@drawable/ic_back"
-                android:tint="@color/colorIconTintDefault" />
+                app:icon="@drawable/ic_back"
+                app:iconSize="@dimen/default_20" />
 
             <TextView
                 android:id="@+id/titleText"
@@ -61,8 +60,9 @@
                 android:text="@{viewModel.title}"
                 tools:text="Detail Title" />
 
-            <ImageView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit"
+                style="@style/ButtonStyle.Simpres.Nav"
                 android:layout_width="@dimen/default_48"
                 android:layout_height="@dimen/default_48"
                 android:layout_alignParentEnd="true"
@@ -71,9 +71,8 @@
                 android:background="@drawable/round_button_transparent_selector"
                 android:contentDescription="@string/subject_detail_edit"
                 android:onClick="@{() -> viewModel.onEditSubject()}"
-                android:padding="@dimen/default_12"
-                android:src="@drawable/ic_edit"
-                android:tint="@color/colorIconTintDefault" />
+                app:icon="@drawable/ic_edit"
+                app:iconSize="@dimen/default_20" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/detailsCard"
@@ -176,18 +175,6 @@
                         android:gravity="center"
                         android:text="@string/subject_detail_sum"
                         android:textStyle="bold" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/addButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="-25dp"
-                        android:onClick="@{()->viewModel.onAddClick()}"
-                        android:src="@drawable/ic_close"
-                        android:tint="@color/colorBackgroundPrimary"
-                        android:visibility="gone"
-                        app:fabSize="mini" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>

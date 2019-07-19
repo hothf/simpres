@@ -135,7 +135,7 @@
 
                         <Button
                             android:id="@+id/dateSetterButton"
-                            style="@style/ButtonStyle.Simpres.Borderless"
+                            style="@style/ButtonStyle.Simpres.Bordered"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/default_42"
                             android:layout_marginStart="@dimen/default_8"
