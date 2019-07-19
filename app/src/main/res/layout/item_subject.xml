@@ -85,7 +85,7 @@
                     tools:text="Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title" />
 
                 <TextView
-                    android:id="@+id/date"
+                    android:id="@+id/done"
                     style="@style/TextStyle.Simpres.Secondary.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -93,8 +93,8 @@
                     android:layout_alignStart="@+id/title"
                     android:textStyle="bold"
                     android:layout_toEndOf="@+id/indicator"
-                    android:text="@{viewModel.date}"
-                    tools:text="Date" />
+                    android:text="@{viewModel.doneAmount}"
+                    tools:text="1/2 Done" />
 
 
                 <TextView

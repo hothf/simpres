@@ -23,7 +23,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/default_112"
+            android:layout_height="@dimen/default_58"
             android:layout_marginTop="@dimen/default_32"
             android:background="@drawable/bg_round_bottom" />
 
@@ -90,28 +90,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        style="@style/TextStyle.Simpres.Secondary.Small"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_2"
-                        android:paddingStart="@dimen/default_24"
-                        android:paddingTop="@dimen/default_16"
-                        android:paddingEnd="@dimen/default_24"
-                        android:textAllCaps="true"
-                        android:textStyle="bold"
-                        android:text="Idea Title"
-                        />
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/titleEditContainer"
+                        style="@style/TextInputStyle.Simpres"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_16"
-                        android:elevation="@dimen/default_4"
-                        android:background="@drawable/bg_round"
+                        android:layout_marginStart="@dimen/default_16"
+                        android:layout_marginTop="@dimen/default_42"
+                        android:layout_marginEnd="@dimen/default_16"
                         android:hint="@string/idea_newedit_title_hint"
-                        android:padding="@dimen/default_24"
                         app:setError="@{viewModel.titleError}">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -119,7 +106,6 @@
                             android:layout_height="wrap_content"
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
-
                             android:maxLines="1"
                             android:singleLine="true"
                             android:text="@{viewModel.title}"
@@ -127,29 +113,15 @@
                             app:setSelection="@{viewModel.titleSelection}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-
-                    <TextView
-                        android:id="@+id/dateHeader"
-                        style="@style/TextStyle.Simpres.Secondary.Small"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_2"
-                        android:paddingStart="@dimen/default_24"
-                        android:paddingTop="@dimen/default_16"
-                        android:paddingEnd="@dimen/default_24"
-                        android:text="Amount"
-                        android:textAllCaps="true"
-                        android:textStyle="bold" />
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/amountEditContainer"
+                        style="@style/TextInputStyle.Simpres"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_round"
-                        android:elevation="@dimen/default_4"
-                        android:layout_margin="@dimen/default_16"
+                        android:layout_marginStart="@dimen/default_16"
+                        android:layout_marginTop="@dimen/default_16"
+                        android:layout_marginEnd="@dimen/default_16"
                         android:hint="@string/idea_newedit_sum_hint"
-                        android:padding="@dimen/default_24"
                         app:setError="@{viewModel.sumError}">
 
                         <com.google.android.material.textfield.TextInputEditText

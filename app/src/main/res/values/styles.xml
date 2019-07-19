@@ -1,5 +1,12 @@
 <resources>
 
+    <style name="TextInputStyle.Simpres" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">@dimen/default_16</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/default_16</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/default_16</item>
+        <item name="boxCornerRadiusTopStart">@dimen/default_16</item>
+    </style>
+
     <style name="AppBarStyle.Simpres" parent="Widget.Design.AppBarLayout">
         <item name="android:background">@color/colorBackgroundPrimary</item>
         <item name="elevation">0dp</item>
@@ -27,9 +34,9 @@
         <item name="android:elevation">@dimen/default_8</item>
     </style>
 
-    <style name="ButtonStyle.Simpres.Borderless" parent="TextAppearance.AppCompat.Button">
-        <item name="android:background">@drawable/button_transculent_selector</item>
-        <item name="android:textAllCaps">true</item>
+    <style name="ButtonStyle.Simpres.Borderless" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">@dimen/default_2</item>
+        <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/font_default</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>

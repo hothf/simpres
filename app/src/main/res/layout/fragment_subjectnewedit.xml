@@ -23,7 +23,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/default_112"
+            android:layout_height="@dimen/default_58"
             android:layout_marginTop="@dimen/default_32"
             android:background="@drawable/bg_round_bottom" />
 
@@ -69,16 +69,15 @@
                     android:id="@+id/saveButton"
                     android:layout_width="@dimen/default_48"
                     android:layout_height="@dimen/default_48"
-                    android:layout_marginEnd="@dimen/default_12"
-                    android:layout_marginTop="@dimen/default_22"
                     android:layout_alignParentEnd="true"
-                    android:scaleType="centerInside"
-                    android:padding="@dimen/default_8"
+                    android:layout_marginTop="@dimen/default_22"
+                    android:layout_marginEnd="@dimen/default_12"
                     android:background="@drawable/round_button_transparent_selector"
                     android:onClick="@{(v)->viewModel.submit(v)}"
-                    android:tint="@color/colorAccent"
+                    android:padding="@dimen/default_8"
+                    android:scaleType="centerInside"
                     android:src="@drawable/ic_check"
-                  />
+                    android:tint="@color/colorAccent" />
 
             </RelativeLayout>
 
@@ -91,28 +90,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        style="@style/TextStyle.Simpres.Secondary.Small"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_2"
-                        android:paddingStart="@dimen/default_24"
-                        android:paddingTop="@dimen/default_16"
-                        android:paddingEnd="@dimen/default_24"
-                        android:text="Title"
-                        android:textAllCaps="true"
-                        android:textStyle="bold" />
-
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/titleEditContainer"
+                        style="@style/TextInputStyle.Simpres"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_16"
-                        android:background="@drawable/bg_round"
-                        android:elevation="@dimen/default_4"
+                        android:layout_marginStart="@dimen/default_16"
+                        android:layout_marginTop="@dimen/default_42"
+                        android:layout_marginEnd="@dimen/default_16"
                         android:hint="@string/subject_newedit_title_hint"
-                        android:padding="@dimen/default_24"
                         app:setError="@{viewModel.titleError}">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -129,48 +115,36 @@
                             app:setSelection="@{viewModel.titleSelection}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        android:id="@+id/dateHeader"
-                        style="@style/TextStyle.Simpres.Secondary.Small"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_2"
-                        android:paddingStart="@dimen/default_24"
-                        android:paddingTop="@dimen/default_16"
-                        android:paddingEnd="@dimen/default_24"
-                        android:text="Date"
-                        android:textAllCaps="true"
-                        android:textStyle="bold" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_16"
-                        android:background="@drawable/bg_round"
-                        android:elevation="@dimen/default_4"
-                        android:padding="@dimen/default_24">
+                        android:background="@drawable/bg_round_stroke"
+                        android:padding="@dimen/default_8">
+
+
+                        <CheckBox
+                            android:id="@+id/checkPush"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/default_42"
+                            android:checked="@={viewModel.pushEnabled}"
+                            android:text="@string/subject_newedit_push_hint"
+                            android:textColor="@color/colorTextSecondaryDefault" />
 
                         <Button
                             android:id="@+id/dateSetterButton"
                             style="@style/ButtonStyle.Simpres.Borderless"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/default_42"
+                            android:layout_marginStart="@dimen/default_8"
+                            android:layout_toEndOf="@+id/checkPush"
+                            android:enabled="@{viewModel.pushEnabled}"
                             android:onClick="@{(v) -> viewModel.onOpenDatePicker(v)}"
-                            android:paddingStart="@dimen/default_4"
-                            android:paddingEnd="@dimen/default_4"
+                            android:paddingStart="@dimen/default_8"
+                            android:paddingEnd="@dimen/default_8"
                             android:text="@{viewModel.date}"
                             tools:text="Date setting" />
-
-                        <CheckBox
-                            android:id="@+id/checkPush"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/default_42"
-                            android:layout_marginStart="@dimen/default_8"
-                            android:layout_toEndOf="@+id/dateSetterButton"
-                            android:checked="@{viewModel.pushEnabled}"
-                            android:onCheckedChanged="@{viewModel.getCheckedChangeListener}"
-                            android:text="@string/subject_newedit_push_hint"
-                            android:textColor="@color/colorTextSecondaryDefault" />
                     </RelativeLayout>
                 </LinearLayout>
             </ScrollView>

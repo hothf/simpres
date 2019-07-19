@@ -16,16 +16,18 @@ class NewEditIdeaViewModel : BaseViewModel() {
     val getTitleTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it
         titleError.postValue("")
+        titleSelection.value = it.length
 
         currentIdea?.title = it
     }
     val getSumTextChangedListener = ViewUtils.TextChangeListener {
         sum.value = it
         sumError.postValue("")
+        sumSelection.value = it.length
 
         currentIdea?.sum = it
     }
-    val getDoneListener = ViewUtils.TextDoneListener { submit() }
+    val getDoneListener = ViewUtils.TextDoneListener { }
     val sum = MutableLiveData<String>().apply { value = "" }
     val sumError = MutableLiveData<String>().apply { value = "" }
     val sumSelection = MutableLiveData<Int>().apply { value = 0 }
@@ -71,7 +73,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
      * Sets up an editable idea, taken from the given item.
      */
     fun setupEdit(subjectId: Long, idea: IdeaItem) {
-        currentIdea = idea
+        currentIdea = idea.copy()
         currentSubjectId = subjectId
 
         isUpdating = true
@@ -86,11 +88,11 @@ class NewEditIdeaViewModel : BaseViewModel() {
             navTitle.postValue(resourcesProvider.getString(R.string.idea_newedit_add))
         }
         if (currentIdea != null) {
-            title.value =(currentIdea?.title)
-//            titleSelection.postValue( title.value?.length)
+            title.postValue(currentIdea?.title)
+            titleSelection.postValue(currentIdea?.title?.length)
             titleError.postValue("")
-            sum.value = (currentIdea?.sum)
-//            sumSelection.postValue(sum.value?.length)
+            sum.postValue(currentIdea?.sum)
+            sumSelection.postValue(currentIdea?.sum?.length)
             sumError.postValue("")
         } else {
             title.postValue("")

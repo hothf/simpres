@@ -23,11 +23,9 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val getTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it
         titleError.postValue("")
+        titleSelection.value = it.length
 
         currentSubject?.title = it
-    }
-    val getCheckedChangeListener = CompoundButton.OnCheckedChangeListener { _, checked ->
-        currentSubject?.pushEnabled = checked
     }
     val getDoneListener = ViewUtils.TextDoneListener { }
     val navTitle = MutableLiveData<String>().apply { value = "" }
@@ -45,13 +43,14 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
     fun onBack(v: View) {
         v.closeAttachedKeyboard()
-        navigateTo(NavigationUtils.BACK)
+        navigateTo(BACK)
     }
 
     fun submit(view: View? = null) {
         view?.closeAttachedKeyboard()
 
         currentSubject?.let {
+            it.pushEnabled = pushEnabled.value!!
             if (isUpdating) {
                 navigateTo(BACK)
                 repository.updateSubject(it)
@@ -86,7 +85,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
      * Sets up an editable subject, received from the given id, if possible.
      */
     fun setupEdit(subjectId: Long) {
-        currentSubject = repository.findSubjectById(subjectId)
+        currentSubject = repository.findSubjectById(subjectId)?.copy()
 
         isUpdating = true
 
@@ -121,13 +120,13 @@ class NewEditSubjectViewModel : BaseViewModel() {
             title.postValue(currentSubject?.title)
             titleSelection.postValue(currentSubject?.title?.length)
             titleError.postValue("")
-            date.postValue(currentSubject?.date?.toDate())
+            date.postValue("Remind on ${currentSubject?.date?.toDate()}")
             pushEnabled.postValue(currentSubject?.pushEnabled)
         } else {
             title.postValue("")
             titleSelection.postValue(0)
             titleError.postValue("")
-            date.postValue(System.currentTimeMillis().toDate())
+            date.postValue("Remind on ${System.currentTimeMillis().toDate()}")
             pushEnabled.postValue(true)
         }
     }

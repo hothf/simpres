@@ -124,6 +124,7 @@
                         android:layout_marginTop="@dimen/default_24"
                         android:gravity="center"
                         android:text="@{viewModel.date}"
+                        android:visibility="@{viewModel.dateVisibility}"
                         android:textColor="@{viewModel.color}"
                         android:textStyle="bold"
                         tools:text="12.12.2019" />
@@ -133,6 +134,7 @@
                         style="@style/TextStyle.Simpres.Secondary.Small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="@{viewModel.dateVisibility}"
                         android:layout_below="@+id/totalDateValueText"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/default_4"
