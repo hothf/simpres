@@ -6,11 +6,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import de.ka.simpres.R
 import de.ka.simpres.base.events.ShowSnack
 
@@ -43,6 +45,11 @@ class Snacker @JvmOverloads constructor(
         snackText = findViewById(R.id.snackText)
         snackAction = findViewById(R.id.snackAction)
         visibility = View.INVISIBLE
+
+        post {
+            container.translationY = container.height.toFloat() + container.marginBottom
+        }
+
     }
 
     /**
@@ -96,7 +103,7 @@ class Snacker @JvmOverloads constructor(
             return
         }
 
-        view.animate().translationY(0.0f).setInterpolator(AccelerateInterpolator())
+        view.animate().translationY(0.0f).setInterpolator(OvershootInterpolator())
     }
 
     private fun createHide(view: View) {
@@ -104,7 +111,7 @@ class Snacker @JvmOverloads constructor(
             return
         }
 
-        view.animate().translationY(view.height.toFloat()).setInterpolator(DecelerateInterpolator())
+        view.animate().translationY(view.height.toFloat() + view.marginBottom).setInterpolator(DecelerateInterpolator())
     }
 
     companion object {
