@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -12,13 +11,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="136dp">
+        android:layout_height="@dimen/default_134">
 
         <ImageView
             android:id="@+id/deleteIcon"
             android:layout_width="@dimen/default_42"
             android:layout_height="@dimen/default_42"
             android:layout_centerInParent="true"
+            android:contentDescription="@string/app_general_delete"
             android:src="@drawable/ic_delete"
             android:tint="@color/colorAccent" />
 
@@ -40,16 +40,16 @@
                     android:id="@+id/indicator"
                     android:layout_width="@dimen/default_36"
                     android:layout_height="@dimen/default_36"
-                    android:gravity="center"
                     android:layout_alignParentStart="true"
-                    android:padding="@dimen/default_8"
                     android:layout_alignParentTop="true"
-                    android:textColor="@color/colorButtonTextDefault"
                     android:layout_marginStart="@dimen/default_12"
                     android:layout_marginTop="@dimen/default_12"
                     android:background="@drawable/bg_circle"
                     android:backgroundTint="@{viewModel.color}"
+                    android:gravity="center"
+                    android:padding="@dimen/default_8"
                     android:text="@{viewModel.shortTitle}"
+                    android:textColor="@color/colorButtonTextDefault"
                     tools:text="hdw" />
 
                 <TextView
@@ -57,15 +57,15 @@
                     style="@style/TextStyle.Simpres.Secondary.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/indicator"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/default_16"
-                    android:layout_toEndOf="@+id/indicator"
-                    android:layout_alignTop="@+id/indicator"
-                    android:visibility="gone"
-                    android:gravity="end"
                     android:layout_marginEnd="@dimen/default_12"
+                    android:layout_toEndOf="@+id/indicator"
+                    android:gravity="end"
                     android:includeFontPadding="false"
                     android:text="@{viewModel.doneAmount}"
+                    android:visibility="gone"
                     tools:text="12/15 fwfwdeed" />
 
                 <TextView
@@ -91,9 +91,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title"
                     android:layout_alignStart="@+id/title"
-                    android:textStyle="bold"
                     android:layout_toEndOf="@+id/indicator"
                     android:text="@{viewModel.doneAmount}"
+                    android:textStyle="bold"
                     tools:text="1/2 Done" />
 
 

@@ -15,7 +15,6 @@
         android:layout_height="match_parent"
         android:background="@color/colorBackgroundPrimary">
 
-
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -27,6 +26,7 @@
             android:layout_height="@dimen/default_112"
             android:layout_marginTop="@dimen/default_32"
             android:background="@drawable/bg_round_bottom" />
+
         <RelativeLayout
             android:id="@+id/subjectDetail"
             android:layout_width="match_parent"
@@ -39,6 +39,7 @@
                 android:layout_marginStart="@dimen/default_12"
                 android:layout_marginTop="@dimen/default_24"
                 android:background="@drawable/round_button_transparent_selector"
+                android:contentDescription="@string/app_general_back"
                 android:onClick="@{() -> viewModel.onBack()}"
                 android:padding="@dimen/default_12"
                 android:src="@drawable/ic_back"
@@ -68,6 +69,7 @@
                 android:layout_marginTop="@dimen/default_24"
                 android:layout_marginEnd="@dimen/default_12"
                 android:background="@drawable/round_button_transparent_selector"
+                android:contentDescription="@string/subject_detail_edit"
                 android:onClick="@{() -> viewModel.onEditSubject()}"
                 android:padding="@dimen/default_12"
                 android:src="@drawable/ic_edit"
@@ -112,7 +114,7 @@
                         android:layout_marginBottom="@dimen/default_24"
                         android:layout_toStartOf="@+id/center"
                         android:gravity="center"
-                        android:text="Done"
+                        android:text="@string/subject_detail_done"
                         android:textStyle="bold" />
 
                     <TextView
@@ -124,9 +126,9 @@
                         android:layout_marginTop="@dimen/default_24"
                         android:gravity="center"
                         android:text="@{viewModel.date}"
-                        android:visibility="@{viewModel.dateVisibility}"
                         android:textColor="@{viewModel.color}"
                         android:textStyle="bold"
+                        android:visibility="@{viewModel.dateVisibility}"
                         tools:text="12.12.2019" />
 
                     <TextView
@@ -134,14 +136,14 @@
                         style="@style/TextStyle.Simpres.Secondary.Small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.dateVisibility}"
                         android:layout_below="@+id/totalDateValueText"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/default_4"
                         android:layout_marginBottom="@dimen/default_24"
                         android:gravity="center"
-                        android:text="Date"
-                        android:textStyle="bold" />
+                        android:text="@string/subject_detail_date"
+                        android:textStyle="bold"
+                        android:visibility="@{viewModel.dateVisibility}" />
 
                     <View
                         android:id="@+id/center"
@@ -172,8 +174,7 @@
                         android:layout_marginBottom="@dimen/default_24"
                         android:layout_toEndOf="@+id/center"
                         android:gravity="center"
-                        android:text="Sum"
-
+                        android:text="@string/subject_detail_sum"
                         android:textStyle="bold" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton

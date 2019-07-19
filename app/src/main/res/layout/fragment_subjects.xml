@@ -32,8 +32,8 @@
                     style="@style/TextStyle.Simpres.Nav"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/default_32"
                     android:layout_marginStart="@dimen/default_32"
+                    android:layout_marginTop="@dimen/default_32"
                     android:text="@string/app_name"
                     tools:text="Title" />
 
@@ -75,18 +75,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Nothing here, try to add something!" />
+                android:text="@string/subject_empty" />
 
         </RelativeLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_button"
+            style="@style/FABStyle.Simpres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/bottomBarSize"
             android:onClick="@{()->viewModel.onAddClick()}"
             android:src="@drawable/ic_pres"
-            app:fabSize="normal"
             app:layout_anchor="@id/swipeRefresh"
             app:layout_anchorGravity="bottom|center_horizontal"
             app:useCompatPadding="true" />

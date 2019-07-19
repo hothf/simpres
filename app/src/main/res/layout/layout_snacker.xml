@@ -6,13 +6,14 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_centerHorizontal="true"
         android:id="@+id/snacker"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/default_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent">
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/default_24"
+        android:background="@color/colorAccent"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/snackText"
@@ -20,27 +21,27 @@
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/default_12"
             android:paddingTop="@dimen/default_12"
-            android:textSize="@dimen/font_default"
             android:paddingEnd="@dimen/default_12"
             android:paddingBottom="@dimen/default_12"
             android:text=""
+            android:textSize="@dimen/font_default"
             tools:text="This is a really nice snacker. " />
 
         <TextView
             android:id="@+id/snackAction"
-            android:textColor="@color/colorIndicatorOrange"
             android:layout_width="wrap_content"
-            android:layout_toEndOf="@+id/snackText"
-            android:textSize="@dimen/font_default"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:layout_toEndOf="@+id/snackText"
+            android:foreground="?attr/selectableItemBackground"
             android:paddingStart="@dimen/default_12"
             android:paddingTop="@dimen/default_12"
             android:paddingEnd="@dimen/default_12"
-            tools:visibility="visible"
-            android:foreground="?attr/selectableItemBackground"
             android:paddingBottom="@dimen/default_12"
-            tools:text="Snack Action " />
+            android:textColor="@color/colorIndicatorOrange"
+            android:textSize="@dimen/font_default"
+            android:textStyle="bold"
+            tools:text="Snack Action "
+            tools:visibility="visible" />
 
     </RelativeLayout>
 

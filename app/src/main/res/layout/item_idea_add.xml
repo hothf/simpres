@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -13,8 +11,8 @@
     <RelativeLayout
         android:id="@+id/item"
         android:layout_width="match_parent"
-        android:background="@drawable/bg_round_dashed"
-        android:layout_height="@dimen/default_68">
+        android:layout_height="@dimen/default_68"
+        android:background="@drawable/bg_round_dashed">
 
         <androidx.cardview.widget.CardView
             style="@style/CardStyle.Simpres"

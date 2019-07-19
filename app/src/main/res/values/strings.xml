@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">Simpres</string>
 
+    <string name="app_general_back">Back</string>
+    <string name="app_general_delete">Delete</string>
+
+    <string name="subject_empty">Nothing here, try to add some!</string>
     <string name="subject_delete_undo_title">Item deleted</string>
     <string name="subject_delete_undo_action">Undo</string>
 
     <string name="subject_detail_empty">No ideas listed yet. Add some ideas!</string>
+    <string name="subject_detail_edit">Edit</string>
+    <string name="subject_detail_done">Done</string>
+    <string name="subject_detail_date">Date</string>
+    <string name="subject_detail_sum">Sum</string>
 
     <string name="subject_newedit_add">Add new</string>
     <string name="subject_newedit_edit">Edit</string>
@@ -19,6 +27,7 @@
     <string name="idea_newedit_sum_hint">Enter sum</string>
 
     <string name="idea_list_add">Add a new idea</string>
+    <string name="idea_list_done">Done</string>
 
     <string name="idea_delete_undo_title">Idea deleted</string>
     <string name="idea_delete_undo_action">Undo</string>

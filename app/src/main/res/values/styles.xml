@@ -1,5 +1,9 @@
 <resources>
 
+    <style name="FABStyle.Simpres" parent="Widget.MaterialComponents.FloatingActionButton">
+    </style>
+
+
     <style name="TextInputStyle.Simpres" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxCornerRadiusBottomEnd">@dimen/default_16</item>
         <item name="boxCornerRadiusBottomStart">@dimen/default_16</item>

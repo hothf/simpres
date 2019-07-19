@@ -44,6 +44,7 @@
                     android:layout_marginStart="@dimen/default_12"
                     android:layout_marginTop="@dimen/default_22"
                     android:background="@drawable/round_button_transparent_selector"
+                    android:contentDescription="@string/app_general_back"
                     android:onClick="@{(v) -> viewModel.onBack(v)}"
                     android:padding="@dimen/default_12"
                     android:src="@drawable/ic_close"
@@ -72,6 +73,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/default_22"
                     android:layout_marginEnd="@dimen/default_12"
+                    android:contentDescription="@string/subject_newedit_save"
                     android:background="@drawable/round_button_transparent_selector"
                     android:onClick="@{(v)->viewModel.submit(v)}"
                     android:padding="@dimen/default_8"
@@ -120,7 +122,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/default_16"
-                        android:background="@drawable/bg_round_stroke"
                         android:padding="@dimen/default_8">
 
 

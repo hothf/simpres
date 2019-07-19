@@ -51,7 +51,7 @@ abstract class BaseFragment<out T : ViewDataBinding, E : BaseViewModel>(clazz: K
 
         binding.apply {
             setVariable(BR.viewModel, viewModel)
-            setLifecycleOwner(viewLifecycleOwner)
+            lifecycleOwner = viewLifecycleOwner
             executePendingBindings()
         }
 

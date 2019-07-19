@@ -61,11 +61,8 @@ abstract class BaseViewModel : ViewModel(), KoinComponent {
         queueEvent(ShowSnack(message, snackType, action, actionText))
     }
 
-    /**
-     * Handles a general error.
-     */
     fun handleGeneralError(throwable: Throwable) {
-        Timber.e("_error: $throwable")
+        Timber.e("General error in viewModel: $throwable")
     }
 
     fun open(url: String? = null, clazz: KClass<*>? = null, args: Bundle? = null) = queueEvent(

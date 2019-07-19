@@ -56,13 +56,21 @@ abstract class BaseActivity<out T : ViewDataBinding, E : BaseViewModel>(clazz: K
         )
     }
 
-    open fun onShowSnack(view: View, showSnack: ShowSnack) {}
+    open fun onShowSnack(view: View, showSnack: ShowSnack) {
+        // to be implemented in sub class
+    }
 
-    open fun onNavigateTo(navigateTo: NavigateTo) {}
+    open fun onNavigateTo(navigateTo: NavigateTo) {
+        // to be implemented in sub class
+    }
 
-    open fun onOpen(open: Open) {}
+    open fun onOpen(open: Open) {
+        // to be implemented in sub class
+    }
 
-    open fun onHandle(element: Any?) {}
+    open fun onHandle(element: Any?) {
+        // to be implemented in sub class
+    }
 
     /**
      * Retrieves the view binding of the activity. May only be useful after [onCreate].
