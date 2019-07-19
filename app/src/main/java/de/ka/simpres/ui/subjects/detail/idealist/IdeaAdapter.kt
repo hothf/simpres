@@ -88,7 +88,7 @@ class IdeaAdapter(
                 IdeaItemViewModel(detail, color)
             }.toMutableList()
 
-//        newList.add(0,IdeaAddItemViewModel())
+        //newList.add(0,IdeaAddItemViewModel()) // used if it should be always on top!
 
         if (indexOfFirstDone != -1) {
             newList.add(indexOfFirstDone, IdeaAddItemViewModel(color))

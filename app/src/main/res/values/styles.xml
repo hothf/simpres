@@ -1,6 +1,7 @@
 <resources>
 
     <style name="FABStyle.Simpres" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="tint">@color/colorBackgroundSecondary</item>
     </style>
 
 

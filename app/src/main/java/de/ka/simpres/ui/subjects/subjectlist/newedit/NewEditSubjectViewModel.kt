@@ -2,13 +2,11 @@ package de.ka.simpres.ui.subjects.subjectlist.newedit
 
 import android.os.Bundle
 import android.view.View
-import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
-import de.ka.simpres.utils.NavigationUtils
 import de.ka.simpres.utils.NavigationUtils.BACK
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
@@ -35,10 +33,9 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val date = MutableLiveData<String>().apply { value = "" }
     val pushEnabled = MutableLiveData<Boolean>().apply { value = false }
 
-    val resourcesProvider: ResourcesProvider by inject()
+    private val resourcesProvider: ResourcesProvider by inject()
 
     private var currentSubject: SubjectItem? = null
-
     private var isUpdating = false
 
     fun onBack(v: View) {
@@ -120,13 +117,17 @@ class NewEditSubjectViewModel : BaseViewModel() {
             title.postValue(currentSubject?.title)
             titleSelection.postValue(currentSubject?.title?.length)
             titleError.postValue("")
-            date.postValue("Remind on ${currentSubject?.date?.toDate()}")
+            date.postValue(
+                resourcesProvider.getString(R.string.subject_newedit_remind_on, currentSubject?.date?.toDate())
+            )
             pushEnabled.postValue(currentSubject?.pushEnabled)
         } else {
             title.postValue("")
             titleSelection.postValue(0)
             titleError.postValue("")
-            date.postValue("Remind on ${System.currentTimeMillis().toDate()}")
+            date.postValue(
+                resourcesProvider.getString(R.string.subject_newedit_remind_on, System.currentTimeMillis().toDate())
+            )
             pushEnabled.postValue(true)
         }
     }

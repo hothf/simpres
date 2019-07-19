@@ -7,7 +7,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
@@ -37,7 +36,6 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val touchHelper = MutableLiveData<ItemTouchHelper>()
     val adapter = MutableLiveData<IdeaAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
-    val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { refresh() }
     val itemDecoration = DecorationUtil(
         resourcesProvider.getDimensionPixelSize(R.dimen.default_16), resourcesProvider.getDimensionPixelSize(
             R.dimen
@@ -47,10 +45,11 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val dateVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
-    val sum = MutableLiveData<String>().apply { value = "-" }
-    val doneAmount = MutableLiveData<String>().apply { value = "-" }
+    val sum = MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+    val doneAmount =
+        MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
     val color = MutableLiveData<Int>().apply { value = Color.parseColor(currentColor) }
-    val date = MutableLiveData<String>().apply { value = "-" }
+    val date = MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
 
     private val removeListener = { viewModel: IdeaItemViewModel ->
         repository.removeIdea(viewModel.item)
@@ -182,12 +181,15 @@ class SubjectsDetailViewModel : BaseViewModel() {
         title.postValue(subject.title)
 
         if (subject.ideasCount > 0) {
-            doneAmount.postValue("${subject.ideasDoneCount} of ${subject.ideasCount}")
-
+            doneAmount.postValue(
+                resourcesProvider.getString(
+                    R.string.subject_detail_done_amount, subject.ideasDoneCount, subject.ideasCount
+                )
+            )
             if (subject.sum.toInt() > 0) {
                 sum.postValue(subject.sum.toEuro())
             } else {
-                sum.postValue("-")
+                sum.postValue(resourcesProvider.getString(R.string.app_general_empty_sign))
             }
         }
 
@@ -206,7 +208,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         repository.getIdeasOf(currentSubjectId)
 
         if (isUpdate) {
-            showSnack("Updated")
+            showSnack(resourcesProvider.getString(R.string.subject_detail_updated))
         }
     }
 

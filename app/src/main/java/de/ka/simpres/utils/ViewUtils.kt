@@ -11,6 +11,9 @@ import android.widget.TextView
  */
 object ViewUtils {
 
+    /**
+     * A key listener for the done button. Fires off the argument event when done is pressed.
+     */
     class TextDoneListener(val block: () -> Unit = {}) : TextView.OnEditorActionListener {
         override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -24,8 +27,6 @@ object ViewUtils {
 
     /**
      * A text watcher only interested in text changes.
-     *
-     * @param textToUpdate the text to update on text changes
      */
     class TextChangeListener(val update: (String) -> Unit) : TextWatcher {
         override fun afterTextChanged(p0: Editable?) {

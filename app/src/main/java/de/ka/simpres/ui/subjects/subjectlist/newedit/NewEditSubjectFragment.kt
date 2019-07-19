@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseFragment
 import de.ka.simpres.databinding.FragmentSubjectneweditBinding
-import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.utils.DatePickeable
 import de.ka.simpres.utils.DatePicker
 

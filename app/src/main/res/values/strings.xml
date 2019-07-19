@@ -3,22 +3,27 @@
 
     <string name="app_general_back">Back</string>
     <string name="app_general_delete">Delete</string>
+    <string name="app_general_empty_sign">-</string>
 
     <string name="subject_empty">Nothing here, try to add some!</string>
     <string name="subject_delete_undo_title">Item deleted</string>
     <string name="subject_delete_undo_action">Undo</string>
+    <string name="subject_done_amount">%1$d of %2$d done</string>
 
     <string name="subject_detail_empty">No ideas listed yet. Add some ideas!</string>
     <string name="subject_detail_edit">Edit</string>
     <string name="subject_detail_done">Done</string>
     <string name="subject_detail_date">Date</string>
     <string name="subject_detail_sum">Sum</string>
+    <string name="subject_detail_updated">Updated</string>
+    <string name="subject_detail_done_amount">%1$d of %2$d</string>
 
     <string name="subject_newedit_add">Add new</string>
     <string name="subject_newedit_edit">Edit</string>
     <string name="subject_newedit_save">Save</string>
     <string name="subject_newedit_title_hint">Enter title</string>
     <string name="subject_newedit_push_hint">Enable notification</string>
+    <string name="subject_newedit_remind_on">Remind on %s</string>
 
     <string name="idea_newedit_add">Add new idea</string>
     <string name="idea_newedit_edit">Edit idea</string>

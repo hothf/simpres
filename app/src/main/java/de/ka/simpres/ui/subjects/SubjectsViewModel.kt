@@ -23,7 +23,7 @@ import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 import org.koin.standalone.inject
 
 /**
- *
+ * The main view model for subjects. Handles the showing, deletion and moving of the list of all available subjects.
  */
 class SubjectsViewModel : BaseViewModel() {
 

@@ -8,7 +8,7 @@ import de.ka.simpres.databinding.FragmentSubjectsBinding
 
 
 /**
- * The home fragment displays a list to discover all consensuses this app has to offer.
+ * The subject fragment displays a list to discover all subjects this app has to offer.
  */
 class SubjectsFragment : BaseFragment<FragmentSubjectsBinding, SubjectsViewModel>(SubjectsViewModel::class) {
 
