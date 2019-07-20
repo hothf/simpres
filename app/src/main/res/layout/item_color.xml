@@ -11,11 +11,12 @@
 
     <RelativeLayout
         android:id="@+id/item"
-        android:layout_width="@dimen/default_68"
-        android:layout_height="@dimen/default_68"
-        android:foreground="?attr/selectableItemBackground"
-        android:background="@drawable/bg_round"
+        android:layout_width="@dimen/default_42"
+        android:layout_height="@dimen/default_42"
+        android:layout_margin="@dimen/default_8"
+        android:background="@drawable/bg_circle"
         android:backgroundTint="@{viewModel.markedColor}"
+        android:foreground="@drawable/button_default_selector"
         android:theme="@style/Theme.Simpres">
 
         <View

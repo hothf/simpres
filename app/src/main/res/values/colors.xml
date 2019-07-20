@@ -9,8 +9,6 @@
     <color name="colorBackgroundSecondary">#ffffff</color>
     <color name="colorBackgroundSecondaryDark">#cfcfcf</color>
 
-    <color name="colorSelected">#232323</color>
-
     <color name="colorTextDefault">#111E40</color>
     <color name="colorTextSecondaryDefault">#9C9C9C</color>
     <color name="colorTextNav">#111E40</color>

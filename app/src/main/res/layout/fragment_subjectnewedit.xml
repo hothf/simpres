@@ -96,7 +96,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_16"
-                        android:layout_marginTop="@dimen/default_42"
+                        android:layout_marginTop="@dimen/default_36"
                         android:layout_marginEnd="@dimen/default_16"
                         android:hint="@string/subject_newedit_title_hint"
                         app:setError="@{viewModel.titleError}">
@@ -115,14 +115,29 @@
                             app:setSelection="@{viewModel.titleSelection}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <RelativeLayout
+                        android:background="@drawable/bg_round_stroke"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/default_16"
+                        android:layout_marginStart="@dimen/default_16"
+                        android:layout_marginEnd="@dimen/default_16"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="wrap_content"
+                            android:adapter="@{viewModel.adapter}"
+                            app:layoutManager="@{viewModel.layoutManager()}"
+                            android:layout_height="wrap_content"/>
+
+
+                    </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_8"
+                        android:layout_marginStart="@dimen/default_16"
                         android:layout_marginTop="@dimen/default_16"
-                        android:layout_marginEnd="@dimen/default_8"
-                        android:padding="@dimen/default_8">
+                        android:layout_marginEnd="@dimen/default_16">
 
                         <CheckBox
                             android:id="@+id/checkPush"
@@ -147,21 +162,6 @@
                             android:paddingEnd="@dimen/default_8"
                             android:text="@{viewModel.date}"
                             tools:text="Date setting setting setting setting setting setting setting setting" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:background="@drawable/bg_round_stroke"
-                        android:layout_width="match_parent"
-                        android:layout_margin="@dimen/default_16"
-                        android:layout_height="wrap_content">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="wrap_content"
-                            android:adapter="@{viewModel.adapter}"
-                            app:layoutManager="@{viewModel.layoutManager()}"
-                            android:layout_height="wrap_content"/>
-
-
                     </RelativeLayout>
                 </LinearLayout>
             </ScrollView>

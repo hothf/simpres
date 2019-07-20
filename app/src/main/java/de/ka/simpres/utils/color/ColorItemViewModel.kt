@@ -18,7 +18,7 @@ class ColorItemViewModel(val colorString: String) : BaseItemViewModel() {
 
     fun setMarked(marked: Boolean) {
         if (marked) {
-            markedColor.postValue(resourcesProvider.getColor(R.color.colorSelected))
+            markedColor.postValue(resourcesProvider.getColor(R.color.colorBackgroundPrimaryDark))
         } else {
             markedColor.postValue(resourcesProvider.getColor(R.color.colorBackgroundSecondary))
         }

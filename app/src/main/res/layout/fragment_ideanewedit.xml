@@ -95,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_16"
-                        android:layout_marginTop="@dimen/default_42"
+                        android:layout_marginTop="@dimen/default_36"
                         android:layout_marginEnd="@dimen/default_16"
                         android:hint="@string/idea_newedit_title_hint"
                         app:setError="@{viewModel.titleError}">

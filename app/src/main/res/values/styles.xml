@@ -44,7 +44,7 @@
     </style>
 
     <style name="ButtonStyle.Simpres.Bordered" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="cornerRadius">@dimen/default_2</item>
+        <item name="cornerRadius">@dimen/default_16</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">@dimen/font_default</item>
         <item name="android:textColor">@color/colorAccent</item>
