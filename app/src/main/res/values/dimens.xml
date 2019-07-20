@@ -19,6 +19,7 @@
     <dimen name="default_20">20dp</dimen>
     <dimen name="default_22">22dp</dimen>
     <dimen name="default_24">24dp</dimen>
+    <dimen name="default_26">26dp</dimen>
     <dimen name="default_28">28dp</dimen>
     <dimen name="default_32">32dp</dimen>
     <dimen name="default_34">34dp</dimen>

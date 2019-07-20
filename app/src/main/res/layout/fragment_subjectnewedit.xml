@@ -78,7 +78,7 @@
                     android:onClick="@{(v)->viewModel.submit(v)}"
                     app:iconTint="@color/colorAccent"
                     app:icon="@drawable/ic_check"
-                    app:iconSize="@dimen/default_28" />
+                    app:iconSize="@dimen/default_26" />
 
             </RelativeLayout>
 
@@ -123,11 +123,12 @@
                         android:layout_margin="@dimen/default_16"
                         android:padding="@dimen/default_8">
 
-
                         <CheckBox
                             android:id="@+id/checkPush"
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/default_42"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/dateSetterButton"
+                            android:layout_alignBottom="@+id/dateSetterButton"
                             android:checked="@={viewModel.pushEnabled}"
                             android:text="@string/subject_newedit_push_hint"
                             android:textColor="@color/colorTextDefault" />
@@ -136,7 +137,7 @@
                             android:id="@+id/dateSetterButton"
                             style="@style/ButtonStyle.Simpres.Bordered"
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/default_42"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/default_8"
                             android:layout_toEndOf="@+id/checkPush"
                             android:enabled="@{viewModel.pushEnabled}"
@@ -144,7 +145,7 @@
                             android:paddingStart="@dimen/default_8"
                             android:paddingEnd="@dimen/default_8"
                             android:text="@{viewModel.date}"
-                            tools:text="Date setting" />
+                            tools:text="Date setting setting setting setting setting setting setting setting" />
                     </RelativeLayout>
                 </LinearLayout>
             </ScrollView>

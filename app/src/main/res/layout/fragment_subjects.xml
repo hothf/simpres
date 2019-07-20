@@ -84,12 +84,13 @@
             style="@style/FABStyle.Simpres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottomBarSize"
+            android:layout_marginBottom="@dimen/default_68"
             android:onClick="@{()->viewModel.onAddClick()}"
+            android:padding="0dp"
+            android:scaleType="center"
             android:src="@drawable/ic_pres"
             app:layout_anchor="@id/swipeRefresh"
-            app:layout_anchorGravity="bottom|center_horizontal"
-            app:useCompatPadding="true" />
+            app:layout_anchorGravity="bottom|center_horizontal" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

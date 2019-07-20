@@ -27,7 +27,7 @@ class SubjectItemViewModel(
         ""
     }
 
-    val shortTitle = if (item.title.isNotEmpty()) item.title.first().toString() else ""
+    val shortTitle = if (item.title.isNotEmpty()) item.title.first().toString() else "-"
 
     val doneAmount =
         if (item.ideasCount > 0) resourceProvider.getString(
@@ -35,7 +35,7 @@ class SubjectItemViewModel(
             item.ideasDoneCount,
             item.ideasCount
         )
-        else ""
+        else shortTitle
 
     val date = item.date.toDate()
 

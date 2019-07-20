@@ -76,7 +76,7 @@
                     android:onClick="@{(v)->viewModel.submit(v)}"
                     android:scaleType="centerInside"
                     app:icon="@drawable/ic_check"
-                    app:iconSize="@dimen/default_28"
+                    app:iconSize="@dimen/default_26"
                     app:iconTint="@color/colorAccent" />
             </RelativeLayout>
 

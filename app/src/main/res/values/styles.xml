@@ -35,7 +35,7 @@
         <item name="cornerSize">@dimen/default_16</item>
     </style>
 
-    <style name="ButtonStyle.Simpres.Nav" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
+    <style name="ButtonStyle.Simpres.Nav" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon">
         <item name="android:textAllCaps">false</item>
         <item name="backgroundTint">@android:color/transparent</item>
         <item name="android:textColor">@color/colorIconTintDefault</item>

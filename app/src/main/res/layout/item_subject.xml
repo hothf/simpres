@@ -37,7 +37,7 @@
 
                 <TextView
                     android:id="@+id/indicator"
-                    android:layout_width="@dimen/default_36"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/default_36"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
@@ -47,9 +47,22 @@
                     android:backgroundTint="@{viewModel.color}"
                     android:gravity="center"
                     android:padding="@dimen/default_8"
-                    android:text="@{viewModel.shortTitle}"
+                    android:text="@{viewModel.doneAmount}"
                     android:textColor="@color/colorButtonTextDefault"
                     tools:text="hdw" />
+
+                <TextView
+                    android:id="@+id/done"
+                    style="@style/TextStyle.Simpres.Secondary.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/indicator"
+                    android:layout_marginStart="@dimen/default_8"
+                    android:layout_toEndOf="@+id/indicator"
+                    android:text="@{viewModel.doneAmount}"
+                    android:visibility="gone"
+                    android:textStyle="bold"
+                    tools:text="1/2 Done" />
 
                 <TextView
                     android:id="@+id/subjectHeader"
@@ -82,19 +95,6 @@
                     android:text="@{viewModel.title}"
                     android:textStyle="bold"
                     tools:text="Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title" />
-
-                <TextView
-                    android:id="@+id/done"
-                    style="@style/TextStyle.Simpres.Secondary.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/title"
-                    android:layout_alignStart="@+id/title"
-                    android:layout_toEndOf="@+id/indicator"
-                    android:text="@{viewModel.doneAmount}"
-                    android:textStyle="bold"
-                    tools:text="1/2 Done" />
-
 
                 <TextView
                     android:id="@+id/doneAmountText"
