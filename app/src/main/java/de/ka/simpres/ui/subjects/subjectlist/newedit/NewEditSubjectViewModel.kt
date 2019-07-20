@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
+import de.ka.simpres.base.events.AnimType
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.utils.NavigationUtils.BACK
@@ -77,6 +78,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
             } else {
                 repository.saveSubject(it)
                 navigateTo(
+                    animType = AnimType.MODAL,
                     navigationTargetId = R.id.action_subjectNewEditFragment_to_subjectsDetailFragment,
                     args = Bundle().apply {
                         putLong(SubjectsDetailFragment.SUBJECT_ID_KEY, it.id)
