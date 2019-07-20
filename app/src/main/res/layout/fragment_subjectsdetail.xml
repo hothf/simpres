@@ -36,9 +36,9 @@
                 android:id="@+id/back"
                 style="@style/ButtonStyle.Simpres.Nav"
                 android:layout_width="@dimen/default_48"
-                android:layout_height="@dimen/default_48"
+                android:layout_height="@dimen/default_58"
                 android:layout_marginStart="@dimen/default_12"
-                android:layout_marginTop="@dimen/default_24"
+                android:layout_marginTop="@dimen/default_16"
                 android:contentDescription="@string/app_general_back"
                 android:onClick="@{() -> viewModel.onBack()}"
                 app:icon="@drawable/ic_back"
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_8"
-                android:layout_marginTop="@dimen/default_36"
+                android:layout_marginTop="@dimen/default_32"
                 android:layout_marginEnd="@dimen/default_8"
                 android:layout_toStartOf="@+id/edit"
                 android:layout_toEndOf="@+id/back"
@@ -64,24 +64,23 @@
                 android:id="@+id/edit"
                 style="@style/ButtonStyle.Simpres.Nav"
                 android:layout_width="@dimen/default_48"
-                android:layout_height="@dimen/default_48"
+                android:layout_height="@dimen/default_58"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/default_24"
+                android:layout_marginTop="@dimen/default_16"
                 android:layout_marginEnd="@dimen/default_12"
-                android:background="@drawable/round_button_transparent_selector"
                 android:contentDescription="@string/subject_detail_edit"
                 android:onClick="@{() -> viewModel.onEditSubject()}"
                 app:icon="@drawable/ic_edit"
                 app:iconSize="@dimen/default_20" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/detailsCard"
                 style="@style/CardStyle.Simpres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/titleText"
                 android:layout_marginStart="@dimen/default_16"
-                android:layout_marginTop="@dimen/default_36"
+                android:layout_marginTop="@dimen/default_24"
                 android:layout_marginEnd="@dimen/default_16"
                 android:layout_marginBottom="@dimen/default_16">
 
@@ -177,7 +176,7 @@
                         android:textStyle="bold" />
 
                 </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/blankText"

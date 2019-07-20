@@ -4,13 +4,13 @@
         <item name="tint">@color/colorBackgroundSecondary</item>
     </style>
 
-
     <style name="TextInputStyle.Simpres" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxCornerRadiusBottomEnd">@dimen/default_16</item>
         <item name="boxCornerRadiusBottomStart">@dimen/default_16</item>
         <item name="boxCornerRadiusTopEnd">@dimen/default_16</item>
         <item name="boxCornerRadiusTopStart">@dimen/default_16</item>
     </style>
+
 
     <style name="AppBarStyle.Simpres" parent="Widget.Design.AppBarLayout">
         <item name="android:background">@color/colorBackgroundPrimary</item>
@@ -24,16 +24,24 @@
         <item name="cardCornerRadius">@dimen/default_corner_radius</item>
         <item name="cardElevation">@dimen/default_4</item>
         <item name="android:theme">@style/Theme.Simpres</item>
+        <item name="shapeAppearance">@style/cardShape</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="cardShape" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamilyTopLeft">cut</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerFamilyBottomRight">cut</item>
+        <item name="cornerSize">@dimen/default_16</item>
     </style>
 
     <style name="ButtonStyle.Simpres.Nav" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:textAllCaps">false</item>
-        <item name="cornerRadius">@dimen/default_16</item>
         <item name="backgroundTint">@android:color/transparent</item>
-        <item name="android:textColor">@color/colorButtonTextDefault</item>
+        <item name="android:textColor">@color/colorIconTintDefault</item>
         <item name="iconTint">@color/colorIconTintDefault</item>
-
+        <item name="cornerRadius">@dimen/default_108</item>
     </style>
 
     <style name="ButtonStyle.Simpres.Alternative" parent="TextAppearance.AppCompat.Button">

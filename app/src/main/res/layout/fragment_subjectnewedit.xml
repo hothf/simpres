@@ -37,49 +37,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ButtonStyle.Simpres.Nav"
                     android:id="@+id/back"
                     android:layout_width="@dimen/default_48"
-                    android:layout_height="@dimen/default_48"
+                    android:layout_height="@dimen/default_58"
                     android:layout_marginStart="@dimen/default_12"
-                    android:layout_marginTop="@dimen/default_22"
-                    android:background="@drawable/round_button_transparent_selector"
+                    android:layout_marginTop="@dimen/default_16"
                     android:contentDescription="@string/app_general_back"
                     android:onClick="@{(v) -> viewModel.onBack(v)}"
-                    android:padding="@dimen/default_12"
-                    android:src="@drawable/ic_close"
-                    android:tint="@color/colorIconTintDefault" />
+                    app:iconSize="@dimen/default_20"
+                    app:icon="@drawable/ic_close"
+                   />
 
                 <TextView
                     style="@style/TextStyle.Simpres.Nav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_8"
-                    android:layout_marginTop="@dimen/default_36"
+                    android:layout_marginTop="@dimen/default_32"
                     android:layout_marginEnd="@dimen/default_8"
                     android:layout_toStartOf="@+id/saveButton"
                     android:layout_toEndOf="@+id/back"
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
-                    android:includeFontPadding="false"
                     android:maxLines="3"
                     android:text="@{viewModel.navTitle}"
                     tools:text="Title" />
 
-                <ImageButton
+                <com.google.android.material.button.MaterialButton
+                    style="@style/ButtonStyle.Simpres.Nav"
                     android:id="@+id/saveButton"
                     android:layout_width="@dimen/default_48"
-                    android:layout_height="@dimen/default_48"
+                    android:layout_height="@dimen/default_58"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="@dimen/default_22"
+                    android:layout_marginTop="@dimen/default_16"
                     android:layout_marginEnd="@dimen/default_12"
                     android:contentDescription="@string/subject_newedit_save"
                     android:background="@drawable/round_button_transparent_selector"
                     android:onClick="@{(v)->viewModel.submit(v)}"
-                    android:padding="@dimen/default_8"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_check"
-                    android:tint="@color/colorAccent" />
+                    app:iconTint="@color/colorAccent"
+                    app:icon="@drawable/ic_check"
+                    app:iconSize="@dimen/default_20" />
 
             </RelativeLayout>
 

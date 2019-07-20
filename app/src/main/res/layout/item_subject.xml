@@ -22,7 +22,7 @@
             android:src="@drawable/ic_delete"
             android:tint="@color/colorAccent" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/item"
             style="@style/CardStyle.Simpres"
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="@dimen/default_12"
-                    android:layout_marginTop="@dimen/default_12"
+                    android:layout_marginTop="@dimen/default_8"
                     android:background="@drawable/bg_circle"
                     android:backgroundTint="@{viewModel.color}"
                     android:gravity="center"
@@ -129,6 +129,6 @@
                     tools:text="20 €" />
 
             </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 </layout>
