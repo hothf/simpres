@@ -54,7 +54,11 @@ class NewEditSubjectViewModel : BaseViewModel() {
     }
 
     fun setupAdapterAndLoad(owner: LifecycleOwner) {
-        adapter.value = ColorAdapter(chooseColor, owner).also {
+        if (adapter.value == null) {
+            adapter.value = ColorAdapter(chooseColor, owner)
+        }
+        adapter.value?.let {
+            it.owner = owner
             it.markColor(currentSubject?.color)
         }
     }

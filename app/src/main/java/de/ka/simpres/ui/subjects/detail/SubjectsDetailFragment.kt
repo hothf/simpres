@@ -35,9 +35,7 @@ class SubjectsDetailFragment :
                 Handler().postDelayed(
                     { startPostponedEnterTransition() },
                     75
-                ) // simply wait for laying out the recycler
-
-
+                ) // simply wait for laying out the recycler for ui de-stuttering
             }
         }
         return view

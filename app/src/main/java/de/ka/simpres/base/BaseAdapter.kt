@@ -16,7 +16,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 abstract class BaseAdapter<E : BaseItemViewModel>(
-    private val owner: LifecycleOwner,
+    var owner: LifecycleOwner,
     private val items: ArrayList<E> = arrayListOf(),
     private val diffCallback: DiffUtil.ItemCallback<E>? = null
 ) : RecyclerView.Adapter<BaseViewHolder<*>>(), KoinComponent {

@@ -82,11 +82,11 @@ class SubjectsViewModel : BaseViewModel() {
      */
     fun setupAdapterAndLoad(owner: LifecycleOwner) {
         if (adapter.value == null) {
-            val subjectAdapter = SubjectAdapter(owner)
-            adapter.value = subjectAdapter
+            adapter.value = SubjectAdapter(owner)
             loadSubjects(true)
         }
         adapter.value?.let {
+            it.owner = owner
             touchHelper.apply {
                 value?.attachToRecyclerView(null)
                 value = null

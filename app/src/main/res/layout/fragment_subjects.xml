@@ -84,7 +84,7 @@
             style="@style/FABStyle.Simpres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_68"
+            android:layout_marginBottom="@dimen/default_72"
             android:onClick="@{()->viewModel.onAddClick()}"
             android:padding="0dp"
             android:scaleType="center"
