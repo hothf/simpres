@@ -16,6 +16,15 @@ class SubjectsFragment : BaseFragment<FragmentSubjectsBinding, SubjectsViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.setupAdapterAndLoad(viewLifecycleOwner)
+
+        postponeEnterTransition()
+        getBinding()?.recyclerSubjects?.let {
+            it.viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
+        }
+
         super.onViewCreated(view, savedInstanceState)
     }
 }
