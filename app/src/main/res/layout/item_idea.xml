@@ -61,6 +61,7 @@
                 android:onClick="@{()->viewModel.toggleDone()}"
                 android:padding="@dimen/default_6"
                 android:src="@drawable/ic_check"
+                android:foreground="@drawable/button_default_selector"
                 android:tint="@color/colorBackgroundSecondary"
                 tools:background="@drawable/bg_circle" />
 

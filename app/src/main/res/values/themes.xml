@@ -10,6 +10,8 @@
         <item name="colorOnSecondary">#000000</item>
 
         <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorTextSecondaryDefault</item>
 
 
         <item name="colorAccent">@color/colorAccent</item>

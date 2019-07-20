@@ -130,7 +130,7 @@
                             android:layout_height="@dimen/default_42"
                             android:checked="@={viewModel.pushEnabled}"
                             android:text="@string/subject_newedit_push_hint"
-                            android:textColor="@color/colorTextSecondaryDefault" />
+                            android:textColor="@color/colorTextDefault" />
 
                         <Button
                             android:id="@+id/dateSetterButton"
