@@ -1,4 +1,4 @@
-package de.ka.simpres.utils.resources
+package de.ka.simpres.utils.color
 
 import java.util.*
 

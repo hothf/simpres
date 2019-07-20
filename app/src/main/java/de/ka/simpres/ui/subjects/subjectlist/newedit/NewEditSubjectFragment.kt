@@ -32,6 +32,11 @@ class NewEditSubjectFragment : BaseFragment<FragmentSubjectneweditBinding, NewEd
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.setupAdapterAndLoad(viewLifecycleOwner)
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     override fun onDateSet(year: Int, month: Int, day: Int, callerId: Int) {
         if (callerId == 1) {
             viewModel.updateDate(year, month, day)

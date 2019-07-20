@@ -148,6 +148,21 @@
                             android:text="@{viewModel.date}"
                             tools:text="Date setting setting setting setting setting setting setting setting" />
                     </RelativeLayout>
+
+                    <RelativeLayout
+                        android:background="@drawable/bg_round_stroke"
+                        android:layout_width="match_parent"
+                        android:layout_margin="@dimen/default_16"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="wrap_content"
+                            android:adapter="@{viewModel.adapter}"
+                            app:layoutManager="@{viewModel.layoutManager()}"
+                            android:layout_height="wrap_content"/>
+
+
+                    </RelativeLayout>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

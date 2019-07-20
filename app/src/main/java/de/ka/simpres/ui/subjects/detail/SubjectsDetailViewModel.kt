@@ -18,7 +18,7 @@ import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
 import de.ka.simpres.utils.*
 import de.ka.simpres.utils.NavigationUtils.BACK
-import de.ka.simpres.utils.resources.ColorResources
+import de.ka.simpres.utils.color.ColorResources
 import de.ka.simpres.utils.resources.ResourcesProvider
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy

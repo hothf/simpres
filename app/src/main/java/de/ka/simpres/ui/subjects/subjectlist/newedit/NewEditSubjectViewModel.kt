@@ -2,7 +2,10 @@ package de.ka.simpres.ui.subjects.subjectlist.newedit
 
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.adapters.LinearLayoutBindingAdapter
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.repo.model.SubjectItem
@@ -10,7 +13,9 @@ import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
 import de.ka.simpres.utils.NavigationUtils.BACK
 import de.ka.simpres.utils.ViewUtils
 import de.ka.simpres.utils.closeAttachedKeyboard
-import de.ka.simpres.utils.resources.ColorResources
+import de.ka.simpres.utils.color.ColorAdapter
+import de.ka.simpres.utils.color.ColorItemViewModel
+import de.ka.simpres.utils.color.ColorResources
 import de.ka.simpres.utils.resources.ResourcesProvider
 import de.ka.simpres.utils.toDate
 import org.koin.standalone.inject
@@ -32,16 +37,30 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
     val date = MutableLiveData<String>().apply { value = "" }
     val pushEnabled = MutableLiveData<Boolean>().apply { value = false }
+    val adapter = MutableLiveData<ColorAdapter>()
 
     private val resourcesProvider: ResourcesProvider by inject()
 
     private var currentSubject: SubjectItem? = null
     private var isUpdating = false
 
+    private val chooseColor: (ColorItemViewModel) -> Unit = {
+        currentSubject?.color = it.colorString
+    }
+
     fun onBack(v: View) {
         v.closeAttachedKeyboard()
         navigateTo(BACK)
     }
+
+    fun setupAdapterAndLoad(owner: LifecycleOwner) {
+        adapter.value = ColorAdapter(chooseColor, owner).also {
+            it.markColor(currentSubject?.color)
+        }
+    }
+
+    fun layoutManager() =
+        LinearLayoutManager(resourcesProvider.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false)
 
     fun submit(view: View? = null) {
         view?.closeAttachedKeyboard()

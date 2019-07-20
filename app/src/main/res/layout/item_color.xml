@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.ka.simpres.utils.color.ColorItemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item"
+        android:layout_width="@dimen/default_68"
+        android:layout_height="@dimen/default_68"
+        android:foreground="?attr/selectableItemBackground"
+        android:background="@drawable/bg_round"
+        android:backgroundTint="@{viewModel.markedColor}"
+        android:theme="@style/Theme.Simpres">
+
+        <View
+            android:layout_width="@dimen/default_36"
+            android:layout_height="@dimen/default_36"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bg_circle"
+            android:backgroundTint="@{viewModel.color}"
+            android:contentDescription="@{viewModel.colorString}" />
+
+    </RelativeLayout>
+
+</layout>

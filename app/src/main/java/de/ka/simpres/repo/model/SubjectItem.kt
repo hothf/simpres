@@ -1,6 +1,6 @@
 package de.ka.simpres.repo.model
 
-import de.ka.simpres.utils.resources.ColorResources
+import de.ka.simpres.utils.color.ColorResources
 import io.objectbox.annotation.Entity
 import io.objectbox.annotation.Id
 import java.io.Serializable
