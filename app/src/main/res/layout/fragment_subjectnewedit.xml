@@ -38,17 +38,16 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/ButtonStyle.Simpres.Nav"
                     android:id="@+id/back"
+                    style="@style/ButtonStyle.Simpres.Nav"
                     android:layout_width="@dimen/default_48"
                     android:layout_height="@dimen/default_58"
                     android:layout_marginStart="@dimen/default_12"
                     android:layout_marginTop="@dimen/default_16"
                     android:contentDescription="@string/app_general_back"
                     android:onClick="@{(v) -> viewModel.onBack(v)}"
-                    app:iconSize="@dimen/default_20"
                     app:icon="@drawable/ic_close"
-                   />
+                    app:iconSize="@dimen/default_20" />
 
                 <TextView
                     style="@style/TextStyle.Simpres.Nav"
@@ -66,19 +65,19 @@
                     tools:text="Title" />
 
                 <com.google.android.material.button.MaterialButton
-                    style="@style/ButtonStyle.Simpres.Nav"
                     android:id="@+id/saveButton"
+                    style="@style/ButtonStyle.Simpres.Nav"
                     android:layout_width="@dimen/default_48"
                     android:layout_height="@dimen/default_58"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/default_16"
                     android:layout_marginEnd="@dimen/default_12"
-                    android:contentDescription="@string/subject_newedit_save"
                     android:background="@drawable/round_button_transparent_selector"
+                    android:contentDescription="@string/subject_newedit_save"
                     android:onClick="@{(v)->viewModel.submit(v)}"
-                    app:iconTint="@color/colorAccent"
                     app:icon="@drawable/ic_check"
-                    app:iconSize="@dimen/default_26" />
+                    app:iconSize="@dimen/default_26"
+                    app:iconTint="@color/colorAccent" />
 
             </RelativeLayout>
 
@@ -120,7 +119,9 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/default_16"
+                        android:layout_marginStart="@dimen/default_8"
+                        android:layout_marginTop="@dimen/default_16"
+                        android:layout_marginEnd="@dimen/default_8"
                         android:padding="@dimen/default_8">
 
                         <CheckBox
