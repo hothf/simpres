@@ -37,7 +37,7 @@
             android:paddingTop="@dimen/default_12"
             android:paddingEnd="@dimen/default_12"
             android:paddingBottom="@dimen/default_12"
-            android:textColor="@color/colorIndicatorOrange"
+            android:textColor="@color/colorIndicatorYellow"
             android:textSize="@dimen/font_default"
             android:textStyle="bold"
             tools:text="Snack Action "

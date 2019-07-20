@@ -72,7 +72,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="@dimen/default_16"
                     android:layout_marginEnd="@dimen/default_12"
-                    android:background="@drawable/round_button_transparent_selector"
                     android:contentDescription="@string/subject_newedit_save"
                     android:onClick="@{(v)->viewModel.submit(v)}"
                     app:icon="@drawable/ic_check"

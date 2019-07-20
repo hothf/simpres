@@ -24,13 +24,4 @@
     <color name="colorIndicatorOrange">#D88C48</color>
     <color name="colorIndicatorRed">#C2445B</color>
     <color name="colorIndicatorPurple">#AF62F6</color>
-
-
-    <!-- remove someday! -->
-
-    <color name="fontNav">#476874</color>
-    <color name="fontTitle">#333333</color>
-    <color name="fontDefault">#476874</color>
-    <color name="fontDisabled">#33888888</color>
-    <color name="fontDefaultInverted">#ffffff</color>
 </resources>
