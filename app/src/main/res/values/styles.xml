@@ -88,7 +88,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-
     <style name="TextStyle.Simpres.Secondary.Small" parent="TextStyle.Simpres.Secondary">
         <item name="android:textSize">@dimen/font_small</item>
     </style>
