@@ -2,7 +2,7 @@ package de.ka.simpres.ui.subjects.subjectlist.newedit
 
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.adapters.LinearLayoutBindingAdapter
+import android.widget.CompoundButton
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,6 +30,10 @@ class NewEditSubjectViewModel : BaseViewModel() {
         titleSelection.value = it.length
 
         currentSubject?.title = it
+    }
+    val onPushChanged = CompoundButton.OnCheckedChangeListener { _, changed: Boolean ->
+        currentSubject?.pushEnabled = changed
+        pushEnabled.value = changed
     }
     val getDoneListener = ViewUtils.TextDoneListener { }
     val navTitle = MutableLiveData<String>().apply { value = "" }
@@ -71,7 +75,6 @@ class NewEditSubjectViewModel : BaseViewModel() {
         view?.closeAttachedKeyboard()
 
         currentSubject?.let {
-            it.pushEnabled = pushEnabled.value!!
             if (isUpdating) {
                 navigateTo(BACK)
                 repository.updateSubject(it)
@@ -124,7 +127,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
     fun updateDate(year: Int, month: Int, day: Int) {
         currentSubject?.let {
             it.date = Calendar.getInstance().apply {
-                time = Date(it.date)
+                time = Date(System.currentTimeMillis())
                 set(year, month, day)
             }.timeInMillis
         }

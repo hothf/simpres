@@ -4,14 +4,18 @@ import de.ka.simpres.repo.db.AppDatabase
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.repo.model.IdeaItem_
+import de.ka.simpres.utils.NotificationWorkManager
 import io.objectbox.kotlin.boxFor
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class RepositoryImpl(db: AppDatabase) : Repository {
+class RepositoryImpl(db: AppDatabase) : Repository, KoinComponent {
 
+    private val notificationWorkManager: NotificationWorkManager by inject()
     private val subjectsBox = db.get().boxFor<SubjectItem>()
     private val ideasBox = db.get().boxFor<IdeaItem>()
 
@@ -49,6 +53,9 @@ class RepositoryImpl(db: AppDatabase) : Repository {
     }
 
     override fun findSubjectById(subjectId: Long): SubjectItem? {
+        if (subjectId == 0L){
+            return null
+        }
         return subjectsBox.get(subjectId)
     }
 
@@ -58,17 +65,22 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         subjectsBox.put(list)
         subjectsBox.put(subject)
 
+        startOrStopNotificationsFor(subject, subject.pushEnabled)
+
         getSubjectsInternally(false)
     }
 
     override fun updateSubject(subject: SubjectItem) {
         subjectsBox.put(subject)
 
+        startOrStopNotificationsFor(subject, subject.pushEnabled)
+
         getSubjectsInternally(true)
     }
 
     override fun removeSubject(subject: SubjectItem) {
         findSubjectById(subject.id)?.let {
+            startOrStopNotificationsFor(it, false)
             lastRemovedIdeas = ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find()
             ideasBox.remove(lastRemovedIdeas)
             subjectsBox.remove(it)
@@ -78,6 +90,14 @@ class RepositoryImpl(db: AppDatabase) : Repository {
             subjectsBox.put(list)
 
             getSubjectsInternally(false)
+        }
+    }
+
+    private fun startOrStopNotificationsFor(subject: SubjectItem, enable: Boolean) {
+        if (enable) {
+            notificationWorkManager.enqueueNotificationWorkFor(subject)
+        } else {
+            notificationWorkManager.cancelNotificationWorkFor(subject)
         }
     }
 

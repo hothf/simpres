@@ -29,6 +29,11 @@
         <action
             android:id="@+id/action_subjectsDetailFragment_to_subjectNewEditFragment"
             app:destination="@id/subjectNewEditFragment" />
+        <deepLink app:uri="simpres.com/{subject_id_key}" />
+        <argument
+            android:name="subject_id_key"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
 
     <fragment

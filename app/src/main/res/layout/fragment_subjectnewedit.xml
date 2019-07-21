@@ -145,7 +145,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignTop="@+id/dateSetterButton"
                             android:layout_alignBottom="@+id/dateSetterButton"
-                            android:checked="@={viewModel.pushEnabled}"
+                            android:checked="@{viewModel.pushEnabled}"
+                            android:onCheckedChanged="@{viewModel.onPushChanged}"
                             android:text="@string/subject_newedit_push_hint"
                             android:textColor="@color/colorTextDefault" />
 

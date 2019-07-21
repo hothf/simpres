@@ -42,7 +42,7 @@ class SubjectsDetailFragment :
     }
 
     companion object {
-        const val SUBJECT_ID_KEY = "sub_id_key"
+        const val SUBJECT_ID_KEY = "subject_id_key"
         const val SUBJECT_IS_NEW = "sub_new_key"
     }
 }
