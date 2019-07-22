@@ -87,7 +87,25 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_24"
                     android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextStyle.Simpres.Default.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_26"
+                        android:layout_marginTop="@dimen/default_20"
+                        android:layout_marginEnd="@dimen/default_26"
+                        android:text="@string/idea_newedit_title_header" />
+
+                    <TextView
+                        style="@style/TextStyle.Simpres.Secondary.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_26"
+                        android:layout_marginEnd="@dimen/default_26"
+                        android:text="@string/idea_newedit_title_info" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/titleEditContainer"
@@ -95,7 +113,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_16"
-                        android:layout_marginTop="@dimen/default_36"
+                        android:layout_marginTop="@dimen/default_8"
                         android:layout_marginEnd="@dimen/default_16"
                         android:hint="@string/idea_newedit_title_hint"
                         app:setError="@{viewModel.titleError}">
@@ -112,13 +130,30 @@
                             app:setSelection="@{viewModel.titleSelection}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <TextView
+                        style="@style/TextStyle.Simpres.Default.Bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_26"
+                        android:layout_marginTop="@dimen/default_26"
+                        android:layout_marginEnd="@dimen/default_26"
+                        android:text="@string/idea_newedit_sum_header" />
+
+                    <TextView
+                        style="@style/TextStyle.Simpres.Secondary.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_26"
+                        android:layout_marginEnd="@dimen/default_26"
+                        android:text="@string/idea_newedit_sum_info" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/amountEditContainer"
                         style="@style/TextInputStyle.Simpres"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_16"
-                        android:layout_marginTop="@dimen/default_16"
+                        android:layout_marginTop="@dimen/default_8"
                         android:layout_marginEnd="@dimen/default_16"
                         android:hint="@string/idea_newedit_sum_hint"
                         app:setError="@{viewModel.sumError}">
