@@ -5,6 +5,13 @@
     <string name="app_general_delete">Delete</string>
     <string name="app_general_empty_sign">-</string>
 
+    <string name="notifications_channel_date">Date reminder</string>
+    <string name="notifications_channel_date_info">Reminders for upcoming dates</string>
+    <string name="notifications_channel_date_description">Notifies of upcoming dates</string>
+
+    <string name="notifications_date_content_title">Reminder for %s</string>
+    <string name="notifications_date_content_text">Tap here to see what is left todo.</string>
+
     <string name="subject_empty">Nothing here, try to add some!</string>
     <string name="subject_delete_undo_title">Item deleted</string>
     <string name="subject_delete_undo_action">Undo</string>

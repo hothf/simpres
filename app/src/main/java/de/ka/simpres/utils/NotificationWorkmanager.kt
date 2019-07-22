@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.work.*
 import de.ka.simpres.R
 import de.ka.simpres.repo.model.SubjectItem
+import de.ka.simpres.utils.NotificationWorker.Constants.workerTagfor
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -26,27 +27,27 @@ class NotificationWorkManager(private val context: Context) {
      *@param subject the subject to notify of
      */
     fun enqueueNotificationWorkFor(subject: SubjectItem) {
-
-        val workTag = "notificationWork${subject.id}"
-
-        val inputData = Data.Builder().putLong("subjectId", subject.id).build()
+        val inputData = Data.Builder()
+            .putLong(NotificationWorker.Constants.KEY_FOR_SUBJECT_ID, subject.id)
+            .putString(NotificationWorker.Constants.KEY_FOR_SUBJECT_TITLE, subject.title)
+            .build()
 
         if (!subject.pushEnabled) {
             return
         }
 
-        // TODO and improve!
+        val workerTag = workerTagfor(subject)
 
         val delay = (subject.date + 5_000) - System.currentTimeMillis()
-        Timber.e("Time! $delay")
+        Timber.e("Sending a notification in: $delay")
 
         val notificationWork = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .setInputData(inputData)
-            .addTag(workTag)
+            .addTag(workerTag)
             .build()
 
-        WorkManager.getInstance(context).beginUniqueWork(workTag, ExistingWorkPolicy.REPLACE, notificationWork)
+        WorkManager.getInstance(context).beginUniqueWork(workerTag, ExistingWorkPolicy.REPLACE, notificationWork)
             .enqueue()
     }
 
@@ -56,51 +57,64 @@ class NotificationWorkManager(private val context: Context) {
      * @param subject the subject to stop notifications of
      */
     fun cancelNotificationWorkFor(subject: SubjectItem) {
-
-        val workTag = "notificationWork${subject.id}"
-
-        WorkManager.getInstance(context).cancelAllWorkByTag(workTag)
+        WorkManager.getInstance(context).cancelAllWorkByTag(workerTagfor(subject))
     }
 
 }
 
+/**
+ * A worker dedicated to trigger notifications.
+ */
 class NotificationWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
 
     @NonNull
     override fun doWork(): Result {
-        triggerNotification(applicationContext, inputData.getLong("subjectId", -1L))
+        triggerSubjectNotification(
+            applicationContext,
+            inputData.getLong(Constants.KEY_FOR_SUBJECT_ID, -1L),
+            inputData.getString(Constants.KEY_FOR_SUBJECT_TITLE)
+        )
 
         return Result.success()
     }
 
-    private fun triggerNotification(context: Context, subjectId: Long) {
-        val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
-        val notificationIntent = buildDeeplinkIntent(subjectId)
-        val pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0)
+    private fun triggerSubjectNotification(context: Context, subjectId: Long, subjectName: String? = "") {
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+        val channelId = context.getString(R.string.notifications_channel_date)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                "default",
-                "Daily Notification",
+                channelId,
+                context.getString(R.string.notifications_channel_date_info),
                 NotificationManager.IMPORTANCE_DEFAULT
-            )
-            channel.description = "Daily Notification"
-            nm?.createNotificationChannel(channel)
+            ).apply { description = context.getString(R.string.notifications_channel_date_description) }
+            notificationManager?.createNotificationChannel(channel)
         }
-        val b = NotificationCompat.Builder(context, "default")
-        b.setAutoCancel(true)
+        val notification = NotificationCompat.Builder(context, channelId).setAutoCancel(true)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setWhen(System.currentTimeMillis())
             .setSmallIcon(R.drawable.ic_present)
-            .setTicker("{Time to watch some cool stuff!}")
-            .setContentTitle("My Cool App")
-            .setContentText("Time to watch some cool stuff!")
-            .setContentInfo("INFO")
-            .setContentIntent(pendingIntent)
-
-        nm?.notify(1, b.build()) // TODO Improve please
+            .setContentTitle(context.getString(R.string.notifications_date_content_title, subjectName))
+            .setContentText(context.getString(R.string.notifications_date_content_text))
+            .setContentIntent(PendingIntent.getActivity(context, 0, buildDeeplinkIntent(subjectId), 0))
+            .build()
+        notificationManager?.notify(
+            Constants.NOTIFICATION_ID_DATES, notification
+        )
     }
 
     private fun buildDeeplinkIntent(subjectId: Long): Intent {
         return Intent(Intent.ACTION_VIEW, Uri.parse("https://simpres.com/$subjectId"))
+    }
+
+    object Constants {
+        const val NOTIFICATION_ID_DATES: Int = 101
+
+        const val KEY_FOR_SUBJECT_ID = "k_sub_id"
+        const val KEY_FOR_SUBJECT_TITLE = "k_sub_title"
+
+        /**
+         * Retrieves a worker tag for the given subject.
+         */
+        fun workerTagfor(subject: SubjectItem) = "notificationWork${subject.id}"
     }
 }
