@@ -5,10 +5,10 @@
         android:pathData="M-10,-5h129v118h-129z"
         android:strokeColor="#00000000" android:strokeWidth="1">
         <aapt:attr name="android:fillColor">
-            <gradient android:endX="22.24029" android:endY="67.289505"
-                android:startX="116.840965" android:startY="42.981888" android:type="linear">
-                <item android:color="#FF6EA1F2" android:offset="0"/>
-                <item android:color="#FF83BEDF" android:offset="1"/>
+            <gradient android:endX="127.7225" android:endY="-136.42006"
+                android:startX="-29.349962" android:startY="297.77512" android:type="linear">
+                <item android:color="#FF544EE6" android:offset="0"/>
+                <item android:color="#FF544EE6" android:offset="1"/>
             </gradient>
         </aapt:attr>
     </path>
