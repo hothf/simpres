@@ -21,12 +21,6 @@ class SubjectItemViewModel(
 
     val title = item.title
 
-    val sum = if (!item.sum.isBlank() && item.sum.toInt() > 0) {
-        item.sum.toEuro()
-    } else {
-        ""
-    }
-
     val shortTitle = if (item.title.isNotEmpty()) item.title.first().toString() else "-"
 
     val doneAmount =

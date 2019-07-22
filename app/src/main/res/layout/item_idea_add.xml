@@ -11,6 +11,7 @@
     <RelativeLayout
         android:id="@+id/item"
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/default_16"
         android:layout_height="@dimen/default_68"
         android:background="@drawable/bg_round_dashed">
 

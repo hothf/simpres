@@ -123,7 +123,6 @@
                     android:layout_marginEnd="@dimen/default_12"
                     android:layout_marginBottom="@dimen/default_12"
                     android:gravity="end"
-                    android:text="@{viewModel.sum}"
                     android:textStyle="bold"
                     android:visibility="gone"
                     tools:text="20 €" />

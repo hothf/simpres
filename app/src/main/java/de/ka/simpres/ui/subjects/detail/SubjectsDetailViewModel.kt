@@ -45,11 +45,15 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val dateVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
-    val sum = MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+    val sumUnspent = MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
     val doneAmount =
         MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
     val color = MutableLiveData<Int>().apply { value = Color.parseColor(currentColor) }
+    val allAmount =
+        MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
     val date = MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+    val sumSpent =
+        MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
 
     private val removeListener = { viewModel: IdeaItemViewModel ->
         repository.removeIdea(viewModel.item)
@@ -164,9 +168,11 @@ class SubjectsDetailViewModel : BaseViewModel() {
         }
         dateVisibility.postValue(View.GONE)
         title.postValue("")
-        sum.postValue("-")
-        doneAmount.postValue("-")
-        date.postValue("-")
+        sumUnspent.postValue("")
+        doneAmount.postValue("")
+        date.postValue("")
+        allAmount.postValue("")
+        sumSpent.postValue("")
 
         refresh()
     }
@@ -181,16 +187,35 @@ class SubjectsDetailViewModel : BaseViewModel() {
         title.postValue(subject.title)
 
         if (subject.ideasCount > 0) {
+            allAmount.postValue(resourcesProvider.getString(R.string.subject_detail_all, subject.ideasCount))
             doneAmount.postValue(
                 resourcesProvider.getString(
-                    R.string.subject_detail_done_amount, subject.ideasDoneCount, subject.ideasCount
+                    R.string.subject_detail_done_amount,
+                    subject.ideasDoneCount
                 )
             )
-            if (subject.sum.toInt() > 0) {
-                sum.postValue(subject.sum.toEuro())
+            if (subject.sumUnspent.toInt() > 0) {
+                sumUnspent.postValue(
+                    resourcesProvider.getString(
+                        R.string.subject_details_sum_unspent,
+                        subject.sumUnspent.toEuro()
+                    )
+                )
             } else {
-                sum.postValue(resourcesProvider.getString(R.string.app_general_empty_sign))
+                sumUnspent.postValue(resourcesProvider.getString(R.string.app_general_empty_sign))
             }
+            if (subject.sumSpent.toInt() > 0){
+                sumSpent.postValue(
+                    resourcesProvider.getString(
+                        R.string.subject_details_sum_spent,
+                        subject.sumSpent.toEuro()
+                    )
+                )
+            } else {
+                sumSpent.postValue(resourcesProvider.getString(R.string.subject_detail_nothingspent))
+            }
+        } else {
+            allAmount.postValue(resourcesProvider.getString(R.string.app_general_empty_sign))
         }
 
         if (subject.pushEnabled) {

@@ -10,7 +10,8 @@ import java.util.*
 data class SubjectItem(
     @Id var id: Long,
     var title: String = "",
-    var sum: String = "0",
+    var sumUnspent: String = "0",
+    var sumSpent: String = "0",
     var date: Long = Calendar.getInstance().timeInMillis,
     var color: String = ColorResources.indicatorColors.first(),
     var position: Int = 0,

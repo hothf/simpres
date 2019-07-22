@@ -97,7 +97,7 @@
                         android:layout_marginTop="@dimen/default_24"
                         android:layout_toStartOf="@+id/center"
                         android:gravity="center"
-                        android:text="@{viewModel.doneAmount}"
+                        android:text="@{viewModel.allAmount}"
                         android:textColor="@{viewModel.color}"
                         android:textStyle="bold"
                         tools:text="Total Sum" />
@@ -108,12 +108,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/totalIdeasValueText"
-                        android:layout_marginTop="@dimen/default_4"
                         android:layout_marginBottom="@dimen/default_24"
                         android:layout_toStartOf="@+id/center"
                         android:gravity="center"
-                        android:text="@string/subject_detail_done"
-                        android:textStyle="bold" />
+                        tools:text="done"
+                        android:text="@{viewModel.doneAmount}" />
 
                     <TextView
                         android:id="@+id/totalDateValueText"
@@ -136,11 +135,9 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/totalDateValueText"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/default_4"
                         android:layout_marginBottom="@dimen/default_24"
                         android:gravity="center"
                         android:text="@string/subject_detail_date"
-                        android:textStyle="bold"
                         android:visibility="@{viewModel.dateVisibility}" />
 
                     <View
@@ -157,7 +154,7 @@
                         android:layout_marginTop="@dimen/default_24"
                         android:layout_toEndOf="@+id/center"
                         android:gravity="center"
-                        android:text="@{viewModel.sum}"
+                        android:text="@{viewModel.sumUnspent}"
                         android:textColor="@{viewModel.color}"
                         android:textStyle="bold"
                         tools:text="Total Sum" />
@@ -168,12 +165,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/totalSumValueText"
-                        android:layout_marginTop="@dimen/default_4"
                         android:layout_marginBottom="@dimen/default_24"
                         android:layout_toEndOf="@+id/center"
                         android:gravity="center"
-                        android:text="@string/subject_detail_sum"
-                        android:textStyle="bold" />
+                        android:text="@{viewModel.sumSpent}"
+                        tools:text="@string/subject_detail_sum" />
 
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -201,7 +197,6 @@
                 android:layout_marginEnd="@dimen/default_16"
                 android:adapter="@{viewModel.adapter}"
                 android:minHeight="@dimen/default_58"
-                app:addItemDecoration="@{viewModel.itemDecoration}"
                 app:layoutManager="@{viewModel.layoutManager()}"
                 app:setItemAnimator="@{viewModel.itemAnimator}"
                 app:touchHelper="@{viewModel.touchHelper}" />

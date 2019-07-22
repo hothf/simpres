@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7447030099033657005",
-      "lastPropertyId": "8:1572647645309548647",
+      "lastPropertyId": "9:1989017795968708837",
       "name": "SubjectItem",
       "properties": [
         {
@@ -39,6 +39,10 @@
         {
           "id": "8:1572647645309548647",
           "name": "ideasDoneCount"
+        },
+        {
+          "id": "9:1989017795968708837",
+          "name": "pushEnabled"
         }
       ],
       "relations": []

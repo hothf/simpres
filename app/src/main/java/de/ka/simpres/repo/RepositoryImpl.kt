@@ -53,7 +53,7 @@ class RepositoryImpl(db: AppDatabase) : Repository, KoinComponent {
     }
 
     override fun findSubjectById(subjectId: Long): SubjectItem? {
-        if (subjectId == 0L){
+        if (subjectId == 0L) {
             return null
         }
         return subjectsBox.get(subjectId)
@@ -149,17 +149,24 @@ class RepositoryImpl(db: AppDatabase) : Repository, KoinComponent {
     private fun recalculateSum(subject: SubjectItem) {
         val ideas = ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find()
 
-        subject.sum = ideas
-            .filter { !it.done }
-            .map {
-                if (it.sum.isBlank()) {
-                    0
-                } else {
-                    it.sum.toInt()
+        var sumSpent = 0
+        var sumUnspent = 0
+
+        ideas.forEach {
+            if (it.done) {
+                if (!it.sum.isBlank()) {
+                    sumSpent += it.sum.toInt()
+                }
+            } else {
+                if (!it.sum.isBlank()) {
+                    sumUnspent += it.sum.toInt()
                 }
             }
-            .fold(0) { sum, item -> sum + item }
-            .toString()
+        }
+        
+        subject.sumSpent = sumSpent.toString()
+        subject.sumUnspent = sumUnspent.toString()
+
         subject.ideasCount = ideas.size
         subject.ideasDoneCount = ideas.count { it.done }
 
