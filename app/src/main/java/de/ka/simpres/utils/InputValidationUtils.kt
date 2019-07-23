@@ -43,37 +43,39 @@ class InputValidator(val context: Context) {
     /**
      * A input class for validating with a error output. Should at least have one [rules] to have any effect.
      */
-    data class ValidatorInput(val errorOutPut: MutableLiveData<String?>, val rules: List<ValidationRules>)
+    data class ValidatorConfig(val errorOutput: MutableLiveData<String?>, val rules: List<ValidationRules>)
 
     /**
      * A simple input validator, offering a [isValid] method for quick error setting and retrieving the validation state
      * of inputs.
      */
-    inner class Validator(private vararg val validationPairs: ValidatorInput) {
+    inner class Validator(private vararg val validationConfigs: ValidatorConfig) {
 
         /**
          * Checks whether all validations are true or at least one is failing.
          *
-         * @return true if all fields defined in the [validationPairs] are valid, false if at least one is failing
+         * @param input the input of the validator, if set to null, will immediately lead to invalid result
+         * @return true if all rules defined in the [validationConfigs] are valid for the given [input], false if at
+         * least one is failing
          */
         fun isValid(input: String?): Boolean {
             if (input == null) return false
 
             var isValid = true
 
-            validationPairs.forEach pairs@{ pair ->
+            validationConfigs.forEach pairs@{ pair ->
                 pair.rules.forEach { rule ->
                     if (rule.predicate(input)) {
                         isValid = false
                         if (rule.variable != null) {
-                            pair.errorOutPut.postValue(
+                            pair.errorOutput.postValue(
                                 String.format(
                                     context.getString(rule.errorTextResId),
                                     rule.variable
                                 )
                             )
                         } else {
-                            pair.errorOutPut.postValue(context.getString(rule.errorTextResId))
+                            pair.errorOutput.postValue(context.getString(rule.errorTextResId))
                         }
                         return@pairs
                     }

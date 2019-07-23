@@ -45,7 +45,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
     private val resourcesProvider: ResourcesProvider by inject()
     private val inputValidator: InputValidator by inject()
     private val titleValidator = inputValidator.Validator(
-        InputValidator.ValidatorInput(
+        InputValidator.ValidatorConfig(
             titleError,
             listOf(ValidationRules.NOT_EMPTY, ValidationRules.MIN_4)
         )

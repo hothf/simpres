@@ -38,7 +38,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
     private val inputValidator: InputValidator by inject()
 
     private val titleValidator = inputValidator.Validator(
-        InputValidator.ValidatorInput(
+        InputValidator.ValidatorConfig(
             titleError,
             listOf(ValidationRules.NOT_EMPTY)
         )
