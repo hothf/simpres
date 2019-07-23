@@ -36,12 +36,6 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val touchHelper = MutableLiveData<ItemTouchHelper>()
     val adapter = MutableLiveData<IdeaAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
-    val itemDecoration = DecorationUtil(
-        resourcesProvider.getDimensionPixelSize(R.dimen.default_16), resourcesProvider.getDimensionPixelSize(
-            R.dimen
-                .default_16
-        )
-    )
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
     val sumUnspent =

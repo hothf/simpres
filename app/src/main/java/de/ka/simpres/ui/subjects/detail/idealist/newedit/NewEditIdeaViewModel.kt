@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.repo.model.IdeaItem
-import de.ka.simpres.utils.NavigationUtils
-import de.ka.simpres.utils.ViewUtils
-import de.ka.simpres.utils.closeAttachedKeyboard
+import de.ka.simpres.utils.*
 import de.ka.simpres.utils.resources.ResourcesProvider
 import org.koin.standalone.inject
 
@@ -33,10 +31,18 @@ class NewEditIdeaViewModel : BaseViewModel() {
     val sumSelection = MutableLiveData<Int>().apply { value = null }
     val navTitle = MutableLiveData<String>().apply { value = "" }
     val title = MutableLiveData<String>().apply { value = "" }
-    val titleError = MutableLiveData<String>().apply { value = null }
+    val titleError = MutableLiveData<String?>().apply { value = null }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
 
     private val resourcesProvider: ResourcesProvider by inject()
+    private val inputValidator: InputValidator by inject()
+
+    private val titleValidator = inputValidator.Validator(
+        InputValidator.ValidatorInput(
+            titleError,
+            listOf(ValidationRules.NOT_EMPTY)
+        )
+    )
 
     private var currentIdea: IdeaItem? = null
     private var currentSubjectId: Long = -1
@@ -48,6 +54,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
     }
 
     fun submit(view: View? = null) {
+        if (!titleValidator.isValid(title.value)) return
 
         view?.closeAttachedKeyboard()
 

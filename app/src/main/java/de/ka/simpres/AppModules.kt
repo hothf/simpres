@@ -7,6 +7,7 @@ import de.ka.simpres.ui.MainViewModel
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailViewModel
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaViewModel
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectViewModel
+import de.ka.simpres.utils.InputValidator
 import de.ka.simpres.utils.NotificationWorkManager
 import de.ka.simpres.utils.resources.ResourcesProvider
 import de.ka.simpres.utils.resources.ResourcesProviderImpl
@@ -24,6 +25,7 @@ val appModule = module {
     viewModel { NewEditSubjectViewModel() }
     viewModel { NewEditIdeaViewModel() }
 
+    single { InputValidator(get()) }
     single { NotificationWorkManager(get()) }
     single { AppDatabase(get()) }
     single { ResourcesProviderImpl(get()) as ResourcesProvider }

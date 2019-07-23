@@ -5,6 +5,10 @@
     <string name="app_general_delete">Delete</string>
     <string name="app_general_empty_sign">-</string>
 
+    <string name="error_input_empty">Please enter something</string>
+    <string name="error_input_too_small">Please use at least %s characters</string>
+    <string name="error_input_too_long">Please use a maximum of %s characters</string>
+
     <string name="notifications_channel_date">Date reminder</string>
     <string name="notifications_channel_date_info">Reminders for upcoming dates</string>
     <string name="notifications_channel_date_description">Notifies of upcoming dates</string>

@@ -11,14 +11,12 @@ import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
+import de.ka.simpres.utils.*
 import de.ka.simpres.utils.NavigationUtils.BACK
-import de.ka.simpres.utils.ViewUtils
-import de.ka.simpres.utils.closeAttachedKeyboard
 import de.ka.simpres.utils.color.ColorAdapter
 import de.ka.simpres.utils.color.ColorItemViewModel
 import de.ka.simpres.utils.color.ColorResources
 import de.ka.simpres.utils.resources.ResourcesProvider
-import de.ka.simpres.utils.toDate
 import org.koin.standalone.inject
 import java.util.*
 
@@ -26,8 +24,8 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
     val getTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it
-        titleError.postValue(null)
         titleSelection.value = it.length
+        titleError.postValue(null)
 
         currentSubject?.title = it
     }
@@ -45,6 +43,13 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val adapter = MutableLiveData<ColorAdapter>()
 
     private val resourcesProvider: ResourcesProvider by inject()
+    private val inputValidator: InputValidator by inject()
+    private val titleValidator = inputValidator.Validator(
+        InputValidator.ValidatorInput(
+            titleError,
+            listOf(ValidationRules.NOT_EMPTY, ValidationRules.MIN_4)
+        )
+    )
 
     private var currentSubject: SubjectItem? = null
     private var isUpdating = false
@@ -72,6 +77,8 @@ class NewEditSubjectViewModel : BaseViewModel() {
         LinearLayoutManager(resourcesProvider.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false)
 
     fun submit(view: View? = null) {
+        if (!titleValidator.isValid(title.value)) return
+
         view?.closeAttachedKeyboard()
 
         currentSubject?.let {
