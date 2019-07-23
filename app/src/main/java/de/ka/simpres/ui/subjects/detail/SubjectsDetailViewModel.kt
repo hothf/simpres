@@ -185,42 +185,29 @@ class SubjectsDetailViewModel : BaseViewModel() {
     private fun updateSubject(subject: SubjectItem, isUpdate: Boolean = false) {
         title.postValue(subject.title)
 
-        if (subject.ideasCount > 0) {
-            allAmount.postValue(resourcesProvider.getString(R.string.subject_detail_all, subject.ideasCount))
-            doneAmount.postValue(
-                resourcesProvider.getString(
-                    R.string.subject_detail_done_amount,
-                    subject.ideasDoneCount
-                )
+        allAmount.postValue(resourcesProvider.getString(R.string.subject_detail_all, subject.ideasCount))
+        doneAmount.postValue(
+            resourcesProvider.getString(
+                R.string.subject_detail_done_amount,
+                subject.ideasDoneCount
             )
-            if (subject.sumUnspent.toInt() > 0) {
-                sumUnspent.postValue(
-                    resourcesProvider.getString(
-                        R.string.subject_details_sum_unspent,
-                        subject.sumUnspent.toEuro()
-                    )
-                )
-            } else {
-                sumUnspent.postValue(resourcesProvider.getString(R.string.app_general_empty_sign))
-            }
-            if (subject.sumSpent.toInt() > 0) {
-                sumSpent.postValue(
-                    resourcesProvider.getString(
-                        R.string.subject_details_sum_spent,
-                        subject.sumSpent.toEuro()
-                    )
-                )
-            } else {
-                sumSpent.postValue(resourcesProvider.getString(R.string.subject_detail_nothingspent))
-            }
-        } else {
-            allAmount.postValue(resourcesProvider.getString(R.string.app_general_empty_sign))
-        }
-
+        )
+        sumUnspent.postValue(
+            resourcesProvider.getString(
+                R.string.subject_details_sum_unspent,
+                subject.sumUnspent.toEuro()
+            )
+        )
+        sumSpent.postValue(
+            resourcesProvider.getString(
+                R.string.subject_details_sum_spent,
+                subject.sumSpent.toEuro()
+            )
+        )
         if (subject.pushEnabled) {
             date.postValue(subject.date.toDate())
         } else {
-            date.postValue(resourcesProvider.getString(R.string.app_general_empty_sign))
+            date.postValue(resourcesProvider.getString(R.string.subject_detail_no_remind))
         }
 
         currentColor = subject.color
