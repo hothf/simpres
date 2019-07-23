@@ -26,7 +26,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
     val getTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it
-        titleError.postValue("")
+        titleError.postValue(null)
         titleSelection.value = it.length
 
         currentSubject?.title = it
@@ -38,7 +38,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val getDoneListener = ViewUtils.TextDoneListener { }
     val navTitle = MutableLiveData<String>().apply { value = "" }
     val title = MutableLiveData<String>().apply { value = "" }
-    val titleError = MutableLiveData<String>().apply { value = "" }
+    val titleError = MutableLiveData<String?>().apply { value = null }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
     val date = MutableLiveData<String>().apply { value = "" }
     val pushEnabled = MutableLiveData<Boolean>().apply { value = false }
@@ -144,7 +144,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
         if (currentSubject != null) {
             title.postValue(currentSubject?.title)
             titleSelection.postValue(currentSubject?.title?.length)
-            titleError.postValue("")
+            titleError.postValue(null)
             date.postValue(
                 resourcesProvider.getString(R.string.subject_newedit_remind_on, currentSubject?.date?.toDate())
             )
@@ -152,7 +152,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
         } else {
             title.postValue("")
             titleSelection.postValue(0)
-            titleError.postValue("")
+            titleError.postValue(null)
             date.postValue(
                 resourcesProvider.getString(R.string.subject_newedit_remind_on, System.currentTimeMillis().toDate())
             )

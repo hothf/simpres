@@ -87,74 +87,80 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_36"
                     android:orientation="vertical">
 
-                    <TextView
-                        style="@style/TextStyle.Simpres.Default.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_26"
-                        android:layout_marginEnd="@dimen/default_26"
-                        android:text="@string/subject_newedit_title_header" />
-
-                    <TextView
-                        style="@style/TextStyle.Simpres.Secondary.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_26"
-                        android:layout_marginEnd="@dimen/default_26"
-                        android:text="@string/subject_newedit_title_info" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/titleEditContainer"
-                        style="@style/TextInputStyle.Simpres"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_16"
-                        android:layout_marginTop="@dimen/default_8"
+                        android:layout_marginTop="@dimen/default_36"
                         android:layout_marginEnd="@dimen/default_16"
-                        android:hint="@string/subject_newedit_title_hint"
-                        app:setError="@{viewModel.titleError}">
+                        android:background="@drawable/bg_round"
+                        android:padding="@dimen/default_8">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/suggInput"
+
+                        <EditText
+                            android:id="@+id/titleEditContainer"
+                            style="@style/TextInputStyle.Simpres"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/default_10"
+                            android:layout_marginEnd="@dimen/default_10"
+                            android:hint="@string/subject_newedit_title_hint"
                             android:imeOptions="actionDone"
                             android:inputType="textCapSentences"
                             android:maxLines="1"
                             android:singleLine="true"
                             android:text="@{viewModel.title}"
                             app:addTextChangedListener="@{viewModel.getTextChangedListener}"
+                            app:setError="@{viewModel.titleError}"
                             app:setOnEditorActionListener="@{viewModel.getDoneListener}"
                             app:setSelection="@{viewModel.titleSelection}" />
-                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        style="@style/TextStyle.Simpres.Default.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_26"
-                        android:layout_marginTop="@dimen/default_26"
-                        android:layout_marginEnd="@dimen/default_26"
-                        android:text="@string/subject_newedit_color_header" />
+                    </RelativeLayout>
 
-                    <TextView
-                        style="@style/TextStyle.Simpres.Secondary.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_26"
-                        android:layout_marginEnd="@dimen/default_26"
-                        android:text="@string/subject_newedit_color_info" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_16"
-                        android:layout_marginTop="@dimen/default_8"
+                        android:layout_marginTop="@dimen/default_20"
                         android:layout_marginEnd="@dimen/default_16"
-                        android:background="@drawable/bg_round_stroke">
+                        android:background="@drawable/bg_round"
+                        android:padding="@dimen/default_8">
+
+                        <CheckBox
+                            android:id="@+id/checkPush"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/default_8"
+                            android:checked="@{viewModel.pushEnabled}"
+                            android:onCheckedChanged="@{viewModel.onPushChanged}"
+                            android:text="@string/subject_newedit_push_hint"
+                            android:textColor="@color/colorTextDefault" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/dateSetterButton"
+                            style="@style/ButtonStyle.Simpres.Nav"
+                            android:layout_width="wrap_content"
+                            android:layout_toEndOf="@+id/checkPush"
+                            android:layout_height="wrap_content"
+                            android:enabled="@{viewModel.pushEnabled}"
+                            android:minHeight="@dimen/default_42"
+                            android:onClick="@{(v) -> viewModel.onOpenDatePicker(v)}"
+                            android:paddingStart="@dimen/default_8"
+                            android:paddingEnd="@dimen/default_8"
+                            android:text="@{viewModel.date}"
+                            app:icon="@drawable/ic_cal"
+                            app:iconSize="@dimen/default_20"
+                            tools:text="Date setting setting setting setting setting setting setting setting" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_20"
+                        android:background="@drawable/bg_round">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:layout_width="wrap_content"
@@ -162,59 +168,6 @@
                             android:adapter="@{viewModel.adapter}"
                             android:overScrollMode="never"
                             app:layoutManager="@{viewModel.layoutManager()}" />
-                    </RelativeLayout>
-
-                    <TextView
-                        style="@style/TextStyle.Simpres.Default.Bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_26"
-                        android:layout_marginTop="@dimen/default_26"
-                        android:layout_marginEnd="@dimen/default_26"
-                        android:text="@string/subject_newedit_reminder_header" />
-
-                    <TextView
-                        style="@style/TextStyle.Simpres.Secondary.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/default_26"
-                        android:layout_marginEnd="@dimen/default_26"
-                        android:text="@string/subject_newedit_reminder_info" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_8"
-                        android:layout_marginStart="@dimen/default_16"
-                        android:layout_marginEnd="@dimen/default_16"
-                        android:background="@drawable/bg_round_stroke">
-
-                        <CheckBox
-                            android:id="@+id/checkPush"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignTop="@+id/dateSetterButton"
-                            android:layout_marginStart="@dimen/default_8"
-                            android:layout_alignBottom="@+id/dateSetterButton"
-                            android:checked="@{viewModel.pushEnabled}"
-                            android:onCheckedChanged="@{viewModel.onPushChanged}"
-                            android:text="@string/subject_newedit_push_hint"
-                            android:textColor="@color/colorTextDefault" />
-
-                        <Button
-                            android:id="@+id/dateSetterButton"
-                            style="@style/ButtonStyle.Simpres.Bordered"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                           android:layout_margin="@dimen/default_8"
-                            android:layout_toEndOf="@+id/checkPush"
-                            android:enabled="@{viewModel.pushEnabled}"
-                            android:minHeight="@dimen/default_42"
-                            android:onClick="@{(v) -> viewModel.onOpenDatePicker(v)}"
-                            android:paddingStart="@dimen/default_8"
-                            android:paddingEnd="@dimen/default_8"
-                            android:text="@{viewModel.date}"
-                            tools:text="Date setting setting setting setting setting setting setting setting" />
                     </RelativeLayout>
                 </LinearLayout>
             </ScrollView>

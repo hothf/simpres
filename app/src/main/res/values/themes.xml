@@ -9,6 +9,9 @@
         <item name="colorSecondaryVariant">@color/colorAccent</item>
         <item name="colorOnSecondary">#000000</item>
 
+        <item name="editTextColor">@color/colorTextDefault</item>
+        <item name="android:textColorHint">@color/colorTextSecondaryDefault</item>
+
         <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="colorControlNormal">@color/colorTextSecondaryDefault</item>

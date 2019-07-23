@@ -82,7 +82,7 @@
 
                 <TextView
                     android:id="@+id/title"
-                    style="@style/TextStyle.Simpres.Default.Large"
+                    style="@style/TextStyle.Simpres.Default"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/indicator"

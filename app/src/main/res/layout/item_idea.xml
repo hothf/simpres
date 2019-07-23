@@ -12,7 +12,7 @@
     <RelativeLayout
         android:id="@+id/item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/default_68"
+        android:layout_height="@dimen/default_54"
         android:background="@drawable/bg_round"
         android:backgroundTint="@color/colorBackgroundPrimary"
         android:theme="@style/Theme.Simpres">
@@ -66,7 +66,7 @@
                 tools:background="@drawable/bg_circle" />
 
             <TextView
-                style="@style/TextStyle.Simpres.Default.Large"
+                style="@style/TextStyle.Simpres.Default.Bold"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

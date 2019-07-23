@@ -4,11 +4,8 @@
         <item name="tint">@color/colorBackgroundSecondary</item>
     </style>
 
-    <style name="TextInputStyle.Simpres" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxCornerRadiusTopStart">@dimen/default_16</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/default_16</item>
-        <item name="boxCornerRadiusBottomEnd">@dimen/default_16</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/default_16</item>
+    <style name="TextInputStyle.Simpres" parent="Widget.AppCompat.EditText">
+      <item name="android:textAppearance">@style/TextStyle.Simpres.Default.Large</item>
     </style>
 
     <style name="AppBarStyle.Simpres" parent="Widget.Design.AppBarLayout">
@@ -41,6 +38,8 @@
         <item name="android:textColor">@color/colorIconTintDefault</item>
         <item name="iconTint">@color/colorIconTintDefault</item>
         <item name="cornerRadius">@dimen/default_108</item>
+        <item name="android:textAppearance">@style/TextStyle.Simpres.Default.Large</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ButtonStyle.Simpres.Bordered" parent="@style/Widget.MaterialComponents.Button">
