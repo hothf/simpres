@@ -145,6 +145,8 @@
                             android:layout_width="wrap_content"
                             android:layout_toEndOf="@+id/checkPush"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/default_2"
+                            android:layout_marginStart="@dimen/default_8"
                             android:enabled="@{viewModel.pushEnabled}"
                             android:minHeight="@dimen/default_42"
                             android:onClick="@{(v) -> viewModel.onOpenDatePicker(v)}"
