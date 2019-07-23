@@ -21,17 +21,34 @@ class SubjectItemViewModel(
 
     val title = item.title
 
-    val shortTitle = if (item.title.isNotEmpty()) item.title.first().toString() else "-"
-
     val doneAmount =
         if (item.ideasCount > 0) resourceProvider.getString(
             R.string.subject_done_amount,
             item.ideasDoneCount,
             item.ideasCount
         )
-        else shortTitle
+        else item.generateShortTitle()
 
     val date = item.date.toDate()
 
     val color = Color.parseColor(item.color)
+
+
+    private fun SubjectItem.generateShortTitle(): String {
+        val strippedTitle = this.title.trim()
+
+        if (strippedTitle.isBlank()) return ""
+
+        if (strippedTitle.length > 3) {
+
+            return strippedTitle.first().toString() + strippedTitle[1].toString() + strippedTitle.last().toString()
+
+        } else if (strippedTitle.length == 3) {
+            return strippedTitle.first().toString() + strippedTitle[strippedTitle.length / 2].toString() + strippedTitle
+                .last()
+                .toString()
+        }
+        return strippedTitle
+
+    }
 }
