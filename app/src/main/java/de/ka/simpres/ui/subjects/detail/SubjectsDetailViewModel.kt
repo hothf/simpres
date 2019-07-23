@@ -45,7 +45,8 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val dateVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
-    val sumUnspent = MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+    val sumUnspent =
+        MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
     val doneAmount =
         MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
     val color = MutableLiveData<Int>().apply { value = Color.parseColor(currentColor) }
@@ -204,7 +205,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
             } else {
                 sumUnspent.postValue(resourcesProvider.getString(R.string.app_general_empty_sign))
             }
-            if (subject.sumSpent.toInt() > 0){
+            if (subject.sumSpent.toInt() > 0) {
                 sumSpent.postValue(
                     resourcesProvider.getString(
                         R.string.subject_details_sum_spent,
@@ -233,7 +234,10 @@ class SubjectsDetailViewModel : BaseViewModel() {
         repository.getIdeasOf(currentSubjectId)
 
         if (isUpdate) {
-            showSnack(resourcesProvider.getString(R.string.subject_detail_updated))
+            showSnack(
+                snackType = Snacker.SnackType.SUCCESS,
+                message = resourcesProvider.getString(R.string.subject_detail_updated)
+            )
         }
     }
 

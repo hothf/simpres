@@ -15,14 +15,14 @@ class NewEditIdeaViewModel : BaseViewModel() {
 
     val getTitleTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it
-        titleError.postValue("")
+        titleError.postValue(null)
         titleSelection.value = it.length
 
         currentIdea?.title = it
     }
     val getSumTextChangedListener = ViewUtils.TextChangeListener {
         sum.value = it
-        sumError.postValue("")
+        sumError.postValue(null)
         sumSelection.value = it.length
 
         currentIdea?.sum = it
@@ -30,10 +30,10 @@ class NewEditIdeaViewModel : BaseViewModel() {
     val getDoneListener = ViewUtils.TextDoneListener { }
     val sum = MutableLiveData<String>().apply { value = "" }
     val sumError = MutableLiveData<String>().apply { value = "" }
-    val sumSelection = MutableLiveData<Int>().apply { value = 0 }
+    val sumSelection = MutableLiveData<Int>().apply { value = null }
     val navTitle = MutableLiveData<String>().apply { value = "" }
     val title = MutableLiveData<String>().apply { value = "" }
-    val titleError = MutableLiveData<String>().apply { value = "" }
+    val titleError = MutableLiveData<String>().apply { value = null }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
 
     private val resourcesProvider: ResourcesProvider by inject()
@@ -90,17 +90,17 @@ class NewEditIdeaViewModel : BaseViewModel() {
         if (currentIdea != null) {
             title.postValue(currentIdea?.title)
             titleSelection.postValue(currentIdea?.title?.length)
-            titleError.postValue("")
+            titleError.postValue(null)
             sum.postValue(currentIdea?.sum)
             sumSelection.postValue(currentIdea?.sum?.length)
-            sumError.postValue("")
+            sumError.postValue(null)
         } else {
             title.postValue("")
             titleSelection.postValue(0)
-            titleError.postValue("")
+            titleError.postValue(null)
             sum.value = ("")
             sumSelection.postValue(0)
-            sumError.postValue("")
+            sumError.postValue(null)
         }
     }
 

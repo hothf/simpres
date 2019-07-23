@@ -59,6 +59,7 @@
                 android:backgroundTint="@{viewModel.color}"
                 android:contentDescription="@string/idea_list_done"
                 android:onClick="@{()->viewModel.toggleDone()}"
+                android:alpha="@{viewModel.doneAlpha}"
                 android:padding="@dimen/default_6"
                 android:src="@drawable/ic_check"
                 android:foreground="@drawable/button_default_selector"
