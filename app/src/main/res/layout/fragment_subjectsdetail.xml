@@ -84,103 +84,101 @@
                 android:layout_marginEnd="@dimen/default_16"
                 android:layout_marginBottom="@dimen/default_16">
 
-                <RelativeLayout
+                <TableLayout
                     android:id="@+id/blankView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="*"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/totalIdeasValueText"
-                        style="@style/TextStyle.Simpres.Default.Large"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_8"
-                        android:layout_toStartOf="@+id/center"
-                        android:gravity="center_horizontal"
-                        android:includeFontPadding="false"
-                        android:text="@{viewModel.allAmount}"
-                        android:textColor="@{viewModel.color}"
-                        android:textStyle="bold"
-                        tools:text="Total Sum" />
+                    <TableRow>
 
-                    <TextView
-                        android:id="@+id/totalIdeasInfoText"
-                        style="@style/TextStyle.Simpres.Secondary.Small"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/totalIdeasValueText"
-                        android:layout_marginBottom="@dimen/default_8"
-                        android:includeFontPadding="false"
-                        android:layout_toStartOf="@+id/center"
-                        android:gravity="center_horizontal|top"
-                        android:textStyle="bold"
-                        tools:text="done"
-                        android:text="@{viewModel.doneAmount}" />
+                        <TextView
+                            android:id="@+id/totalIdeasValueText"
+                            style="@style/TextStyle.Simpres.Default.Large"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/default_8"
+                            android:layout_toStartOf="@+id/center"
+                            android:gravity="center_horizontal"
+                            android:includeFontPadding="false"
+                            android:text="@{viewModel.allAmount}"
+                            android:textColor="@{viewModel.color}"
+                            android:textStyle="bold"
+                            tools:text="Total Sum" />
 
-                    <TextView
-                        android:id="@+id/totalDateValueText"
-                        style="@style/TextStyle.Simpres.Default.Large"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:includeFontPadding="false"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/default_8"
-                        android:gravity="center"
-                        android:text="@{viewModel.date}"
-                        android:textColor="@{viewModel.color}"
-                        android:textStyle="bold"
-                        android:visibility="@{viewModel.dateVisibility}"
-                        tools:text="12.12.2019" />
+                        <TextView
+                            android:id="@+id/totalDateValueText"
+                            style="@style/TextStyle.Simpres.Default.Large"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/default_8"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="@{viewModel.date}"
+                            android:textColor="@{viewModel.color}"
+                            android:textStyle="bold"
+                            tools:text="12.12.2019" />
 
-                    <TextView
-                        android:id="@+id/totalDateInfoText"
-                        style="@style/TextStyle.Simpres.Secondary.Small"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/totalDateValueText"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="@dimen/default_8"
-                        android:includeFontPadding="false"
-                        android:textStyle="bold"
-                        android:gravity="center_horizontal|top"
-                        android:text="@string/subject_detail_date"
-                        android:visibility="@{viewModel.dateVisibility}" />
+                        <TextView
+                            android:id="@+id/totalSumValueText"
+                            style="@style/TextStyle.Simpres.Default.Large"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/default_8"
+                            android:layout_toEndOf="@+id/center"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="@{viewModel.sumUnspent}"
+                            android:textColor="@{viewModel.color}"
+                            android:textStyle="bold"
+                            tools:text="Total Sum" />
+                    </TableRow>
+                    <TableRow>
 
-                    <View
-                        android:id="@+id/center"
-                        android:layout_width="@dimen/default_1"
-                        android:layout_height="@dimen/default_1"
-                        android:layout_centerInParent="true" />
+                        <TextView
+                            android:id="@+id/totalIdeasInfoText"
+                            style="@style/TextStyle.Simpres.Secondary.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/totalIdeasValueText"
+                            android:layout_marginBottom="@dimen/default_8"
+                            android:layout_toStartOf="@+id/center"
+                            android:gravity="center_horizontal|top"
+                            android:includeFontPadding="false"
+                            android:text="@{viewModel.doneAmount}"
+                            android:textStyle="bold"
+                            tools:text="done" />
 
-                    <TextView
-                        android:id="@+id/totalSumValueText"
-                        style="@style/TextStyle.Simpres.Default.Large"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_8"
-                        android:includeFontPadding="false"
-                        android:layout_toEndOf="@+id/center"
-                        android:gravity="center"
-                        android:text="@{viewModel.sumUnspent}"
-                        android:textColor="@{viewModel.color}"
-                        android:textStyle="bold"
-                        tools:text="Total Sum" />
+                        <TextView
+                            android:id="@+id/totalDateInfoText"
+                            style="@style/TextStyle.Simpres.Secondary.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/totalDateValueText"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="@dimen/default_8"
+                            android:gravity="center_horizontal|top"
+                            android:includeFontPadding="false"
+                            android:text="@string/subject_detail_date"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/totalSumInfoText"
-                        style="@style/TextStyle.Simpres.Secondary.Small"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/totalSumValueText"
-                        android:layout_marginBottom="@dimen/default_8"
-                        android:textStyle="bold"
-                        android:layout_toEndOf="@+id/center"
-                        android:includeFontPadding="false"
-                        android:gravity="center_horizontal|top"
-                        android:text="@{viewModel.sumSpent}"
-                        tools:text="@string/subject_detail_sum" />
-
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/totalSumInfoText"
+                            style="@style/TextStyle.Simpres.Secondary.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/totalSumValueText"
+                            android:layout_marginBottom="@dimen/default_8"
+                            android:layout_toEndOf="@+id/center"
+                            android:gravity="center_horizontal|top"
+                            android:includeFontPadding="false"
+                            android:text="@{viewModel.sumSpent}"
+                            android:textStyle="bold"
+                            tools:text="@string/subject_detail_sum" />
+                    </TableRow>
+                </TableLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <TextView

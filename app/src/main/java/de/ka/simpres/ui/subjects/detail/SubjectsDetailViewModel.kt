@@ -43,7 +43,6 @@ class SubjectsDetailViewModel : BaseViewModel() {
         )
     )
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
-    val dateVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
     val sumUnspent =
         MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
@@ -167,7 +166,6 @@ class SubjectsDetailViewModel : BaseViewModel() {
             value = null
             postValue(ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(ideaAdapter)))
         }
-        dateVisibility.postValue(View.GONE)
         title.postValue("")
         sumUnspent.postValue("")
         doneAmount.postValue("")
@@ -220,16 +218,14 @@ class SubjectsDetailViewModel : BaseViewModel() {
         }
 
         if (subject.pushEnabled) {
-            dateVisibility.postValue(View.VISIBLE)
+            date.postValue(subject.date.toDate())
         } else {
-            dateVisibility.postValue(View.GONE)
+            date.postValue(resourcesProvider.getString(R.string.app_general_empty_sign))
         }
-
 
         currentColor = subject.color
 
         color.postValue(Color.parseColor(currentColor))
-        date.postValue(subject.date.toDate())
 
         repository.getIdeasOf(currentSubjectId)
 
