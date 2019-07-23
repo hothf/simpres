@@ -19,10 +19,10 @@
 
     <string name="subject_detail_empty">No ideas listed yet. Add some ideas!</string>
     <string name="subject_detail_edit">Edit</string>
-    <string name="subject_detail_all">%d</string>
-    <string name="subject_detail_date">Date reminded</string>
+    <string name="subject_detail_all">%d to do</string>
+    <string name="subject_detail_date">remind</string>
     <string name="subject_details_sum_spent">%s spent</string>
-    <string name="subject_details_sum_unspent">%s</string>
+    <string name="subject_details_sum_unspent">%s open</string>
     <string name="subject_detail_sum">Sum</string>
     <string name="subject_detail_updated">Updated</string>
     <string name="subject_detail_done_amount">%1$d done</string>

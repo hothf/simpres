@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.work.*
 import de.ka.simpres.R
 import de.ka.simpres.repo.model.SubjectItem
-import de.ka.simpres.utils.NotificationWorker.Constants.workerTagfor
+import de.ka.simpres.utils.NotificationWorker.Constants.workerTagFor
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -24,22 +24,24 @@ class NotificationWorkManager(private val context: Context) {
      * Enqueues the task of notification of a subject item, if wanted.
      * Will replace the current notification if one was already scheduled.
      *
+     * If the subject does not want pushes or the reminder date is beyond the current time, no work will be scheduled.
+     *
      *@param subject the subject to notify of
      */
     fun enqueueNotificationWorkFor(subject: SubjectItem) {
-        val inputData = Data.Builder()
-            .putLong(NotificationWorker.Constants.KEY_FOR_SUBJECT_ID, subject.id)
-            .putString(NotificationWorker.Constants.KEY_FOR_SUBJECT_TITLE, subject.title)
-            .build()
-
         if (!subject.pushEnabled) {
             return
         }
 
-        val workerTag = workerTagfor(subject)
+        val workerTag = workerTagFor(subject)
 
-        val delay = (subject.date + 5_000) - System.currentTimeMillis()
-        Timber.e("Sending a notification in: $delay")
+        val delay = subject.date - System.currentTimeMillis()
+        Timber.i("Sending a notification in: $delay")
+
+        val inputData = Data.Builder()
+            .putLong(NotificationWorker.Constants.KEY_FOR_SUBJECT_ID, subject.id)
+            .putString(NotificationWorker.Constants.KEY_FOR_SUBJECT_TITLE, subject.title)
+            .build()
 
         val notificationWork = OneTimeWorkRequest.Builder(NotificationWorker::class.java)
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
@@ -47,7 +49,9 @@ class NotificationWorkManager(private val context: Context) {
             .addTag(workerTag)
             .build()
 
-        WorkManager.getInstance(context).beginUniqueWork(workerTag, ExistingWorkPolicy.REPLACE, notificationWork)
+        WorkManager
+            .getInstance(context)
+            .beginUniqueWork(workerTag, ExistingWorkPolicy.REPLACE, notificationWork)
             .enqueue()
     }
 
@@ -57,7 +61,7 @@ class NotificationWorkManager(private val context: Context) {
      * @param subject the subject to stop notifications of
      */
     fun cancelNotificationWorkFor(subject: SubjectItem) {
-        WorkManager.getInstance(context).cancelAllWorkByTag(workerTagfor(subject))
+        WorkManager.getInstance(context).cancelAllWorkByTag(workerTagFor(subject))
     }
 
 }
@@ -115,6 +119,6 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Worker(co
         /**
          * Retrieves a worker tag for the given subject.
          */
-        fun workerTagfor(subject: SubjectItem) = "notificationWork${subject.id}"
+        fun workerTagFor(subject: SubjectItem) = "notificationWork${subject.id}"
     }
 }
