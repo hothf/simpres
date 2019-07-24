@@ -33,6 +33,8 @@ class SubjectItemViewModel(
 
     val color = Color.parseColor(item.color)
 
+    val openSum = if (item.sumUnspent.toInt() > 0) item.sumUnspent.toEuro() else ""
+
 
     private fun SubjectItem.generateShortTitle(): String {
         val strippedTitle = this.title.trim()

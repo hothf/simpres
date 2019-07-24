@@ -14,13 +14,13 @@ class ColorItemViewModel(val colorString: String) : BaseItemViewModel() {
     val color = Color.parseColor(colorString)
 
     val markedColor =
-        MutableLiveData<Int>().apply { value = (resourcesProvider.getColor(R.color.colorBackgroundSecondary)) }
+        MutableLiveData<Int>().apply { value = (resourcesProvider.getColor(R.color.colorBackgroundPrimary)) }
 
     fun setMarked(marked: Boolean) {
         if (marked) {
             markedColor.postValue(resourcesProvider.getColor(R.color.colorTextDefault))
         } else {
-            markedColor.postValue(resourcesProvider.getColor(R.color.colorBackgroundSecondary))
+            markedColor.postValue(resourcesProvider.getColor(R.color.colorBackgroundPrimary))
         }
     }
 }

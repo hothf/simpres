@@ -56,7 +56,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/default_8"
                 android:background="@{viewModel.checkerBackground}"
-                android:backgroundTint="@{viewModel.color}"
+                android:backgroundTint="@color/colorTextDefault"
                 android:contentDescription="@string/idea_list_done"
                 android:onClick="@{()->viewModel.toggleDone()}"
                 android:alpha="@{viewModel.doneAlpha}"
@@ -67,7 +67,7 @@
                 tools:background="@drawable/bg_circle" />
 
             <TextView
-                style="@style/TextStyle.Simpres.Default.Bold"
+                style="@style/TextStyle.Simpres.Default"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

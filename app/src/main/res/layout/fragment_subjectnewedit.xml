@@ -162,6 +162,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_20"
+                        android:layout_marginStart="@dimen/default_26"
+                        android:layout_marginEnd="@dimen/default_26"
+                        android:backgroundTint="@color/colorBackgroundPrimary"
                         android:background="@drawable/bg_round">
 
                         <androidx.recyclerview.widget.RecyclerView

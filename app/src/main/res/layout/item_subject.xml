@@ -49,36 +49,25 @@
                     android:padding="@dimen/default_8"
                     android:text="@{viewModel.doneAmount}"
                     android:textColor="@color/colorButtonTextDefault"
+                    tools:backgroundTint="@color/colorAccent"
                     tools:text="hdw" />
 
                 <TextView
-                    android:id="@+id/done"
                     style="@style/TextStyle.Simpres.Secondary.Small"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignBottom="@+id/indicator"
-                    android:layout_marginStart="@dimen/default_8"
-                    android:layout_toEndOf="@+id/indicator"
-                    android:text="@{viewModel.doneAmount}"
-                    android:visibility="gone"
-                    android:textStyle="bold"
-                    tools:text="1/2 Done" />
-
-                <TextView
-                    android:id="@+id/subjectHeader"
-                    style="@style/TextStyle.Simpres.Secondary.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/indicator"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/default_16"
-                    android:layout_marginEnd="@dimen/default_12"
+                    android:layout_marginStart="@dimen/default_8"
+                    android:layout_marginEnd="@dimen/default_8"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:gravity="center"
+                    android:ellipsize="end"
                     android:layout_toEndOf="@+id/indicator"
-                    android:gravity="end"
-                    android:includeFontPadding="false"
-                    android:text="@{viewModel.doneAmount}"
-                    android:visibility="gone"
-                    tools:text="12/15 fwfwdeed" />
+                    android:text="@{viewModel.openSum}"
+                    android:textStyle="bold"
+                    tools:text="120 €" />
 
                 <TextView
                     android:id="@+id/title"
@@ -95,22 +84,6 @@
                     android:text="@{viewModel.title}"
                     android:textStyle="bold"
                     tools:text="Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title Title" />
-
-                <TextView
-                    android:id="@+id/doneAmountText"
-                    style="@style/TextStyle.Simpres.Secondary.Small"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/subjectHeader"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/default_16"
-                    android:gravity="end"
-                    android:includeFontPadding="false"
-                    android:text="@{viewModel.doneAmount}"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    tools:text="1 of 2" />
-
 
                 <TextView
                     android:id="@+id/sum"
