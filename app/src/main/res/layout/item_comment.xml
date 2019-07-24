@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.ka.simpres.ui.subjects.detail.idealist.newedit.comments.CommentsItemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_54"
+        android:background="@drawable/bg_round"
+        android:backgroundTint="@color/colorBackgroundPrimary"
+        android:theme="@style/Theme.Simpres">
+
+        <ImageView
+            android:id="@+id/deleteIconLeft"
+            android:layout_width="@dimen/default_24"
+            android:layout_height="@dimen/default_24"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/default_32"
+            android:contentDescription="@string/app_general_delete"
+            android:src="@drawable/ic_delete"
+            android:tint="@color/colorAccent" />
+
+        <ImageView
+            android:id="@+id/deleteIconRight"
+            android:layout_width="@dimen/default_24"
+            android:layout_height="@dimen/default_24"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/default_32"
+            android:contentDescription="@string/app_general_delete"
+            android:src="@drawable/ic_delete"
+            android:tint="@color/colorAccent" />
+
+        <RelativeLayout
+            android:id="@+id/swipeAble"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_round"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/remove"
+                style="@style/ButtonStyle.Simpres.Nav"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:tint="@color/colorAccent"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_delete" />
+
+            <ImageView
+                android:id="@+id/open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</layout>

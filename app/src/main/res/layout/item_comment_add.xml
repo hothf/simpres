@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.ka.simpres.ui.subjects.detail.idealist.newedit.comments.CommentsAddItemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/default_16"
+        android:layout_height="@dimen/default_68"
+        android:layout_marginBottom="@dimen/default_16"
+        android:background="@drawable/bg_round_dashed">
+
+       <TextView
+           style="@style/Widget.MaterialComponents.Button.TextButton"
+           android:id="@+id/add"
+           android:layout_width="50dp"
+           android:text="add"
+           android:layout_height="50dp" />
+
+    </RelativeLayout>
+
+</layout>
