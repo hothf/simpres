@@ -78,15 +78,33 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
         isEmpty = true
     }
 
-    open fun addItem(index: Int = 0, item: E) {
+    open fun addItem(item: E) {
         if (diffCallback != null) {
-            differ?.submitList(differ!!.currentList.toMutableList().apply { add(index, item) })
+            differ?.submitList(differ!!.currentList.toMutableList().apply { add(item) })
         } else {
             items.add(item)
 
             notifyDataSetChanged()
         }
         isEmpty = false
+    }
+
+    open fun removeItem(item: E) {
+        var isRemoved = false
+        val size: Int
+
+        if (diffCallback != null) {
+            size = differ!!.currentList.size
+            differ?.submitList(differ!!.currentList.toMutableList().apply {
+                isRemoved = remove(item)
+            })
+        } else {
+            size = items.size
+            isRemoved = items.remove(item)
+
+            notifyDataSetChanged()
+        }
+        isEmpty = isRemoved && size == 1
     }
 
     open fun setItems(newItems: List<E>) {

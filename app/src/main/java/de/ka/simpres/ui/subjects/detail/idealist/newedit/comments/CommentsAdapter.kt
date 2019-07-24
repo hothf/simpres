@@ -84,14 +84,6 @@ class CommentsAdapter(
         return comments
     }
 
-    override fun addItem(item: CommentsBaseItemViewModel) {
-        super.addItem(item)
-    }
-
-    override fun removeItem(item: CommentsBaseItemViewModel) {
-        super.removeItem(item)
-    }
-
     /**
      * Overwrites the current list with the given [newItems].
      *

@@ -1,13 +1,19 @@
 package de.ka.simpres.ui.subjects.detail.idealist.newedit
 
 import android.view.View
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
+import de.ka.simpres.repo.model.Comment
+import de.ka.simpres.repo.model.Comments
 import de.ka.simpres.repo.model.IdeaItem
+import de.ka.simpres.ui.subjects.detail.idealist.newedit.comments.CommentsAdapter
 import de.ka.simpres.utils.*
 import de.ka.simpres.utils.resources.ResourcesProvider
 import org.koin.standalone.inject
+import timber.log.Timber
 
 class NewEditIdeaViewModel : BaseViewModel() {
 
@@ -33,6 +39,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String?>().apply { value = null }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
+    val commentsAdapter = MutableLiveData<CommentsAdapter>().apply { value = null }
 
     private val resourcesProvider: ResourcesProvider by inject()
     private val inputValidator: InputValidator by inject()
@@ -48,6 +55,8 @@ class NewEditIdeaViewModel : BaseViewModel() {
     private var currentSubjectId: Long = -1
     private var isUpdating = false
 
+    fun layoutManager() = LinearLayoutManager(resourcesProvider.getApplicationContext())
+
     fun onBack(v: View) {
         v.closeAttachedKeyboard()
         navigateTo(NavigationUtils.BACK)
@@ -58,35 +67,60 @@ class NewEditIdeaViewModel : BaseViewModel() {
 
         view?.closeAttachedKeyboard()
 
+        commentsAdapter.value?.getComments()?.let {
+            currentIdea?.comments = Comments(it)
+        }
+
         currentIdea?.let { idea ->
             repository.saveOrUpdateIdea(idea)
             navigateTo(NavigationUtils.BACK)
         }
     }
 
+    private val openComment: (Comment) -> Unit = {
+
+    }
+
     /**
      * Sets up a new empty idea.
      */
-    fun setupNew(subjectId: Long) {
+    fun setupNew(subjectId: Long, owner: LifecycleOwner) {
         currentIdea = IdeaItem(0, subjectId)
         currentSubjectId = subjectId
 
         isUpdating = false
 
         updateTextViews()
+
+        commentsAdapter.postValue(
+            CommentsAdapter(
+                owner = owner,
+                open = openComment,
+                sourceItems = currentIdea?.comments?.comments
+            )
+        )
     }
 
     /**
      * Sets up an editable idea, taken from the given item.
      */
-    fun setupEdit(subjectId: Long, idea: IdeaItem) {
+    fun setupEdit(subjectId: Long, idea: IdeaItem, owner: LifecycleOwner) {
         currentIdea = idea.copy()
         currentSubjectId = subjectId
 
         isUpdating = true
 
         updateTextViews()
+
+        commentsAdapter.postValue(
+            CommentsAdapter(
+                owner = owner,
+                open = openComment,
+                sourceItems = currentIdea?.comments?.comments
+            )
+        )
     }
+
 
     private fun updateTextViews() {
         if (isUpdating) {
