@@ -67,7 +67,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
 
         view?.closeAttachedKeyboard()
 
-        commentsAdapter.value?.getComments()?.let {
+        commentsAdapter.value?.getComments(shouldSave = true)?.let {
             currentIdea?.comments = Comments(it)
         }
 

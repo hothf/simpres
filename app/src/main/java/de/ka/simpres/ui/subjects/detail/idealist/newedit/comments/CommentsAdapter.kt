@@ -74,11 +74,20 @@ class CommentsAdapter(
         overwriteList(newList)
     }
 
-    fun getComments(): List<Comment> {
+    /**
+     * Retrieves all comments. If you specify that the comments should be saved, the items will call a save function.
+     *
+     * @param shouldSave set to true to trigger a save method on the items. Defaults to false
+     * @return the comments
+     */
+    fun getComments(shouldSave: Boolean = false): List<Comment> {
         val comments = mutableListOf<Comment>()
         getItems().forEach {
             if (it is CommentsItemViewModel) {
                 comments.add(it.item)
+                if (shouldSave) {
+                    it.save()
+                }
             }
         }
         return comments
