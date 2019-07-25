@@ -2,12 +2,10 @@ package de.ka.simpres.ui.subjects.subjectlist
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
-import de.ka.simpres.R
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
 import de.ka.simpres.databinding.ItemSubjectBinding
@@ -94,23 +92,19 @@ class SubjectAdapterDiffCallback : DiffUtil.ItemCallback<SubjectItemViewModel>()
 
 class SubjectViewHolder<T : ItemSubjectBinding>(private val binding: T) : BaseViewHolder<T>(binding) {
 
+    init {
+        binding.deleteIcon.alpha = 0.0f
+    }
+
     override var swipeableView: View? = binding.item
     override var isDraggable = true
     override var isSwipeable = true
-
-    override fun onHolderDrag() {
-        binding.item.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorBackgroundPrimary))
-
-        super.onHolderDrag()
-    }
 
     override fun onHolderClear() {
         binding.deleteIcon.alpha = 0.0f
         binding.deleteIcon.scaleX = 0.0f
         binding.deleteIcon.scaleY = 0.0f
         swipeableView?.alpha = 1.0f
-
-        binding.item.setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorBackgroundSecondary))
 
         super.onHolderClear()
     }

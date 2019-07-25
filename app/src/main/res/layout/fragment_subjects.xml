@@ -15,45 +15,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            style="@style/AppBarStyle.Simpres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/title"
-                style="@style/TextStyle.Simpres.Nav"
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/default_32"
-                android:layout_marginTop="@dimen/default_18"
-                android:text="@string/app_name"
-                tools:text="Title" />
+                android:layout_height="@dimen/default_68"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipeRefresh"
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/TextStyle.Simpres.Nav"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/default_32"
+                    android:layout_marginTop="@dimen/default_32"
+                    android:text="@string/app_name"
+                    tools:text="Title" />
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
+            app:setRefreshing="@{viewModel.refresh}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerSubjects"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/title"
-                android:layout_marginTop="@dimen/default_8"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
-                app:setRefreshing="@{viewModel.refresh}">
+                android:adapter="@{viewModel.adapter}"
+                app:addItemDecoration="@{viewModel.itemDecoration}"
+                app:layoutManager="@{viewModel.layoutManager()}"
+                app:setItemAnimator="@{viewModel.itemAnimator}"
+                app:touchHelper="@{viewModel.touchHelper}" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerSubjects"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/title"
-                    android:adapter="@{viewModel.adapter}"
-                    app:addItemDecoration="@{viewModel.itemDecoration}"
-                    app:layoutManager="@{viewModel.layoutManager()}"
-                    app:setItemAnimator="@{viewModel.itemAnimator}"
-                    app:touchHelper="@{viewModel.touchHelper}" />
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        </RelativeLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
         <RelativeLayout
@@ -64,24 +71,26 @@
             android:visibility="@{viewModel.blankVisibility}">
 
             <TextView
-                style="@style/TextStyle.Simpres.Default"
+                style="@style/TextStyle.Simpres.Secondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Nothing here, try to add something!" />
+                android:text="@string/subject_empty" />
 
         </RelativeLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_button"
+            style="@style/FABStyle.Simpres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/bottomBarSize"
+            android:layout_marginBottom="@dimen/default_72"
             android:onClick="@{()->viewModel.onAddClick()}"
-            android:src="@drawable/ic_pres"
+            android:padding="0dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_plus"
             app:layout_anchor="@id/swipeRefresh"
-            app:layout_anchorGravity="bottom|center_horizontal"
-            app:useCompatPadding="true" />
+            app:layout_anchorGravity="bottom|center_horizontal" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

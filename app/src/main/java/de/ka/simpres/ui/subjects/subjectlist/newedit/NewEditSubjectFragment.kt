@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseFragment
 import de.ka.simpres.databinding.FragmentSubjectneweditBinding
-import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.utils.DatePickeable
 import de.ka.simpres.utils.DatePicker
 
@@ -31,6 +30,11 @@ class NewEditSubjectFragment : BaseFragment<FragmentSubjectneweditBinding, NewEd
         arguments?.clear()
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.setupAdapterAndLoad(viewLifecycleOwner)
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDateSet(year: Int, month: Int, day: Int, callerId: Int) {

@@ -2,18 +2,21 @@ package de.ka.simpres.ui.subjects.subjectlist.newedit
 
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
+import de.ka.simpres.base.events.AnimType
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.SubjectsDetailFragment
-import de.ka.simpres.utils.NavigationUtils
+import de.ka.simpres.utils.*
 import de.ka.simpres.utils.NavigationUtils.BACK
-import de.ka.simpres.utils.ViewUtils
-import de.ka.simpres.utils.closeAttachedKeyboard
-import de.ka.simpres.utils.resources.ColorResources
+import de.ka.simpres.utils.color.ColorAdapter
+import de.ka.simpres.utils.color.ColorItemViewModel
+import de.ka.simpres.utils.color.ColorResources
 import de.ka.simpres.utils.resources.ResourcesProvider
-import de.ka.simpres.utils.toDate
 import org.koin.standalone.inject
 import java.util.*
 
@@ -21,29 +24,61 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
     val getTextChangedListener = ViewUtils.TextChangeListener {
         title.value = it
-        titleError.postValue("")
+        titleSelection.value = it.length
+        titleError.postValue(null)
 
         currentSubject?.title = it
+    }
+    val onPushChanged = CompoundButton.OnCheckedChangeListener { _, changed: Boolean ->
+        currentSubject?.pushEnabled = changed
+        pushEnabled.value = changed
     }
     val getDoneListener = ViewUtils.TextDoneListener { }
     val navTitle = MutableLiveData<String>().apply { value = "" }
     val title = MutableLiveData<String>().apply { value = "" }
-    val titleError = MutableLiveData<String>().apply { value = "" }
+    val titleError = MutableLiveData<String?>().apply { value = null }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
     val date = MutableLiveData<String>().apply { value = "" }
+    val pushEnabled = MutableLiveData<Boolean>().apply { value = false }
+    val adapter = MutableLiveData<ColorAdapter>()
 
-    val resourcesProvider: ResourcesProvider by inject()
+    private val resourcesProvider: ResourcesProvider by inject()
+    private val inputValidator: InputValidator by inject()
+    private val titleValidator = inputValidator.Validator(
+        InputValidator.ValidatorConfig(
+            titleError,
+            listOf(ValidationRules.NOT_EMPTY, ValidationRules.MIN_4)
+        )
+    )
 
     private var currentSubject: SubjectItem? = null
-
     private var isUpdating = false
+
+    private val chooseColor: (ColorItemViewModel) -> Unit = {
+        currentSubject?.color = it.colorString
+    }
 
     fun onBack(v: View) {
         v.closeAttachedKeyboard()
-        navigateTo(NavigationUtils.BACK)
+        navigateTo(BACK)
     }
 
+    fun setupAdapterAndLoad(owner: LifecycleOwner) {
+        if (adapter.value == null) {
+            adapter.value = ColorAdapter(chooseColor, owner)
+        }
+        adapter.value?.let {
+            it.owner = owner
+            it.markColor(currentSubject?.color)
+        }
+    }
+
+    fun layoutManager() =
+        LinearLayoutManager(resourcesProvider.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false)
+
     fun submit(view: View? = null) {
+        if (!titleValidator.isValid(title.value)) return
+
         view?.closeAttachedKeyboard()
 
         currentSubject?.let {
@@ -53,8 +88,12 @@ class NewEditSubjectViewModel : BaseViewModel() {
             } else {
                 repository.saveSubject(it)
                 navigateTo(
+                    animType = AnimType.MODAL,
                     navigationTargetId = R.id.action_subjectNewEditFragment_to_subjectsDetailFragment,
-                    args = Bundle().apply { putLong(SubjectsDetailFragment.SUBJECT_ID_KEY, it.id) },
+                    args = Bundle().apply {
+                        putLong(SubjectsDetailFragment.SUBJECT_ID_KEY, it.id)
+                        putBoolean(SubjectsDetailFragment.SUBJECT_IS_NEW, true)
+                    },
                     popupToId = R.id.subjectNewEditFragment
                 )
             }
@@ -78,7 +117,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
      * Sets up an editable subject, received from the given id, if possible.
      */
     fun setupEdit(subjectId: Long) {
-        currentSubject = repository.findSubjectById(subjectId)
+        currentSubject = repository.findSubjectById(subjectId)?.copy()
 
         isUpdating = true
 
@@ -95,7 +134,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
     fun updateDate(year: Int, month: Int, day: Int) {
         currentSubject?.let {
             it.date = Calendar.getInstance().apply {
-                time = Date(it.date)
+                time = Date(System.currentTimeMillis())
                 set(year, month, day)
             }.timeInMillis
         }
@@ -112,13 +151,19 @@ class NewEditSubjectViewModel : BaseViewModel() {
         if (currentSubject != null) {
             title.postValue(currentSubject?.title)
             titleSelection.postValue(currentSubject?.title?.length)
-            titleError.postValue("")
-            date.postValue(currentSubject?.date?.toDate())
+            titleError.postValue(null)
+            date.postValue(
+                resourcesProvider.getString(R.string.subject_newedit_remind_on, currentSubject?.date?.toDate())
+            )
+            pushEnabled.postValue(currentSubject?.pushEnabled)
         } else {
             title.postValue("")
             titleSelection.postValue(0)
-            titleError.postValue("")
-            date.postValue(System.currentTimeMillis().toDate())
+            titleError.postValue(null)
+            date.postValue(
+                resourcesProvider.getString(R.string.subject_newedit_remind_on, System.currentTimeMillis().toDate())
+            )
+            pushEnabled.postValue(true)
         }
     }
 

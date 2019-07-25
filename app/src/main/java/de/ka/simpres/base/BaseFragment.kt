@@ -51,7 +51,7 @@ abstract class BaseFragment<out T : ViewDataBinding, E : BaseViewModel>(clazz: K
 
         binding.apply {
             setVariable(BR.viewModel, viewModel)
-            setLifecycleOwner(viewLifecycleOwner)
+            lifecycleOwner = viewLifecycleOwner
             executePendingBindings()
         }
 
@@ -101,7 +101,11 @@ abstract class BaseFragment<out T : ViewDataBinding, E : BaseViewModel>(clazz: K
 
             startActivity(intent)
         } else {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(openEvent.url)))
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(openEvent.url)))
+            } catch (e: Exception) {
+                Timber.e(e, "Could not open $openEvent.url")
+            }
         }
     }
 

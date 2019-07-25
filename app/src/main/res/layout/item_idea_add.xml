@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -13,25 +11,35 @@
     <RelativeLayout
         android:id="@+id/item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/default_58"
-        android:layout_marginStart="@dimen/default_8"
-        android:layout_marginEnd="@dimen/default_8"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:layout_marginTop="@dimen/default_16"
+        android:layout_height="@dimen/default_68"
+        android:layout_marginBottom="@dimen/default_16"
+        android:background="@drawable/bg_round_dashed">
 
-        <TextView
-            android:layout_marginStart="@dimen/default_16"
-            android:id="@+id/sumText"
-            style="@style/TextStyle.Simpres.Default"
-            android:textColor="@color/colorAccent"
+        <androidx.cardview.widget.CardView
+            style="@style/CardStyle.Simpres"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@string/idea_list_add" />
+            android:layout_height="@dimen/default_42"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/default_16"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/sumText"
+                style="@style/TextStyle.Simpres.Default.Small"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_round"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingStart="@dimen/default_16"
+                android:paddingEnd="@dimen/default_16"
+                android:text="@string/idea_list_add"
+                android:textColor="@{viewModel.color}" />
+
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 

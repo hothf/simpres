@@ -7,19 +7,18 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.ui.subjects.detail.idealist.IdeaAdapter
-import de.ka.simpres.ui.subjects.detail.idealist.IdeaBaseItemViewModel
+import de.ka.simpres.ui.subjects.detail.idealist.IdeaItemViewModel
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.NewEditIdeaFragment
 import de.ka.simpres.ui.subjects.subjectlist.newedit.NewEditSubjectFragment
 import de.ka.simpres.utils.*
 import de.ka.simpres.utils.NavigationUtils.BACK
-import de.ka.simpres.utils.resources.ColorResources
+import de.ka.simpres.utils.color.ColorResources
 import de.ka.simpres.utils.resources.ResourcesProvider
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
@@ -28,6 +27,7 @@ import org.koin.standalone.inject
 
 class SubjectsDetailViewModel : BaseViewModel() {
 
+    private var currentColor = ColorResources.getRandomColorString()
     private var currentSubjectId = -1L
     private var isLoading = false
 
@@ -36,25 +36,29 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val touchHelper = MutableLiveData<ItemTouchHelper>()
     val adapter = MutableLiveData<IdeaAdapter>()
     val refresh = MutableLiveData<Boolean>().apply { value = false }
-    val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { refresh() }
-    val itemDecoration = DecorationUtil(
-        resourcesProvider.getDimensionPixelSize(R.dimen.default_16), resourcesProvider.getDimensionPixelSize(
-            R.dimen
-                .default_16
-        )
-    )
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
     val title = MutableLiveData<String>()
-    val sum = MutableLiveData<String>().apply { value = "" }
-    val color = MutableLiveData<Int>().apply { Color.parseColor(ColorResources.getRandomColorString()) }
-    private val removeListener = { _: IdeaBaseItemViewModel ->
+    val sumUnspent =
+        MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+    val doneAmount =
+        MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+    val color = MutableLiveData<Int>().apply { value = Color.parseColor(currentColor) }
+    val allAmount =
+        MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+    val date = MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+    val sumSpent =
+        MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+
+    private val removeListener = { viewModel: IdeaItemViewModel ->
+        repository.removeIdea(viewModel.item)
         showSnack(
             resourcesProvider.getString(R.string.idea_delete_undo_title),
             Snacker.SnackType.DEFAULT,
-            { repository.undoDeleteIdea() },
+            repository::undoDeleteIdea,
             resourcesProvider.getString(R.string.idea_delete_undo_action)
         )
     }
+
     private val addListener = {
         navigateTo(
             R.id.ideaNewEditFragment,
@@ -77,6 +81,9 @@ class SubjectsDetailViewModel : BaseViewModel() {
         )
     }
 
+    fun onAddClick() {
+        addListener()
+    }
 
     fun itemAnimator() = SlideInDownAnimator()
 
@@ -100,7 +107,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
                 onError = ::handleGeneralError,
                 onNext = { result ->
                     adapter.value?.let {
-                        it.overwriteList(result)
+                        it.overwriteList(result, currentColor)
 
                         if (it.isEmpty) {
                             blankVisibility.postValue(View.VISIBLE)
@@ -116,7 +123,11 @@ class SubjectsDetailViewModel : BaseViewModel() {
             .with(AndroidSchedulerProvider())
             .subscribeBy(
                 onError = ::handleGeneralError,
-                onNext = { it.find { subject -> subject.id == currentSubjectId }?.let(::updateSubject) }
+                onNext = {
+                    it.list.find { subject -> subject.id == currentSubjectId }?.let { subject ->
+                        updateSubject(subject, it.update)
+                    }
+                }
             )
             .addTo(compositeDisposable)
     }
@@ -135,41 +146,76 @@ class SubjectsDetailViewModel : BaseViewModel() {
 
         currentSubjectId = subjectId
 
-        // resets all current saved details, should be fairly impossible to get here without a deep link / wrong id
-        adapter.value = IdeaAdapter(
+        val ideaAdapter = IdeaAdapter(
             owner = owner,
             subjectId = subjectId,
             listener = ideaClickListener,
             add = addListener,
-            remove = removeListener)
-        adapter.value?.apply {
-            touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
+            remove = removeListener
+        )
+        adapter.value = ideaAdapter
+
+        touchHelper.apply {
+            value?.attachToRecyclerView(null)
+            value = null
+            postValue(ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(ideaAdapter)))
         }
         title.postValue("")
-        sum.postValue("")
+        sumUnspent.postValue("")
+        doneAmount.postValue("")
+        date.postValue("")
+        allAmount.postValue("")
+        sumSpent.postValue("")
 
         refresh()
     }
 
     private fun refresh() {
         showLoading()
-        repository.findSubjectById(currentSubjectId)?.let(::updateSubject)
-        repository.getIdeasOf(currentSubjectId)
+        repository.findSubjectById(currentSubjectId)?.let { updateSubject(it, false) }
         hideLoading()
     }
 
-    private fun updateSubject(subject: SubjectItem) {
+    private fun updateSubject(subject: SubjectItem, isUpdate: Boolean = false) {
         title.postValue(subject.title)
 
-        if (subject.ideasCount > 0) {
-            if (subject.sum.toInt() > 0) {
-                sum.postValue("${subject.sum.toEuro()}, ${subject.ideasDoneCount}/${subject.ideasCount}")
-            } else {
-                sum.postValue("${subject.ideasDoneCount}/${subject.ideasCount}")
-            }
+        allAmount.postValue(resourcesProvider.getString(R.string.subject_detail_all, subject.ideasCount))
+        doneAmount.postValue(
+            resourcesProvider.getString(
+                R.string.subject_detail_done_amount,
+                subject.ideasDoneCount
+            )
+        )
+        sumUnspent.postValue(
+            resourcesProvider.getString(
+                R.string.subject_details_sum_unspent,
+                subject.sumUnspent.toEuro()
+            )
+        )
+        sumSpent.postValue(
+            resourcesProvider.getString(
+                R.string.subject_details_sum_spent,
+                subject.sumSpent.toEuro()
+            )
+        )
+        if (subject.pushEnabled) {
+            date.postValue(subject.date.toDate())
+        } else {
+            date.postValue(resourcesProvider.getString(R.string.subject_detail_no_remind))
         }
 
-        color.postValue(Color.parseColor(subject.color))
+        currentColor = subject.color
+
+        color.postValue(Color.parseColor(currentColor))
+
+        repository.getIdeasOf(currentSubjectId)
+
+        if (isUpdate) {
+            showSnack(
+                snackType = Snacker.SnackType.SUCCESS,
+                message = resourcesProvider.getString(R.string.subject_detail_updated)
+            )
+        }
     }
 
     private fun showLoading() {

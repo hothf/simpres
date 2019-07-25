@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7447030099033657005",
-      "lastPropertyId": "6:4958714195116734107",
+      "lastPropertyId": "11:3719630992753594498",
       "name": "SubjectItem",
       "properties": [
         {
@@ -15,10 +15,6 @@
         {
           "id": "2:8910675155156475714",
           "name": "title"
-        },
-        {
-          "id": "3:7637648367381791306",
-          "name": "sum"
         },
         {
           "id": "4:3171104039643432184",
@@ -31,6 +27,26 @@
         {
           "id": "6:4958714195116734107",
           "name": "position"
+        },
+        {
+          "id": "7:7215480883435737438",
+          "name": "ideasCount"
+        },
+        {
+          "id": "8:1572647645309548647",
+          "name": "ideasDoneCount"
+        },
+        {
+          "id": "9:1989017795968708837",
+          "name": "pushEnabled"
+        },
+        {
+          "id": "10:4831717334715006927",
+          "name": "sumUnspent"
+        },
+        {
+          "id": "11:3719630992753594498",
+          "name": "sumSpent"
         }
       ],
       "relations": []
@@ -72,7 +88,9 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    7637648367381791306
+  ],
   "retiredRelationUids": [
     6386165350942569310
   ],

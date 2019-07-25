@@ -1,37 +1,58 @@
 <resources>
 
-    <style name="CardStyle.Simpres" parent="CardView.Light">
+    <style name="FABStyle.Simpres" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="tint">@color/colorBackgroundSecondary</item>
+        <item name="backgroundTint">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="TextInputStyle.Simpres" parent="Widget.AppCompat.EditText">
+      <item name="android:textAppearance">@style/TextStyle.Simpres.Default.Large</item>
+    </style>
+
+    <style name="AppBarStyle.Simpres" parent="Widget.Design.AppBarLayout">
+        <item name="android:background">@color/colorBackgroundPrimary</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="CardStyle.Simpres" parent="Widget.MaterialComponents.CardView">
         <item name="cardBackgroundColor">@color/colorBackgroundSecondary</item>
         <item name="android:textColor">@color/colorTextDefault</item>
         <item name="android:textColorHighlight">@color/colorTextDefault</item>
         <item name="cardCornerRadius">@dimen/default_corner_radius</item>
         <item name="cardElevation">@dimen/default_4</item>
+        <item name="android:theme">@style/Theme.Simpres</item>
+        <item name="shapeAppearance">@style/cardShape</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
-    <style name="ButtonStyle.Simpres" parent="TextAppearance.AppCompat.Button">
-        <item name="android:background">@drawable/button_default_selector</item>
+    <style name="cardShape" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamilyTopLeft">cut</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerFamilyBottomRight">cut</item>
+        <item name="cornerSize">@dimen/default_16</item>
+    </style>
+
+    <style name="ButtonStyle.Simpres.Nav" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon">
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/colorButtonTextDefault</item>
-        <item name="android:elevation">@dimen/default_8</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/colorIconTintDefault</item>
+        <item name="iconTint">@color/colorIconTintDefault</item>
+        <item name="cornerRadius">@dimen/default_108</item>
+        <item name="android:textAppearance">@style/TextStyle.Simpres.Default.Large</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="ButtonStyle.Simpres.Alternative" parent="TextAppearance.AppCompat.Button">
-        <item name="android:background">@drawable/button_alternative_selector</item>
+    <style name="ButtonStyle.Simpres.Bordered" parent="@style/Widget.MaterialComponents.Button">
+        <item name="cornerRadius">@dimen/default_4</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/colorButtonTextAlternative</item>
-        <item name="android:elevation">@dimen/default_8</item>
-    </style>
-
-    <style name="ButtonStyle.Simpres.Borderless" parent="TextAppearance.AppCompat.Button">
-        <item name="android:background">@drawable/button_transculent_selector</item>
-        <item name="android:textAllCaps">true</item>
         <item name="android:textSize">@dimen/font_default</item>
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorBackgroundSecondary</item>
     </style>
 
     <!-- Text Styles -->
 
-    <style name="TextStyle.Simpres.Default" parent="TextAppearance.AppCompat">
+    <style name="TextStyle.Simpres.Default" parent="TextAppearance.AppCompat.Medium">
         <item name="android:textSize">@dimen/font_default</item>
         <item name="android:textColor">@color/colorTextDefault</item>
     </style>
@@ -64,6 +85,10 @@
 
     <style name="TextStyle.Simpres.Secondary.Bold" parent="TextStyle.Simpres.Secondary">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.Simpres.Secondary.Small" parent="TextStyle.Simpres.Secondary">
+        <item name="android:textSize">@dimen/font_small</item>
     </style>
 
     <style name="TextStyle.Simpres.Secondary.Large" parent="TextStyle.Simpres.Secondary">

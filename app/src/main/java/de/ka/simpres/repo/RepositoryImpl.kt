@@ -4,40 +4,45 @@ import de.ka.simpres.repo.db.AppDatabase
 import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.repo.model.IdeaItem_
+import de.ka.simpres.utils.NotificationWorkManager
 import io.objectbox.kotlin.boxFor
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class RepositoryImpl(db: AppDatabase) : Repository {
+class RepositoryImpl(db: AppDatabase) : Repository, KoinComponent {
 
-    private val ideasBox = db.get().boxFor<IdeaItem>()
+    private val notificationWorkManager: NotificationWorkManager by inject()
     private val subjectsBox = db.get().boxFor<SubjectItem>()
+    private val ideasBox = db.get().boxFor<IdeaItem>()
 
     private var lastRemovedIdea: IdeaItem? = null
     private var lastRemovedSubjectItem: SubjectItem? = null
+    private var lastRemovedIdeas: List<IdeaItem> = listOf()
 
     override val observableSubjects =
-        PublishSubject.create<List<SubjectItem>>()
+        PublishSubject.create<IndicatedList<SubjectItem>>()
 
     override val observableIdeas =
-        PublishSubject.create<List<IdeaItem>>()
+        PublishSubject.create<IndicatedList<IdeaItem>>()
 
     override fun getSubjects(wait: Boolean) {
         if (wait) {
             GlobalScope.launch {
                 delay(250)
-                getSubjectsInternally()
+                getSubjectsInternally(false)
             }
         } else {
-            getSubjectsInternally()
+            getSubjectsInternally(false)
         }
     }
 
-    private fun getSubjectsInternally() {
+    private fun getSubjectsInternally(isUpdate: Boolean) {
         val list = subjectsBox.all.sortedBy { it.position }
-        observableSubjects.onNext(list)
+        observableSubjects.onNext(IndicatedList(list, isUpdate))
     }
 
     override fun moveSubject(subject1: SubjectItem, subject2: SubjectItem, oldPosition: Int, newPosition: Int) {
@@ -48,6 +53,9 @@ class RepositoryImpl(db: AppDatabase) : Repository {
     }
 
     override fun findSubjectById(subjectId: Long): SubjectItem? {
+        if (subjectId == 0L) {
+            return null
+        }
         return subjectsBox.get(subjectId)
     }
 
@@ -57,49 +65,69 @@ class RepositoryImpl(db: AppDatabase) : Repository {
         subjectsBox.put(list)
         subjectsBox.put(subject)
 
-        getSubjects()
+        startOrStopNotificationsFor(subject, subject.pushEnabled)
+
+        getSubjectsInternally(false)
     }
 
     override fun updateSubject(subject: SubjectItem) {
         subjectsBox.put(subject)
 
-        getSubjects()
+        startOrStopNotificationsFor(subject, subject.pushEnabled)
+
+        getSubjectsInternally(true)
     }
 
     override fun removeSubject(subject: SubjectItem) {
         findSubjectById(subject.id)?.let {
-            ideasBox.remove(ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find())
+            startOrStopNotificationsFor(it, false)
+            lastRemovedIdeas = ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find()
+            ideasBox.remove(lastRemovedIdeas)
             subjectsBox.remove(it)
             lastRemovedSubjectItem = it
             val list = subjectsBox.all.toMutableList()
             list.forEach { subject -> subject.position = subject.position - 1 }
             subjectsBox.put(list)
 
-            getSubjects()
+            getSubjectsInternally(false)
+        }
+    }
+
+    private fun startOrStopNotificationsFor(subject: SubjectItem, enable: Boolean) {
+        if (enable) {
+            notificationWorkManager.enqueueNotificationWorkFor(subject)
+        } else {
+            notificationWorkManager.cancelNotificationWorkFor(subject)
         }
     }
 
     override fun getIdeasOf(subjectId: Long) {
-        val items = ideasBox.query().equal(IdeaItem_.subjectId, subjectId).build().find().sortedBy { it.done }
-        observableIdeas.onNext(items)
+        getIdeasOfInternally(subjectId, false)
     }
 
-    override fun removeIdea(subjectId: Long, ideaItem: IdeaItem) {
-        findSubjectById(subjectId)?.let { subject ->
+    private fun getIdeasOfInternally(subjectId: Long, isUpdate: Boolean) {
+        val items = ideasBox.query().equal(IdeaItem_.subjectId, subjectId).build().find().sortedBy { it.done }
+        observableIdeas.onNext(IndicatedList(items, isUpdate))
+    }
+
+    override fun removeIdea(ideaItem: IdeaItem) {
+        findSubjectById(ideaItem.subjectId)?.let { subject ->
             ideasBox.remove(ideaItem)
             lastRemovedIdea = ideaItem
 
-            getIdeasOf(subjectId)
+            getIdeasOfInternally(subject.id, false)
 
             recalculateSum(subject)
         }
     }
 
-    override fun saveOrUpdateIdea(subjectId: Long, idea: IdeaItem) {
-        findSubjectById(subjectId)?.let { subject ->
+    override fun saveOrUpdateIdea(idea: IdeaItem) {
+        findSubjectById(idea.subjectId)?.let { subject ->
+            val update = idea.id != 0L
+
             ideasBox.put(idea)
 
-            getIdeasOf(subjectId)
+            getIdeasOfInternally(subject.id, update)
 
             recalculateSum(subject)
         }
@@ -107,40 +135,42 @@ class RepositoryImpl(db: AppDatabase) : Repository {
 
     override fun undoDeleteSubject() {
         lastRemovedSubjectItem?.let {
-            val list = subjectsBox.all.toMutableList()
-            list.forEach { subject -> subject.position = subject.position + 1 }
-            subjectsBox.put(list)
-            subjectsBox.put(it)
-
-            getSubjects()
+            saveSubject(it)
+            ideasBox.put(lastRemovedIdeas)
         }
     }
 
     override fun undoDeleteIdea() {
         lastRemovedIdea?.let {
-            ideasBox.put(it)
-
-            getIdeasOf(it.subjectId)
+            saveOrUpdateIdea(it)
         }
     }
 
     private fun recalculateSum(subject: SubjectItem) {
         val ideas = ideasBox.query().equal(IdeaItem_.subjectId, subject.id).build().find()
 
-        subject.sum = ideas
-            .filter { !it.done }
-            .map {
-                if (it.sum.isBlank()) {
-                    0
-                } else {
-                    it.sum.toInt()
+        var sumSpent = 0
+        var sumUnspent = 0
+
+        ideas.forEach {
+            if (it.done) {
+                if (!it.sum.isBlank()) {
+                    sumSpent += it.sum.toInt()
+                }
+            } else {
+                if (!it.sum.isBlank()) {
+                    sumUnspent += it.sum.toInt()
                 }
             }
-            .fold(0) { sum, item -> sum + item }
-            .toString()
+        }
+        
+        subject.sumSpent = sumSpent.toString()
+        subject.sumUnspent = sumUnspent.toString()
+
         subject.ideasCount = ideas.size
         subject.ideasDoneCount = ideas.count { it.done }
 
-        updateSubject(subject)
+        subjectsBox.put(subject)
+        getSubjectsInternally(false)
     }
 }

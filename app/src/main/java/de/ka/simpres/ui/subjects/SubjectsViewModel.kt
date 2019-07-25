@@ -23,7 +23,7 @@ import jp.wasabeef.recyclerview.animators.SlideInDownAnimator
 import org.koin.standalone.inject
 
 /**
- *
+ * The main view model for subjects. Handles the showing, deletion and moving of the list of all available subjects.
  */
 class SubjectsViewModel : BaseViewModel() {
 
@@ -82,12 +82,16 @@ class SubjectsViewModel : BaseViewModel() {
      */
     fun setupAdapterAndLoad(owner: LifecycleOwner) {
         if (adapter.value == null) {
-            val subjectAdapter = SubjectAdapter(owner)
-            adapter.value = subjectAdapter
+            adapter.value = SubjectAdapter(owner)
             loadSubjects(true)
         }
-        adapter.value?.apply {
-            touchHelper.value = ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(this))
+        adapter.value?.let {
+            it.owner = owner
+            touchHelper.apply {
+                value?.attachToRecyclerView(null)
+                value = null
+                postValue(ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(it)))
+            }
         }
     }
 

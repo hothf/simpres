@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#544EE6</color>
+    <color name="colorPrimary">#544EE6</color>
+    <color name="colorPrimaryDark">#544EE6</color>
+    <color name="colorAccent">#111E40</color>
 
-    <color name="colorBackgroundPrimary">#EAEBEF</color>
+    <color name="colorBackgroundPrimary">#F2F5F9</color>
     <color name="colorBackgroundPrimaryDark">#525252</color>
     <color name="colorBackgroundSecondary">#ffffff</color>
+    <color name="colorBackgroundSecondaryDark">#cfcfcf</color>
 
-    <color name="colorSelected">#232323</color>
-
-    <color name="colorTextDefault">#232323</color>
-    <color name="colorTextSecondaryDefault">#333333</color>
-    <color name="colorTextNav">#000000</color>
+    <color name="colorTextDefault">#111E40</color>
+    <color name="colorTextSecondaryDefault">#9C9C9C</color>
+    <color name="colorTextNav">#111E40</color>
     <color name="colorButtonTextDefault">#ffffff</color>
     <color name="colorButtonTextAlternative">@color/colorAccent</color>
 
-    <color name="colorIconTintDefault">#002200</color>
+    <color name="colorIconTintDefault">#111E40</color>
     <color name="colorIconTintSecondary">#747474</color>
 
     <color name="colorIndicatorGreen">#5BB6A6</color>
@@ -25,13 +24,4 @@
     <color name="colorIndicatorOrange">#D88C48</color>
     <color name="colorIndicatorRed">#C2445B</color>
     <color name="colorIndicatorPurple">#AF62F6</color>
-
-
-    <!-- remove someday! -->
-
-    <color name="fontNav">#232323</color>
-    <color name="fontTitle">#333333</color>
-    <color name="fontDefault">#476874</color>
-    <color name="fontDisabled">#33888888</color>
-    <color name="fontDefaultInverted">#ffffff</color>
 </resources>

@@ -3,19 +3,15 @@ package de.ka.simpres.ui.subjects.detail.idealist
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
-import de.ka.simpres.R
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
 import de.ka.simpres.databinding.ItemIdeaAddBinding
 import de.ka.simpres.databinding.ItemIdeaBinding
-import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.IdeaItem
-import org.koin.standalone.inject
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -25,10 +21,8 @@ class IdeaAdapter(
     val listener: (IdeaItem) -> Unit,
     val add: () -> Unit,
     val subjectId: Long,
-    val remove: (IdeaBaseItemViewModel) -> Unit
+    val remove: (IdeaItemViewModel) -> Unit
 ) : BaseAdapter<IdeaBaseItemViewModel>(owner, list, IdeaAdapterDiffCallback()) {
-
-    private val repository: Repository by inject()
 
     override fun getItemViewType(position: Int): Int {
         if (getItems()[position] is IdeaAddItemViewModel) {
@@ -57,10 +51,6 @@ class IdeaAdapter(
             }
         } else if (viewModel is IdeaItemViewModel) {
             DataBindingUtil.getBinding<ItemIdeaBinding>(holder.itemView)?.let { binding ->
-                binding.check.setOnCheckedChangeListener { _, checked ->
-                    viewModel.item.done = checked
-                    repository.saveOrUpdateIdea(subjectId, viewModel.item)
-                }
                 binding.swipeAble.setOnClickListener {
                     listener(viewModel.item)
                 }
@@ -74,7 +64,6 @@ class IdeaAdapter(
         val viewModel = getItems()[position] as? IdeaItemViewModel
 
         viewModel?.let {
-            repository.removeIdea(subjectId, viewModel.item)
             remove(it)
         }
 
@@ -87,11 +76,25 @@ class IdeaAdapter(
      * @param newItems the new items to append or replace
      */
     fun overwriteList(
-        newItems: List<IdeaItem>
+        newItems: List<IdeaItem>,
+        color: String
     ) {
+        var indexOfFirstDone = -1
         val newList: MutableList<IdeaBaseItemViewModel> =
-            newItems.map { detail -> IdeaItemViewModel(detail) }.toMutableList()
-        newList.add(0, IdeaAddItemViewModel())
+            newItems.mapIndexed { index, detail ->
+                if (detail.done && indexOfFirstDone == -1) {
+                    indexOfFirstDone = index
+                }
+                IdeaItemViewModel(detail, color)
+            }.toMutableList()
+
+        //newList.add(0,IdeaAddItemViewModel()) // used if it should be always on top!
+
+        if (indexOfFirstDone != -1) {
+            newList.add(indexOfFirstDone, IdeaAddItemViewModel(color))
+        } else {
+            newList.add(IdeaAddItemViewModel(color))
+        }
         setItems(newList)
     }
 }
@@ -99,16 +102,16 @@ class IdeaAdapter(
 class IdeaAdapterDiffCallback : DiffUtil.ItemCallback<IdeaBaseItemViewModel>() {
 
     override fun areItemsTheSame(oldItem: IdeaBaseItemViewModel, newItem: IdeaBaseItemViewModel): Boolean {
-        return oldItem.id == newItem.id
+        if (oldItem.id == newItem.id) return true
+        return false
     }
 
     override fun areContentsTheSame(
         oldItem: IdeaBaseItemViewModel,
         newItem: IdeaBaseItemViewModel
     ): Boolean {
-        return oldItem == newItem
+        return false
     }
-
 }
 
 class IdeaViewHolder<T : ItemIdeaBinding>(val binding: T) : BaseViewHolder<T>(binding) {
@@ -129,7 +132,7 @@ class IdeaViewHolder<T : ItemIdeaBinding>(val binding: T) : BaseViewHolder<T>(bi
     override fun onHolderSwipe(dX: Float, dY: Float, actionState: Int) {
         swipeableView?.let {
             val change = abs(dX) / it.width
-            if (dX > 0){
+            if (dX > 0) {
                 binding.deleteIconRight.alpha = 0.0f
                 binding.deleteIconLeft.alpha = 0.5f + change
                 binding.deleteIconLeft.scaleX = min(0.5f + change, 1.0f)
@@ -140,9 +143,6 @@ class IdeaViewHolder<T : ItemIdeaBinding>(val binding: T) : BaseViewHolder<T>(bi
                 binding.deleteIconRight.scaleX = min(0.5f + change, 1.0f)
                 binding.deleteIconRight.scaleY = min(0.5f + change, 1.0f)
             }
-
-
-
         }
 
         super.onHolderSwipe(dX, dY, actionState)

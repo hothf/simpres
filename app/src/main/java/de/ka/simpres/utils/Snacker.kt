@@ -4,13 +4,15 @@ import android.content.Context
 import android.os.Handler
 import android.util.AttributeSet
 import android.view.View
-import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import de.ka.simpres.R
 import de.ka.simpres.base.events.ShowSnack
 
@@ -25,6 +27,7 @@ class Snacker @JvmOverloads constructor(
 
     enum class SnackType(@ColorRes val textColorRes: Int, @DrawableRes val backgroundRes: Int) {
         DEFAULT(R.color.colorBackgroundSecondary, R.drawable.bg_snacker_default),
+        SUCCESS(R.color.colorBackgroundSecondary, R.drawable.bg_snacker_success),
         WARNING(R.color.colorBackgroundSecondary, R.drawable.bg_snacker_warning),
         ERROR(R.color.colorBackgroundSecondary, R.drawable.bg_snacker_error)
     }
@@ -33,6 +36,7 @@ class Snacker @JvmOverloads constructor(
 
     private var container: View
     private var snackText: TextView
+    private var snackIcon: ImageView
     private var snackAction: TextView
     private var isHidingStopped = false
 
@@ -40,9 +44,15 @@ class Snacker @JvmOverloads constructor(
         inflate(context, R.layout.layout_snacker, this)
 
         container = findViewById(R.id.snacker)
+        snackIcon = findViewById(R.id.snackIcon)
         snackText = findViewById(R.id.snackText)
         snackAction = findViewById(R.id.snackAction)
         visibility = View.INVISIBLE
+
+        post {
+            container.translationY = container.height.toFloat() + container.marginBottom
+        }
+
     }
 
     /**
@@ -51,6 +61,12 @@ class Snacker @JvmOverloads constructor(
     fun reveal(showSnack: ShowSnack) {
         snackHandler.removeCallbacksAndMessages(null)
         isHidingStopped = true
+
+        if (showSnack.type == SnackType.SUCCESS) {
+            snackIcon.visibility = View.VISIBLE
+        } else {
+            snackIcon.visibility = View.GONE
+        }
 
         if (showSnack.action != null && showSnack.actionText != null) {
             snackAction.text = showSnack.actionText
@@ -96,7 +112,7 @@ class Snacker @JvmOverloads constructor(
             return
         }
 
-        view.animate().translationY(0.0f).setInterpolator(AccelerateInterpolator())
+        view.animate().translationY(0.0f).setInterpolator(OvershootInterpolator())
     }
 
     private fun createHide(view: View) {
@@ -104,7 +120,7 @@ class Snacker @JvmOverloads constructor(
             return
         }
 
-        view.animate().translationY(view.height.toFloat()).setInterpolator(DecelerateInterpolator())
+        view.animate().translationY(view.height.toFloat() + view.marginBottom).setInterpolator(DecelerateInterpolator())
     }
 
     companion object {

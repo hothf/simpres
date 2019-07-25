@@ -1,22 +1,54 @@
 <resources>
     <string name="app_name">Simpres</string>
 
+    <string name="app_general_back">Back</string>
+    <string name="app_general_delete">Delete</string>
+    <string name="app_general_empty_sign">-</string>
+
+    <string name="error_input_empty">Please enter something</string>
+    <string name="error_input_too_small">Please use at least %s characters</string>
+    <string name="error_input_too_long">Please use a maximum of %s characters</string>
+
+    <string name="notifications_channel_date">Date reminder</string>
+    <string name="notifications_channel_date_info">Reminders for upcoming dates</string>
+    <string name="notifications_channel_date_description">Notifies of upcoming dates</string>
+
+    <string name="notifications_date_content_title">Reminder for %s</string>
+    <string name="notifications_date_content_text">Tap here to see what is left todo.</string>
+
+    <string name="subject_empty">Nothing here, try to add some!</string>
     <string name="subject_delete_undo_title">Item deleted</string>
     <string name="subject_delete_undo_action">Undo</string>
+    <string name="subject_done_amount">%1$d/%2$d</string>
+
+    <string name="subject_detail_empty">No ideas listed yet. Add some ideas!</string>
+    <string name="subject_detail_edit">Edit</string>
+    <string name="subject_detail_all">%d to do</string>
+    <string name="subject_detail_date">remind</string>
+    <string name="subject_detail_no_remind">No</string>
+    <string name="subject_details_sum_spent">%s spent</string>
+    <string name="subject_details_sum_unspent">%s open</string>
+    <string name="subject_detail_sum">Sum</string>
+    <string name="subject_detail_updated">Updated</string>
+    <string name="subject_detail_done_amount">%1$d done</string>
+    <string name="subject_detail_nothingspent">0 € spent</string>
 
     <string name="subject_newedit_add">Add new</string>
     <string name="subject_newedit_edit">Edit</string>
     <string name="subject_newedit_save">Save</string>
     <string name="subject_newedit_title_hint">Enter title</string>
-    <string name="subject_newedit_push_hint">Enable notification</string>
+    <string name="subject_newedit_push_hint">Notification on</string>
+    <string name="subject_newedit_remind_on">%s</string>
 
     <string name="idea_newedit_add">Add new idea</string>
     <string name="idea_newedit_edit">Edit idea</string>
     <string name="idea_newedit_save">Save</string>
     <string name="idea_newedit_title_hint">Enter title</string>
     <string name="idea_newedit_sum_hint">Enter sum</string>
+    <string name="idea_newedit_add_comment">Comment</string>
 
-    <string name="idea_list_add">+ new Idea</string>
+    <string name="idea_list_add">Add a new idea</string>
+    <string name="idea_list_done">Done</string>
 
     <string name="idea_delete_undo_title">Idea deleted</string>
     <string name="idea_delete_undo_action">Undo</string>
