@@ -14,7 +14,8 @@ import de.ka.simpres.utils.*
 import de.ka.simpres.utils.resources.ResourcesProvider
 import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 import org.koin.standalone.inject
-import timber.log.Timber
+import java.net.URLEncoder
+
 
 class NewEditIdeaViewModel : BaseViewModel() {
 
@@ -81,7 +82,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
     }
 
     private val openComment: (Comment) -> Unit = {
-
+        open(url = "http://www.google.com/#q=${URLEncoder.encode(it.text, "UTF-8")}")
     }
 
     /**
