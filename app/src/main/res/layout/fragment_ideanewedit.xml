@@ -139,6 +139,18 @@
                             app:setOnEditorActionListener="@{viewModel.getDoneListener}"
                             app:setSelection="@{viewModel.sumSelection}" />
                     </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_26"
+                        android:layout_marginTop="@dimen/default_20"
+                        android:layout_marginEnd="@dimen/default_26"
+                        app:setItemAnimator="@{viewModel.itemAnimator}"
+                        android:adapter="@{viewModel.commentsAdapter}"
+                        android:background="@drawable/bg_round"
+                        android:backgroundTint="@color/colorBackgroundPrimary"
+                        app:layoutManager="@{viewModel.layoutManager()}" />
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

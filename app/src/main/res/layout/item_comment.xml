@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="de.ka.simpres.ui.subjects.detail.idealist.newedit.comments.CommentsItemViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/default_54"
+        android:theme="@style/Theme.Simpres">
+
+        <RelativeLayout
+            android:id="@+id/swipeAble"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/open"
+                style="@style/ButtonStyle.Simpres.Nav"
+                android:layout_width="@dimen/default_42"
+                android:layout_height="@dimen/default_42"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:visibility="@{viewModel.openVisibility}"
+                app:icon="@drawable/ic_open"
+                app:iconSize="@dimen/default_22" />
+
+            <EditText
+                style="@style/TextInputStyle.Simpres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/remove"
+                android:layout_toEndOf="@+id/open"
+                android:hint="@string/idea_newedit_title_hint"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@{viewModel.text}"
+                app:addTextChangedListener="@{viewModel.getTextChangedListener}"
+                app:setSelection="@{viewModel.textSelection}" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/remove"
+                style="@style/ButtonStyle.Simpres.Nav"
+                android:layout_width="@dimen/default_42"
+                android:layout_height="@dimen/default_42"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:icon="@drawable/ic_delete"
+                app:iconSize="@dimen/default_22" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</layout>
