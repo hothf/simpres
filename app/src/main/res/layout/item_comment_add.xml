@@ -20,7 +20,8 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add"
             style="@style/ButtonStyle.Simpres.Nav"
-            android:layout_width="@dimen/default_42"
+            android:layout_width="wrap_content"
+            android:text="@string/idea_newedit_add_comment"
             android:layout_height="@dimen/default_42"
             android:layout_centerInParent="true"
             app:icon="@drawable/ic_plus"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -14,67 +14,51 @@
         android:id="@+id/item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_54"
-        android:theme="@style/Theme.Simpres"
-        android:background="@drawable/bg_round"
-        android:backgroundTint="@color/colorBackgroundPrimary">
-
-        <ImageView
-            android:id="@+id/deleteIconLeft"
-            android:layout_width="@dimen/default_24"
-            android:layout_height="@dimen/default_24"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/default_32"
-            android:contentDescription="@string/app_general_delete"
-            android:src="@drawable/ic_delete"
-            android:tint="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/deleteIconRight"
-            android:layout_width="@dimen/default_24"
-            android:layout_height="@dimen/default_24"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/default_32"
-            android:contentDescription="@string/app_general_delete"
-            android:src="@drawable/ic_delete"
-            android:tint="@color/colorAccent" />
+        android:theme="@style/Theme.Simpres">
 
         <RelativeLayout
             android:id="@+id/swipeAble"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg_round"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/open"
+                style="@style/ButtonStyle.Simpres.Nav"
+                android:layout_width="@dimen/default_42"
+                android:layout_height="@dimen/default_42"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                app:icon="@drawable/ic_overflow"
+                app:iconSize="@dimen/default_22" />
+
             <EditText
                 style="@style/TextInputStyle.Simpres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/remove"
+                android:layout_toEndOf="@+id/open"
                 android:hint="@string/idea_newedit_title_hint"
                 android:imeOptions="actionDone"
-                android:layout_width="wrap_content"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="@{viewModel.text}"
                 app:addTextChangedListener="@{viewModel.getTextChangedListener}"
-                app:setSelection="@{viewModel.textSelection}"
-                android:layout_height="wrap_content" />
+                app:setSelection="@{viewModel.textSelection}" />
 
-            <ImageView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/remove"
                 style="@style/ButtonStyle.Simpres.Nav"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:tint="@color/colorAccent"
+                android:layout_width="@dimen/default_42"
+                android:layout_height="@dimen/default_42"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_delete" />
+                android:layout_centerVertical="true"
+                app:icon="@drawable/ic_delete"
+                app:iconSize="@dimen/default_22" />
 
-            <ImageView
-                android:id="@+id/open"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
         </RelativeLayout>
     </RelativeLayout>

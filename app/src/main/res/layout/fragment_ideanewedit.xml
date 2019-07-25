@@ -141,13 +141,16 @@
                     </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_16"
                         android:layout_marginTop="@dimen/default_20"
                         android:layout_marginEnd="@dimen/default_16"
+                        app:setItemAnimator="@{viewModel.itemAnimator}"
                         android:adapter="@{viewModel.commentsAdapter}"
-                        app:layoutManager="@{viewModel.layoutManager()}"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:background="@drawable/bg_round"
+                        android:backgroundTint="@color/colorBackgroundPrimary"
+                        app:layoutManager="@{viewModel.layoutManager()}" />
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

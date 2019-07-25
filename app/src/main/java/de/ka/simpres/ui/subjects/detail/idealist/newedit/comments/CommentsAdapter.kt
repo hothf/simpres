@@ -64,7 +64,8 @@ class CommentsAdapter(
 
     private fun addComment() {
         val newList = getComments().toMutableList()
-        newList.add((Comment("", false)))
+        val id = if (newList.isEmpty()) 0L else (newList.last().id.plus(1))
+        newList.add((Comment(id, "", false)))
         overwriteList(newList)
     }
 
@@ -114,6 +115,12 @@ class CommentsAdapter(
 class CommentsAdapterDiffCallback : DiffUtil.ItemCallback<CommentsBaseItemViewModel>() {
 
     override fun areItemsTheSame(oldItem: CommentsBaseItemViewModel, newItem: CommentsBaseItemViewModel): Boolean {
+        if (oldItem is CommentsItemViewModel && newItem is CommentsItemViewModel) {
+            return oldItem.item == newItem.item
+        }
+        if (oldItem is CommentsAddItemViewModel && newItem is CommentsAddItemViewModel) {
+            return true
+        }
         return false
     }
 

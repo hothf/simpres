@@ -21,7 +21,7 @@ data class IdeaItem(
 
 data class Comments(var comments: List<Comment>)
 
-data class Comment(var text: String, var isLink: Boolean)
+data class Comment(var id: Long, var text: String, var isLink: Boolean)
 
 class CommentsConverter : PropertyConverter<Comments, String> {
 

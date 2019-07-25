@@ -12,6 +12,7 @@ import de.ka.simpres.repo.model.IdeaItem
 import de.ka.simpres.ui.subjects.detail.idealist.newedit.comments.CommentsAdapter
 import de.ka.simpres.utils.*
 import de.ka.simpres.utils.resources.ResourcesProvider
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 import org.koin.standalone.inject
 import timber.log.Timber
 
@@ -56,6 +57,8 @@ class NewEditIdeaViewModel : BaseViewModel() {
     private var isUpdating = false
 
     fun layoutManager() = LinearLayoutManager(resourcesProvider.getApplicationContext())
+
+    fun itemAnimator() = SlideInRightAnimator()
 
     fun onBack(v: View) {
         v.closeAttachedKeyboard()
