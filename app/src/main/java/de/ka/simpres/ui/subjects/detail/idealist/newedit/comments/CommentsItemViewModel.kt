@@ -16,6 +16,9 @@ class CommentsItemViewModel(val item: Comment) : CommentsBaseItemViewModel() {
         textSelection.value = it.length
 
         openVisibility.postValue(determineOpenVisibility(!it.isBlank()))
+
+        text.value?.let { item.text = it }
+        openVisibility.value?.let { item.isLink = it == View.VISIBLE }
     }
 
     private fun determineOpenVisibility(isLink: Boolean): Int {
@@ -27,8 +30,7 @@ class CommentsItemViewModel(val item: Comment) : CommentsBaseItemViewModel() {
 
 
     fun save() {
-        text.value?.let { item.text = it }
-        openVisibility.value?.let { item.isLink = it == View.VISIBLE }
+
     }
 
 

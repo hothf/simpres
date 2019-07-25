@@ -11,16 +11,17 @@ import de.ka.simpres.base.BaseViewHolder
 import de.ka.simpres.databinding.ItemCommentAddBinding
 import de.ka.simpres.databinding.ItemCommentBinding
 import de.ka.simpres.repo.model.Comment
+import de.ka.simpres.repo.model.Comments
 
 class CommentsAdapter(
     owner: LifecycleOwner,
     list: ArrayList<CommentsBaseItemViewModel> = arrayListOf(),
     val open: (Comment) -> Unit,
-    sourceItems: List<Comment>?
+    sourceItems: Comments?
 ) : BaseAdapter<CommentsBaseItemViewModel>(owner, list, CommentsAdapterDiffCallback()) {
 
     init {
-        overwriteList(sourceItems)
+        overwriteList(sourceItems?.comments)
     }
 
     override fun getItemViewType(position: Int): Int {

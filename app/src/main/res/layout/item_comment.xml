@@ -26,8 +26,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/open"
                 style="@style/ButtonStyle.Simpres.Nav"
-                android:layout_width="@dimen/default_42"
-                android:layout_height="@dimen/default_42"
+                android:layout_width="@dimen/default_54"
+                android:layout_height="@dimen/default_54"
+                android:layout_margin="@dimen/default_4"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:visibility="@{viewModel.openVisibility}"
@@ -52,8 +53,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/remove"
                 style="@style/ButtonStyle.Simpres.Nav"
-                android:layout_width="@dimen/default_42"
-                android:layout_height="@dimen/default_42"
+                android:layout_width="@dimen/default_54"
+                android:layout_height="@dimen/default_54"
+                android:layout_margin="@dimen/default_4"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 app:icon="@drawable/ic_delete"

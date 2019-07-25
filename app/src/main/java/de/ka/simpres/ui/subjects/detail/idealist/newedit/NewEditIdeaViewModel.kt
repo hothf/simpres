@@ -100,7 +100,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
             CommentsAdapter(
                 owner = owner,
                 open = openComment,
-                sourceItems = currentIdea?.comments?.comments
+                sourceItems = currentIdea?.comments?.copy()
             )
         )
     }
@@ -120,7 +120,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
             CommentsAdapter(
                 owner = owner,
                 open = openComment,
-                sourceItems = currentIdea?.comments?.comments
+                sourceItems = currentIdea?.comments?.copy()
             )
         )
     }

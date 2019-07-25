@@ -22,7 +22,7 @@
             style="@style/ButtonStyle.Simpres.Nav"
             android:layout_width="wrap_content"
             android:text="@string/idea_newedit_add_comment"
-            android:layout_height="@dimen/default_42"
+            android:layout_height="@dimen/default_58"
             android:layout_centerInParent="true"
             app:icon="@drawable/ic_plus"
             app:iconSize="@dimen/default_22" />
