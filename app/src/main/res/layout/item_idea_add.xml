@@ -21,6 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/default_42"
             android:layout_centerVertical="true"
+            android:onClick="@{()->viewModel.onAdd()}"
             android:layout_marginStart="@dimen/default_16"
             android:foreground="?android:attr/selectableItemBackground">
 
