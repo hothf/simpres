@@ -119,6 +119,72 @@
 
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_26"
+                        android:layout_marginTop="@dimen/default_20"
+                        android:layout_marginEnd="@dimen/default_26">
+
+                        <TextView
+                            style="@style/TextStyle.Simpres.Default.Small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Associate with" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            app:cardCornerRadius="30dp"
+                            android:id="@+id/contact"
+                            android:layout_width="@dimen/default_58"
+                            android:layout_height="@dimen/default_58"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/default_36">
+
+                            <ImageView
+                                android:scaleType="centerCrop"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/bg_circle_dashed"
+                                android:foreground="?attr/selectableItemBackground"
+                                android:onClick="@{()->viewModel.chooseContact()}"
+                                app:uriLoad="@{viewModel.contactUri}" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <TextView
+                            android:id="@+id/contactName"
+                            style="@style/TextStyle.Simpres.Secondary.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/contact"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:padding="@dimen/default_4"
+                            android:text="@{viewModel.contactName}"
+                            android:textStyle="bold"
+                            tools:text="Thomas Hofmann" />
+
+                        <EditText
+                            android:id="@+id/contactInfoTextEdit"
+                            style="@style/TextInputStyle.Simpres"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/contactName"
+                            android:layout_marginStart="@dimen/default_10"
+                            android:layout_marginEnd="@dimen/default_10"
+                            android:hint="@string/subject_newedit_contactnotes_hint"
+                            android:imeOptions="actionDone"
+                            android:inputType="textCapSentences"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="@{viewModel.contactNotes}"
+                            app:addTextChangedListener="@{viewModel.getContextNotesChangedListener}"
+                            app:setOnEditorActionListener="@{viewModel.getDoneListener}"
+                            app:setSelection="@{viewModel.contactNotesSelection}" />
+
+                    </RelativeLayout>
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -143,10 +209,10 @@
                             android:id="@+id/dateSetterButton"
                             style="@style/ButtonStyle.Simpres.Nav"
                             android:layout_width="wrap_content"
-                            android:layout_toEndOf="@+id/checkPush"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/default_2"
                             android:layout_marginStart="@dimen/default_8"
+                            android:layout_marginTop="@dimen/default_2"
+                            android:layout_toEndOf="@+id/checkPush"
                             android:enabled="@{viewModel.pushEnabled}"
                             android:minHeight="@dimen/default_42"
                             android:onClick="@{(v) -> viewModel.onOpenDatePicker(v)}"
@@ -161,11 +227,11 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_20"
                         android:layout_marginStart="@dimen/default_26"
+                        android:layout_marginTop="@dimen/default_20"
                         android:layout_marginEnd="@dimen/default_26"
-                        android:backgroundTint="@color/colorBackgroundPrimary"
-                        android:background="@drawable/bg_round">
+                        android:background="@drawable/bg_round"
+                        android:backgroundTint="@color/colorBackgroundPrimary">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:layout_width="wrap_content"

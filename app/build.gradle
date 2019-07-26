@@ -85,4 +85,7 @@ dependencies {
 
     // database
     implementation "io.objectbox:objectbox-kotlin:$objectbox_version"
+
+    // contact picker
+    implementation "com.github.broakenmedia:MultiContactPicker:$contactpicker_version"
 }

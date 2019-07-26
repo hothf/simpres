@@ -47,7 +47,8 @@
             android:background="@drawable/bg_round"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground">
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="@{()->viewModel.onItemClick()}">
 
             <ImageView
                 android:id="@+id/checker"
@@ -55,14 +56,14 @@
                 android:layout_height="@dimen/default_36"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/default_8"
+                android:alpha="@{viewModel.doneAlpha}"
                 android:background="@{viewModel.checkerBackground}"
                 android:backgroundTint="@color/colorTextDefault"
                 android:contentDescription="@string/idea_list_done"
+                android:foreground="@drawable/button_default_selector"
                 android:onClick="@{()->viewModel.toggleDone()}"
-                android:alpha="@{viewModel.doneAlpha}"
                 android:padding="@dimen/default_6"
                 android:src="@drawable/ic_check"
-                android:foreground="@drawable/button_default_selector"
                 android:tint="@color/colorBackgroundSecondary"
                 tools:background="@drawable/bg_circle" />
 

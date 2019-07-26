@@ -4,6 +4,7 @@
     <string name="app_general_back">Back</string>
     <string name="app_general_delete">Delete</string>
     <string name="app_general_empty_sign">-</string>
+    <string name="app_general_empty_item">Item not available</string>
 
     <string name="error_input_empty">Please enter something</string>
     <string name="error_input_too_small">Please use at least %s characters</string>
@@ -32,11 +33,14 @@
     <string name="subject_detail_updated">Updated</string>
     <string name="subject_detail_done_amount">%1$d done</string>
     <string name="subject_detail_nothingspent">0 € spent</string>
+    <string name="subject_detail_contactnote">Contact</string>
 
+    <string name="subject_newedit_contact_choose">Choose a contact</string>
     <string name="subject_newedit_add">Add new</string>
     <string name="subject_newedit_edit">Edit</string>
     <string name="subject_newedit_save">Save</string>
     <string name="subject_newedit_title_hint">Enter title</string>
+    <string name="subject_newedit_contactnotes_hint">Enter contact notes</string>
     <string name="subject_newedit_push_hint">Notification on</string>
     <string name="subject_newedit_remind_on">%s</string>
 

@@ -40,26 +40,6 @@ class IdeaAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-        val viewModel = getItems()[position]
-
-        if (viewModel is IdeaAddItemViewModel) {
-            DataBindingUtil.getBinding<ItemIdeaAddBinding>(holder.itemView)?.let { binding ->
-                binding.item.setOnClickListener {
-                    add()
-                }
-            }
-        } else if (viewModel is IdeaItemViewModel) {
-            DataBindingUtil.getBinding<ItemIdeaBinding>(holder.itemView)?.let { binding ->
-                binding.swipeAble.setOnClickListener {
-                    listener(viewModel.item)
-                }
-            }
-        }
-
-        super.onBindViewHolder(holder, position)
-    }
-
     override fun onItemDismiss(position: Int) {
         val viewModel = getItems()[position] as? IdeaItemViewModel
 
@@ -85,15 +65,15 @@ class IdeaAdapter(
                 if (detail.done && indexOfFirstDone == -1) {
                     indexOfFirstDone = index
                 }
-                IdeaItemViewModel(detail, color)
+                IdeaItemViewModel(detail, color, listener)
             }.toMutableList()
 
         //newList.add(0,IdeaAddItemViewModel()) // used if it should be always on top!
 
         if (indexOfFirstDone != -1) {
-            newList.add(indexOfFirstDone, IdeaAddItemViewModel(color))
+            newList.add(indexOfFirstDone, IdeaAddItemViewModel(color, add))
         } else {
-            newList.add(IdeaAddItemViewModel(color))
+            newList.add(IdeaAddItemViewModel(color, add))
         }
         setItems(newList)
     }

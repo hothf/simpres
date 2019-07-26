@@ -71,7 +71,9 @@ class NewEditIdeaViewModel : BaseViewModel() {
 
         view?.closeAttachedKeyboard()
 
-        commentsAdapter.value?.getComments(shouldSave = true)?.let {
+        // because the comments system is a adapter only thing so far, not connected to the repository,
+        // we have to manually add it here. This is a chosen design simply to de-clutter the repository.
+        commentsAdapter.value?.getComments()?.let {
             currentIdea?.comments = Comments(it)
         }
 
@@ -97,11 +99,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
         updateTextViews()
 
         commentsAdapter.postValue(
-            CommentsAdapter(
-                owner = owner,
-                open = openComment,
-                sourceItems = currentIdea?.comments?.comments
-            )
+            CommentsAdapter(owner = owner, open = openComment, sourceItems = currentIdea?.comments?.copy())
         )
     }
 
@@ -117,11 +115,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
         updateTextViews()
 
         commentsAdapter.postValue(
-            CommentsAdapter(
-                owner = owner,
-                open = openComment,
-                sourceItems = currentIdea?.comments?.comments
-            )
+            CommentsAdapter(owner = owner, open = openComment, sourceItems = currentIdea?.comments?.copy())
         )
     }
 

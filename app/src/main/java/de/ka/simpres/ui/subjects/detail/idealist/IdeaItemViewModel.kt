@@ -10,7 +10,7 @@ import de.ka.simpres.utils.resources.ResourcesProvider
 import de.ka.simpres.utils.toEuro
 import org.koin.standalone.inject
 
-class IdeaItemViewModel(val item: IdeaItem, color: String) : IdeaBaseItemViewModel() {
+class IdeaItemViewModel(val item: IdeaItem, color: String, val click: (IdeaItem) -> Unit) : IdeaBaseItemViewModel() {
 
     private val resourcesProvider: ResourcesProvider by inject()
     private val repository: Repository by inject()
@@ -29,6 +29,10 @@ class IdeaItemViewModel(val item: IdeaItem, color: String) : IdeaBaseItemViewMod
         item.sum.toEuro()
     } else {
         ""
+    }
+
+    fun onItemClick(){
+        click(item)
     }
 
     /**

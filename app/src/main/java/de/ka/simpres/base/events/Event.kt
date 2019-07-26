@@ -44,6 +44,26 @@ data class NavigateTo(
     @IdRes val navigationPopupToId: Int? = null
 ) : Event()
 
+data class RequestPermission(val request: Int, val permissions: Array<out String>): Event() {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as RequestPermission
+
+        if (request != other.request) return false
+        if (!permissions.contentEquals(other.permissions)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = request
+        result = 31 * result + permissions.contentHashCode()
+        return result
+    }
+}
+
 data class Open(
     val url: String? = null,
     val clazz: KClass<*>? = null,

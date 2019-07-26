@@ -1,3 +1,13 @@
 package de.ka.simpres.ui.subjects.detail.idealist.newedit.comments
 
-class CommentsAddItemViewModel : CommentsBaseItemViewModel()
+import android.view.View
+
+
+class CommentsAddItemViewModel(private val add: () -> Unit) : CommentsBaseItemViewModel() {
+
+    fun addNew(view: View){
+        view.clearFocus()
+        add()
+    }
+
+}
