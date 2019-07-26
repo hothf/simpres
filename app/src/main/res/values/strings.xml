@@ -33,6 +33,7 @@
     <string name="subject_detail_updated">Updated</string>
     <string name="subject_detail_done_amount">%1$d done</string>
     <string name="subject_detail_nothingspent">0 € spent</string>
+    <string name="subject_detail_contactnote">Contact</string>
 
     <string name="subject_newedit_contact_choose">Choose a contact</string>
     <string name="subject_newedit_add">Add new</string>

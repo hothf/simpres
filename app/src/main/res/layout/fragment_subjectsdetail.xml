@@ -52,13 +52,33 @@
                 android:layout_marginStart="@dimen/default_8"
                 android:layout_marginTop="@dimen/default_32"
                 android:layout_marginEnd="@dimen/default_8"
-                android:layout_toStartOf="@+id/edit"
+                android:layout_toStartOf="@+id/contact"
                 android:layout_toEndOf="@+id/back"
                 android:ellipsize="end"
                 android:gravity="start|center_vertical"
                 android:maxLines="3"
                 android:text="@{viewModel.title}"
                 tools:text="Detail Title" />
+
+            <com.google.android.material.card.MaterialCardView
+                app:cardCornerRadius="30dp"
+                android:id="@+id/contact"
+                android:layout_marginTop="@dimen/default_24"
+                android:layout_marginEnd="@dimen/default_4"
+                android:layout_width="@dimen/default_42"
+                android:layout_toStartOf="@+id/edit"
+                android:layout_height="@dimen/default_42">
+
+                <ImageView
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_circle_dashed"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{()->viewModel.clickContact()}"
+                    app:uriLoad="@{viewModel.contactUri}" />
+
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/edit"
