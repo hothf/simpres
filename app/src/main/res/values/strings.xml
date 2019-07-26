@@ -4,6 +4,7 @@
     <string name="app_general_back">Back</string>
     <string name="app_general_delete">Delete</string>
     <string name="app_general_empty_sign">-</string>
+    <string name="app_general_empty_item">Item not available</string>
 
     <string name="error_input_empty">Please enter something</string>
     <string name="error_input_too_small">Please use at least %s characters</string>

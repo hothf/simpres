@@ -45,6 +45,8 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val color = MutableLiveData<Int>().apply { value = Color.parseColor(currentColor) }
     val allAmount =
         MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+    val remind =
+        MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
     val date = MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
     val sumSpent =
         MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
@@ -166,6 +168,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         date.postValue("")
         allAmount.postValue("")
         sumSpent.postValue("")
+        remind.postValue(resourcesProvider.getString(R.string.app_general_empty_item))
 
         refresh()
     }
@@ -203,6 +206,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         } else {
             date.postValue(resourcesProvider.getString(R.string.subject_detail_no_remind))
         }
+        remind.postValue(resourcesProvider.getString(R.string.subject_detail_date))
 
         currentColor = subject.color
 
