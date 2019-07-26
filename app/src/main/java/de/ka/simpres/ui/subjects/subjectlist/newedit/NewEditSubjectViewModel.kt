@@ -6,6 +6,7 @@ import android.widget.CompoundButton
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.wafflecopter.multicontactpicker.ContactResult
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
 import de.ka.simpres.base.events.AnimType
@@ -29,6 +30,12 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
         currentSubject?.title = it
     }
+    val getContextNotesChangedListener = ViewUtils.TextChangeListener {
+        contactNotes.value = it
+        contactNotesSelection.value = it.length
+
+        currentSubject?.contactNote = it
+    }
     val onPushChanged = CompoundButton.OnCheckedChangeListener { _, changed: Boolean ->
         currentSubject?.pushEnabled = changed
         pushEnabled.value = changed
@@ -37,6 +44,10 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val navTitle = MutableLiveData<String>().apply { value = "" }
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String?>().apply { value = null }
+    val contactNotes = MutableLiveData<String>().apply { value = null }
+    val contactNotesSelection = MutableLiveData<Int>().apply { value = 0 }
+    val contactName = MutableLiveData<String>().apply { value = "" }
+    val contactUri = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
     val date = MutableLiveData<String>().apply { value = "" }
     val pushEnabled = MutableLiveData<Boolean>().apply { value = false }
@@ -71,6 +82,10 @@ class NewEditSubjectViewModel : BaseViewModel() {
             it.owner = owner
             it.markColor(currentSubject?.color)
         }
+    }
+
+    fun chooseContact() {
+        handle(OpenContactsPicker())
     }
 
     fun layoutManager() =
@@ -142,6 +157,20 @@ class NewEditSubjectViewModel : BaseViewModel() {
         updateTextViews()
     }
 
+    /**
+     * Updates the current contact.
+     *
+     * @param name the name of the contact
+     */
+    fun updateContact(result: ContactResult) {
+        currentSubject?.let {
+            it.contactName = result.displayName
+            it.contactUri = result.thumbnail?.toString()
+        }
+
+        updateTextViews()
+    }
+
     private fun updateTextViews() {
         if (isUpdating) {
             navTitle.postValue(resourcesProvider.getString(R.string.subject_newedit_edit))
@@ -156,6 +185,10 @@ class NewEditSubjectViewModel : BaseViewModel() {
                 resourcesProvider.getString(R.string.subject_newedit_remind_on, currentSubject?.date?.toDate())
             )
             pushEnabled.postValue(currentSubject?.pushEnabled)
+            contactName.postValue(currentSubject?.contactName)
+            contactUri.postValue(currentSubject?.contactUri)
+            contactNotes.postValue(currentSubject?.contactNote)
+            contactNotesSelection.postValue(currentSubject?.contactNote?.length)
         } else {
             title.postValue("")
             titleSelection.postValue(0)
@@ -164,6 +197,9 @@ class NewEditSubjectViewModel : BaseViewModel() {
                 resourcesProvider.getString(R.string.subject_newedit_remind_on, System.currentTimeMillis().toDate())
             )
             pushEnabled.postValue(true)
+            contactName.postValue("")
+            contactUri.postValue("")
+            contactNotesSelection.postValue(0)
         }
     }
 
@@ -181,4 +217,5 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
     class OpenDatePickerEvent(val date: Long)
 
+    class OpenContactsPicker
 }

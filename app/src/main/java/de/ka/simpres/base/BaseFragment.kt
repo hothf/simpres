@@ -1,5 +1,6 @@
 package de.ka.simpres.base
 
+import android.Manifest
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -19,6 +20,9 @@ import de.ka.simpres.utils.NavigationUtils
 import org.koin.androidx.viewmodel.ext.android.getViewModelByClass
 import timber.log.Timber
 import kotlin.reflect.KClass
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
+
 
 /**
  * Represents a base fragment. Extending fragments should always be combined with a viewModel,
@@ -81,6 +85,41 @@ abstract class BaseFragment<out T : ViewDataBinding, E : BaseViewModel>(clazz: K
                 }
             }
         )
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        permissions.forEachIndexed { index, _ ->
+            val grantResult = grantResults[index]
+
+            if (grantResult == PackageManager.PERMISSION_GRANTED) {
+                onPermissionGranted(requestCode)
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    /**
+     * Requests permissions like fragments normally do, but can immediately trigger [onPermissionGranted] for the given
+     * request code. This makes it convenient to start actions from [onPermissionGranted].
+     */
+    fun requestPermission(requestCode: Int, permissions: Array<out String>) {
+        val permissionCheck =
+            ContextCompat.checkSelfPermission(this.requireContext(), Manifest.permission.READ_CONTACTS)
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            onPermissionGranted(requestCode)
+        } else {
+            requestPermissions(permissions, requestCode)
+        }
+    }
+
+    /**
+     * Called on a granted permission request.
+     *
+     * @param request the request code of the permission
+     */
+    open fun onPermissionGranted(request: Int) {
+        // implemented by subclasses
     }
 
     /**

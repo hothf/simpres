@@ -28,7 +28,6 @@ class NewEditIdeaFragment : BaseFragment<FragmentIdeaneweditBinding, NewEditIdea
                 }
             }
         }
-        arguments?.clear()
 
         return view
     }

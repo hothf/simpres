@@ -28,6 +28,7 @@ import org.koin.standalone.inject
 class SubjectsDetailViewModel : BaseViewModel() {
 
     private var currentColor = ColorResources.getRandomColorString()
+    private var currentSubject: SubjectItem? = null
     private var currentSubjectId = -1L
     private var isLoading = false
 
@@ -50,6 +51,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
     val date = MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
     val sumSpent =
         MutableLiveData<String>().apply { value = resourcesProvider.getString(R.string.app_general_empty_sign) }
+    val contactUri = MutableLiveData<String>().apply { value = "" }
 
     private val removeListener = { viewModel: IdeaItemViewModel ->
         repository.removeIdea(viewModel.item)
@@ -83,15 +85,21 @@ class SubjectsDetailViewModel : BaseViewModel() {
         )
     }
 
-    fun onAddClick() {
-        addListener()
-    }
-
     fun itemAnimator() = SlideInDownAnimator()
 
     fun layoutManager() = LinearLayoutManager(resourcesProvider.getApplicationContext())
 
     fun onBack() = navigateTo(BACK)
+
+    fun clickContact() {
+        currentSubject?.let {
+            val firstPart =
+                if (!it.contactName.isNullOrBlank()) "${it.contactName}"
+                else resourcesProvider.getString(R.string.subject_detail_contactnote)
+            val secondPart = if (!it.contactNote.isNullOrBlank()) ": ${it.contactNote}" else ""
+            showSnack("$firstPart$secondPart")
+        }
+    }
 
     fun onEditSubject() {
         navigateTo(
@@ -146,8 +154,8 @@ class SubjectsDetailViewModel : BaseViewModel() {
             return
         }
 
+        currentSubject = null
         currentSubjectId = subjectId
-
         val ideaAdapter = IdeaAdapter(
             owner = owner,
             subjectId = subjectId,
@@ -169,6 +177,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
         allAmount.postValue("")
         sumSpent.postValue("")
         remind.postValue(resourcesProvider.getString(R.string.app_general_empty_item))
+        contactUri.postValue("")
 
         refresh()
     }
@@ -180,6 +189,7 @@ class SubjectsDetailViewModel : BaseViewModel() {
     }
 
     private fun updateSubject(subject: SubjectItem, isUpdate: Boolean = false) {
+        currentSubject = subject
         title.postValue(subject.title)
 
         allAmount.postValue(resourcesProvider.getString(R.string.subject_detail_all, subject.ideasCount))
@@ -211,6 +221,8 @@ class SubjectsDetailViewModel : BaseViewModel() {
         currentColor = subject.color
 
         color.postValue(Color.parseColor(currentColor))
+
+        contactUri.postValue(subject.contactUri)
 
         repository.getIdeasOf(currentSubjectId)
 

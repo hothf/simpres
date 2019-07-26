@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7447030099033657005",
-      "lastPropertyId": "11:3719630992753594498",
+      "lastPropertyId": "15:8322955630176956862",
       "name": "SubjectItem",
       "properties": [
         {
@@ -47,6 +47,18 @@
         {
           "id": "11:3719630992753594498",
           "name": "sumSpent"
+        },
+        {
+          "id": "12:8358590453245193976",
+          "name": "contactName"
+        },
+        {
+          "id": "14:3013495041894077925",
+          "name": "contactNote"
+        },
+        {
+          "id": "15:8322955630176956862",
+          "name": "contactUri"
         }
       ],
       "relations": []
@@ -93,7 +105,8 @@
   "retiredEntityUids": [],
   "retiredIndexUids": [],
   "retiredPropertyUids": [
-    7637648367381791306
+    7637648367381791306,
+    7666593937096452982
   ],
   "retiredRelationUids": [
     6386165350942569310
