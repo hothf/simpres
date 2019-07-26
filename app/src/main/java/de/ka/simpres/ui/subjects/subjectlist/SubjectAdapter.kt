@@ -9,19 +9,26 @@ import androidx.recyclerview.widget.DiffUtil
 import de.ka.simpres.base.BaseAdapter
 import de.ka.simpres.base.BaseViewHolder
 import de.ka.simpres.databinding.ItemSubjectBinding
-import de.ka.simpres.repo.Repository
 import de.ka.simpres.repo.model.SubjectItem
-import org.koin.standalone.inject
 import kotlin.math.abs
 import kotlin.math.min
 
 /**
  * Adapter for displaying [SubjectItemViewModel]s.
  */
-class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel> = arrayListOf()) :
+class SubjectAdapter(
+    owner: LifecycleOwner,
+    list: ArrayList<SubjectItemViewModel> = arrayListOf(),
+    val click: (SubjectItemViewModel, View) -> Unit,
+    val remove: (SubjectItemViewModel) -> Unit,
+    val move: (
+        fromPosition: Int,
+        toPosition: Int,
+        viewModel1: SubjectItemViewModel,
+        viewModel2: SubjectItemViewModel
+    ) -> Unit
+) :
     BaseAdapter<SubjectItemViewModel>(owner, list, SubjectAdapterDiffCallback()) {
-
-    private val repository: Repository by inject()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         return SubjectViewHolder(ItemSubjectBinding.inflate(layoutInflater, parent, false))
@@ -32,9 +39,6 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
             DataBindingUtil.getBinding<ItemSubjectBinding>(holder.itemView)?.let { binding ->
                 val sharedTransitionView = binding.item
                 ViewCompat.setTransitionName(sharedTransitionView, this.item.id.toString())
-                binding.item.setOnClickListener {
-                    click(this, sharedTransitionView)
-                }
             }
         }
 
@@ -42,19 +46,12 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
-        repository.moveSubject(
-            getItems()[fromPosition].item,
-            getItems()[toPosition].item,
-            fromPosition,
-            toPosition
-        )
+        move(fromPosition, toPosition, getItems()[fromPosition], getItems()[toPosition])
         return super.onItemMove(fromPosition, toPosition)
     }
 
     override fun onItemDismiss(position: Int) {
-        val viewModel = getItems()[position]
-        repository.removeSubject(viewModel.item)
-        viewModel.remove(viewModel)
+        getItems()[position].also(remove)
         super.onItemDismiss(position)
     }
 
@@ -65,11 +62,7 @@ class SubjectAdapter(owner: LifecycleOwner, list: ArrayList<SubjectItemViewModel
      * @param click a click listener
      * @param remove a listener for a request to remove the item
      */
-    fun overwriteList(
-        newItems: List<SubjectItem>,
-        click: (SubjectItemViewModel, View) -> Unit,
-        remove: (SubjectItemViewModel) -> Unit
-    ) {
+    fun overwriteList(newItems: List<SubjectItem>) {
         val newList: MutableList<SubjectItemViewModel> =
             newItems.map { SubjectItemViewModel(it, click, remove) }.toMutableList()
         setItems(newList)

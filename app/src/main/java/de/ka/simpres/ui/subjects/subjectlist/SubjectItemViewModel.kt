@@ -35,6 +35,9 @@ class SubjectItemViewModel(
 
     val openSum = if (item.sumUnspent.toInt() > 0) item.sumUnspent.toEuro() else ""
 
+    fun onItemClick(view: View) {
+        click(this, view)
+    }
 
     private fun SubjectItem.generateShortTitle(): String {
         val strippedTitle = this.title.trim()

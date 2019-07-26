@@ -50,12 +50,25 @@ class SubjectsViewModel : BaseViewModel() {
             FragmentNavigatorExtras(view to view.transitionName)
         )
     }
-    private val removeListener = { _: SubjectItemViewModel ->
+    private val removeListener = { viewModel: SubjectItemViewModel ->
+        repository.removeSubject(viewModel.item)
         showSnack(
             resourcesProvider.getString(R.string.subject_delete_undo_title),
             Snacker.SnackType.DEFAULT,
             { repository.undoDeleteSubject() },
             resourcesProvider.getString(R.string.subject_delete_undo_action)
+        )
+    }
+
+    private val moveSubjects = { fromPosition: Int,
+                         toPosition: Int,
+                         viewModel1: SubjectItemViewModel,
+                         viewModel2: SubjectItemViewModel ->
+        repository.moveSubject(
+            viewModel1.item,
+            viewModel2.item,
+            fromPosition,
+            toPosition
         )
     }
 
@@ -82,7 +95,12 @@ class SubjectsViewModel : BaseViewModel() {
      */
     fun setupAdapterAndLoad(owner: LifecycleOwner) {
         if (adapter.value == null) {
-            adapter.value = SubjectAdapter(owner)
+            adapter.value =
+                SubjectAdapter(
+                    owner = owner,
+                    click = itemClickListener,
+                    remove = removeListener,
+                    move = moveSubjects)
             loadSubjects(true)
         }
         adapter.value?.let {
@@ -102,7 +120,7 @@ class SubjectsViewModel : BaseViewModel() {
                 onNext = { result ->
                     hideLoading()
                     adapter.value?.let {
-                        it.overwriteList(result, itemClickListener, removeListener)
+                        it.overwriteList(result)
 
                         if (it.isEmpty) {
                             blankVisibility.postValue(View.VISIBLE)
