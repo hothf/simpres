@@ -41,4 +41,5 @@ object ViewUtils {
             update(text.toString())
         }
     }
+
 }

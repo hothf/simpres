@@ -68,7 +68,7 @@ class NewEditSubjectFragment : BaseFragment<FragmentSubjectneweditBinding, NewEd
             if (resultCode == RESULT_OK && data != null) {
                 val results = MultiContactPicker.obtainResult(data)
                 if (results.isNotEmpty()) {
-                    viewModel.updateContact(results[0].displayName)
+                    viewModel.updateContact(results[0])
                 }
             }
         }

@@ -19,5 +19,6 @@ data class SubjectItem(
     var ideasDoneCount: Int = 0,
     var pushEnabled: Boolean = true,
     var contactName: String? = null,
-    var contactItems: String? = null
+    var contactNote: String? = null,
+    var contactUri: String? = null
 ) : Serializable

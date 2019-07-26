@@ -22,8 +22,6 @@
     <string name="subject_delete_undo_action">Undo</string>
     <string name="subject_done_amount">%1$d/%2$d</string>
 
-
-
     <string name="subject_detail_empty">No ideas listed yet. Add some ideas!</string>
     <string name="subject_detail_edit">Edit</string>
     <string name="subject_detail_all">%d to do</string>
@@ -41,6 +39,7 @@
     <string name="subject_newedit_edit">Edit</string>
     <string name="subject_newedit_save">Save</string>
     <string name="subject_newedit_title_hint">Enter title</string>
+    <string name="subject_newedit_contactnotes_hint">Enter contact notes</string>
     <string name="subject_newedit_push_hint">Notification on</string>
     <string name="subject_newedit_remind_on">%s</string>
 

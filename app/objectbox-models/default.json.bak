@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:7447030099033657005",
-      "lastPropertyId": "11:3719630992753594498",
+      "lastPropertyId": "13:7666593937096452982",
       "name": "SubjectItem",
       "properties": [
         {
@@ -47,6 +47,14 @@
         {
           "id": "11:3719630992753594498",
           "name": "sumSpent"
+        },
+        {
+          "id": "12:8358590453245193976",
+          "name": "contactName"
+        },
+        {
+          "id": "13:7666593937096452982",
+          "name": "contactItems"
         }
       ],
       "relations": []
