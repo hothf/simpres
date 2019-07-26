@@ -13,6 +13,17 @@ import de.ka.simpres.databinding.ItemCommentBinding
 import de.ka.simpres.repo.model.Comment
 import de.ka.simpres.repo.model.Comments
 
+/**
+ * This adapter is not only responsible for showing comments passed via the constructors `sourceItems` but also
+ * responsible for adding and removing comments. They can later be retrieved using [getComments].
+ *
+ * This design is used because of a wanted de-cluttering of the repository which would normally be responsible for
+ * handling that add and remove logic and serving the items via RxJava.
+ *
+ * The decision was made because the commenting system is a fast approached, easy written simple list representation
+ * which must not be scalable at the moment. By not adding it to the repository, it makes space for more important
+ * lists handling.
+ */
 class CommentsAdapter(
     owner: LifecycleOwner,
     list: ArrayList<CommentsBaseItemViewModel> = arrayListOf(),
@@ -43,18 +54,11 @@ class CommentsAdapter(
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         val viewModel = getItems()[position]
 
-        if (viewModel is CommentsAddItemViewModel) {
-            DataBindingUtil.getBinding<ItemCommentAddBinding>(holder.itemView)?.let { binding ->
-                binding.add.setOnClickListener {
-                    addComment()
-                }
-            }
-        } else if (viewModel is CommentsItemViewModel) {
+        // because of a focus bug in android, we use this setter instead and clear all focuses
+        if (viewModel is CommentsItemViewModel) {
             DataBindingUtil.getBinding<ItemCommentBinding>(holder.itemView)?.let { binding ->
-                binding.open.setOnClickListener {
-                    open(viewModel.item)
-                }
                 binding.remove.setOnClickListener {
+                    binding.edit.clearFocus()
                     removeComment(viewModel.item)
                 }
             }
@@ -79,17 +83,13 @@ class CommentsAdapter(
     /**
      * Retrieves all comments. If you specify that the comments should be saved, the items will call a save function.
      *
-     * @param shouldSave set to true to trigger a save method on the items. Defaults to false
      * @return the comments
      */
-    fun getComments(shouldSave: Boolean = false): List<Comment> {
+    fun getComments(): List<Comment> {
         val comments = mutableListOf<Comment>()
         getItems().forEach {
             if (it is CommentsItemViewModel) {
                 comments.add(it.item)
-                if (shouldSave) {
-                    it.save()
-                }
             }
         }
         return comments
@@ -104,10 +104,10 @@ class CommentsAdapter(
         val newList = mutableListOf<CommentsBaseItemViewModel>()
 
         if (!newItems.isNullOrEmpty()) {
-            newList.addAll(newItems.map { CommentsItemViewModel(it) })
+            newList.addAll(newItems.map { CommentsItemViewModel(it, open) })
         }
 
-        newList.add(CommentsAddItemViewModel())
+        newList.add(CommentsAddItemViewModel(::addComment))
 
         setItems(newList)
     }

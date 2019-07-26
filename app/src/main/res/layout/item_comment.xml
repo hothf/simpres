@@ -28,14 +28,16 @@
                 style="@style/ButtonStyle.Simpres.Nav"
                 android:layout_width="@dimen/default_54"
                 android:layout_height="@dimen/default_54"
-                android:layout_margin="@dimen/default_4"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:layout_margin="@dimen/default_4"
+                android:onClick="@{()->viewModel.open()}"
                 android:visibility="@{viewModel.openVisibility}"
                 app:icon="@drawable/ic_open"
                 app:iconSize="@dimen/default_22" />
 
             <EditText
+                android:id="@+id/edit"
                 style="@style/TextInputStyle.Simpres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,9 +57,9 @@
                 style="@style/ButtonStyle.Simpres.Nav"
                 android:layout_width="@dimen/default_54"
                 android:layout_height="@dimen/default_54"
-                android:layout_margin="@dimen/default_4"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:layout_margin="@dimen/default_4"
                 app:icon="@drawable/ic_delete"
                 app:iconSize="@dimen/default_22" />
 
