@@ -37,6 +37,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val navTitle = MutableLiveData<String>().apply { value = "" }
     val title = MutableLiveData<String>().apply { value = "" }
     val titleError = MutableLiveData<String?>().apply { value = null }
+    val contactName = MutableLiveData<String>().apply { value = "" }
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
     val date = MutableLiveData<String>().apply { value = "" }
     val pushEnabled = MutableLiveData<Boolean>().apply { value = false }
@@ -71,6 +72,10 @@ class NewEditSubjectViewModel : BaseViewModel() {
             it.owner = owner
             it.markColor(currentSubject?.color)
         }
+    }
+
+    fun chooseContact() {
+          handle(OpenContactsPicker())
     }
 
     fun layoutManager() =
@@ -142,6 +147,19 @@ class NewEditSubjectViewModel : BaseViewModel() {
         updateTextViews()
     }
 
+    /**
+     * Updates the current contact.
+     *
+     * @param name the name of the contact
+     */
+    fun updateContact(name: String) {
+        currentSubject?.let {
+            it.contactName = name
+        }
+
+        updateTextViews()
+    }
+
     private fun updateTextViews() {
         if (isUpdating) {
             navTitle.postValue(resourcesProvider.getString(R.string.subject_newedit_edit))
@@ -156,6 +174,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
                 resourcesProvider.getString(R.string.subject_newedit_remind_on, currentSubject?.date?.toDate())
             )
             pushEnabled.postValue(currentSubject?.pushEnabled)
+            contactName.postValue(currentSubject?.contactName)
         } else {
             title.postValue("")
             titleSelection.postValue(0)
@@ -164,6 +183,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
                 resourcesProvider.getString(R.string.subject_newedit_remind_on, System.currentTimeMillis().toDate())
             )
             pushEnabled.postValue(true)
+            contactName.postValue("")
         }
     }
 
@@ -181,4 +201,5 @@ class NewEditSubjectViewModel : BaseViewModel() {
 
     class OpenDatePickerEvent(val date: Long)
 
+    class OpenContactsPicker
 }

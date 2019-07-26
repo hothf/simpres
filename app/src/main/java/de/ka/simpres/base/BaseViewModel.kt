@@ -1,6 +1,7 @@
 package de.ka.simpres.base
 
 import android.os.Bundle
+import android.webkit.PermissionRequest
 import androidx.annotation.IdRes
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavOptions

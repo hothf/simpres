@@ -53,7 +53,7 @@
     },
     {
       "id": "2:3748764761050857159",
-      "lastPropertyId": "5:7620834741382393513",
+      "lastPropertyId": "6:2898693572611937134",
       "name": "IdeaItem",
       "properties": [
         {
@@ -75,6 +75,10 @@
         {
           "id": "5:7620834741382393513",
           "name": "subjectId"
+        },
+        {
+          "id": "6:2898693572611937134",
+          "name": "comments"
         }
       ],
       "relations": []

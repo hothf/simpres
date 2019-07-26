@@ -143,10 +143,10 @@
                             android:id="@+id/dateSetterButton"
                             style="@style/ButtonStyle.Simpres.Nav"
                             android:layout_width="wrap_content"
-                            android:layout_toEndOf="@+id/checkPush"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/default_2"
                             android:layout_marginStart="@dimen/default_8"
+                            android:layout_marginTop="@dimen/default_2"
+                            android:layout_toEndOf="@+id/checkPush"
                             android:enabled="@{viewModel.pushEnabled}"
                             android:minHeight="@dimen/default_42"
                             android:onClick="@{(v) -> viewModel.onOpenDatePicker(v)}"
@@ -161,11 +161,39 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/default_20"
                         android:layout_marginStart="@dimen/default_26"
+                        android:layout_marginTop="@dimen/default_20"
+                        android:layout_marginEnd="@dimen/default_26">
+
+                        <ImageView
+                            android:id="@+id/contact"
+                            android:layout_width="@dimen/default_58"
+                            android:layout_height="@dimen/default_58"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/bg_circle"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:onClick="@{()->viewModel.chooseContact()}" />
+
+                        <TextView
+                            android:layout_width="@dimen/default_58"
+                            android:layout_height="@dimen/default_58"
+                            android:layout_centerInParent="true"
+                            android:autoSizeTextType="uniform"
+                            android:gravity="center"
+                            android:padding="@dimen/default_4"
+                            android:text="@{viewModel.contactName}"
+                            tools:text="Thomas Hofmann" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_26"
+                        android:layout_marginTop="@dimen/default_20"
                         android:layout_marginEnd="@dimen/default_26"
-                        android:backgroundTint="@color/colorBackgroundPrimary"
-                        android:background="@drawable/bg_round">
+                        android:background="@drawable/bg_round"
+                        android:backgroundTint="@color/colorBackgroundPrimary">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:layout_width="wrap_content"
