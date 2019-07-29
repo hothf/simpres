@@ -53,7 +53,9 @@ class NewEditIdeaViewModel : BaseViewModel() {
         )
     )
 
-    private var currentIdea: IdeaItem? = null
+    var currentIdea: IdeaItem? = null
+        private set
+
     private var currentSubjectId: Long = -1
     private var isUpdating = false
 

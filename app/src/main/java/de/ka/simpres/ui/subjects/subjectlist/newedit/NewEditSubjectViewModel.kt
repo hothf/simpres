@@ -63,7 +63,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
     )
 
     var currentSubject: SubjectItem? = null
-    private set
+        private set
 
     private var isUpdating = false
 
