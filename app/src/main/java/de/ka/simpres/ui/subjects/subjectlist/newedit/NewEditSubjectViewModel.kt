@@ -62,7 +62,9 @@ class NewEditSubjectViewModel : BaseViewModel() {
         )
     )
 
-    private var currentSubject: SubjectItem? = null
+    var currentSubject: SubjectItem? = null
+    private set
+
     private var isUpdating = false
 
     private val chooseColor: (ColorItemViewModel) -> Unit = {
@@ -134,6 +136,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
     fun setupEdit(subjectId: Long) {
         currentSubject = repository.findSubjectById(subjectId)?.copy()
 
+
         isUpdating = true
 
         updateTextViews()
@@ -160,7 +163,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
     /**
      * Updates the current contact.
      *
-     * @param name the name of the contact
+     * @param result the contact to update
      */
     fun updateContact(result: ContactResult) {
         currentSubject?.let {
