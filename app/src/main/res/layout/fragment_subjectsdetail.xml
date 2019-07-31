@@ -61,21 +61,21 @@
                 tools:text="Detail Title" />
 
             <com.google.android.material.card.MaterialCardView
-                app:cardCornerRadius="30dp"
                 android:id="@+id/contact"
+                android:layout_width="@dimen/default_42"
+                android:layout_height="@dimen/default_42"
                 android:layout_marginTop="@dimen/default_24"
                 android:layout_marginEnd="@dimen/default_4"
-                android:layout_width="@dimen/default_42"
                 android:layout_toStartOf="@+id/edit"
-                android:layout_height="@dimen/default_42">
+                app:cardCornerRadius="30dp">
 
                 <ImageView
-                    android:scaleType="centerCrop"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/bg_circle_dashed"
                     android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{()->viewModel.clickContact()}"
+                    android:scaleType="centerCrop"
                     app:uriLoad="@{viewModel.contactUri}" />
 
             </com.google.android.material.card.MaterialCardView>
@@ -108,8 +108,8 @@
                     android:id="@+id/blankView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:stretchColumns="*"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:stretchColumns="*">
 
                     <TableRow>
 
@@ -152,6 +152,7 @@
                             android:textStyle="bold"
                             tools:text="Total Sum" />
                     </TableRow>
+
                     <TableRow>
 
                         <TextView
@@ -206,7 +207,7 @@
                 android:text="@string/subject_detail_empty"
                 android:visibility="@{viewModel.blankVisibility}" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <de.ka.simpres.utils.AutoReleaseRecyclerView
                 android:id="@+id/recyclerIdeas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -216,9 +217,7 @@
                 android:adapter="@{viewModel.adapter}"
                 android:minHeight="@dimen/default_58"
                 app:layoutManager="@{viewModel.layoutManager()}"
-                app:setItemAnimator="@{viewModel.itemAnimator}"
-                app:touchHelper="@{viewModel.touchHelper}" />
-
+                app:setItemAnimator="@{viewModel.itemAnimator}" />
 
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

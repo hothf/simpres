@@ -234,7 +234,7 @@
                         android:background="@drawable/bg_round"
                         android:backgroundTint="@color/colorBackgroundPrimary">
 
-                        <androidx.recyclerview.widget.RecyclerView
+                        <de.ka.simpres.utils.AutoReleaseRecyclerView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:adapter="@{viewModel.adapter}"

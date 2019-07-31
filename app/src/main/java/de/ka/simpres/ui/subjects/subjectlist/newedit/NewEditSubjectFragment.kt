@@ -35,8 +35,6 @@ class NewEditSubjectFragment : BaseFragment<FragmentSubjectneweditBinding, NewEd
             }
         }
 
-        viewModel.setupAdapterAndLoad(viewLifecycleOwner)
-
         return view
     }
 

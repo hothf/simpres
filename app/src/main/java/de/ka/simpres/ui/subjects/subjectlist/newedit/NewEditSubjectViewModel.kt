@@ -40,6 +40,9 @@ class NewEditSubjectViewModel : BaseViewModel() {
         currentSubject?.pushEnabled = changed
         pushEnabled.value = changed
     }
+    private val chooseColor: (ColorItemViewModel) -> Unit = {
+        currentSubject?.color = it.colorString
+    }
     val getDoneListener = ViewUtils.TextDoneListener { }
     val navTitle = MutableLiveData<String>().apply { value = "" }
     val title = MutableLiveData<String>().apply { value = "" }
@@ -51,7 +54,7 @@ class NewEditSubjectViewModel : BaseViewModel() {
     val titleSelection = MutableLiveData<Int>().apply { value = 0 }
     val date = MutableLiveData<String>().apply { value = "" }
     val pushEnabled = MutableLiveData<Boolean>().apply { value = false }
-    val adapter = MutableLiveData<ColorAdapter>()
+    val adapter = ColorAdapter(chooseColor)
 
     private val resourcesProvider: ResourcesProvider by inject()
     private val inputValidator: InputValidator by inject()
@@ -61,29 +64,15 @@ class NewEditSubjectViewModel : BaseViewModel() {
             listOf(ValidationRules.NOT_EMPTY, ValidationRules.MIN_4)
         )
     )
-
     var currentSubject: SubjectItem? = null
         private set
 
     private var isUpdating = false
 
-    private val chooseColor: (ColorItemViewModel) -> Unit = {
-        currentSubject?.color = it.colorString
-    }
 
     fun onBack(v: View) {
         v.closeAttachedKeyboard()
         navigateTo(BACK)
-    }
-
-    fun setupAdapterAndLoad(owner: LifecycleOwner) {
-        if (adapter.value == null) {
-            adapter.value = ColorAdapter(chooseColor, owner)
-        }
-        adapter.value?.let {
-            it.owner = owner
-            it.markColor(currentSubject?.color)
-        }
     }
 
     fun chooseContact() {
@@ -128,6 +117,8 @@ class NewEditSubjectViewModel : BaseViewModel() {
         isUpdating = false
 
         updateTextViews()
+
+        adapter.markColor(currentSubject?.color)
     }
 
     /**
@@ -136,10 +127,11 @@ class NewEditSubjectViewModel : BaseViewModel() {
     fun setupEdit(subjectId: Long) {
         currentSubject = repository.findSubjectById(subjectId)?.copy()
 
-
         isUpdating = true
 
         updateTextViews()
+
+        adapter.markColor(currentSubject?.color)
     }
 
     /**

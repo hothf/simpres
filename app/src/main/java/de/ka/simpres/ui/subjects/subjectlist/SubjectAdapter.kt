@@ -17,7 +17,6 @@ import kotlin.math.min
  * Adapter for displaying [SubjectItemViewModel]s.
  */
 class SubjectAdapter(
-    owner: LifecycleOwner,
     list: ArrayList<SubjectItemViewModel> = arrayListOf(),
     val click: (SubjectItemViewModel, View) -> Unit,
     val remove: (SubjectItemViewModel) -> Unit,
@@ -28,7 +27,7 @@ class SubjectAdapter(
         viewModel2: SubjectItemViewModel
     ) -> Unit
 ) :
-    BaseAdapter<SubjectItemViewModel>(owner, list, SubjectAdapterDiffCallback()) {
+    BaseAdapter<SubjectItemViewModel>(list, SubjectAdapterDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         return SubjectViewHolder(ItemSubjectBinding.inflate(layoutInflater, parent, false))

@@ -25,11 +25,10 @@ import de.ka.simpres.repo.model.Comments
  * lists handling.
  */
 class CommentsAdapter(
-    owner: LifecycleOwner,
     list: ArrayList<CommentsBaseItemViewModel> = arrayListOf(),
     val open: (Comment) -> Unit,
     sourceItems: Comments?
-) : BaseAdapter<CommentsBaseItemViewModel>(owner, list, CommentsAdapterDiffCallback()) {
+) : BaseAdapter<CommentsBaseItemViewModel>(list, CommentsAdapterDiffCallback()) {
 
     init {
         overwriteList(sourceItems?.comments)

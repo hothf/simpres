@@ -5,7 +5,6 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.SharedElementCallback
 import androidx.core.view.ViewCompat
 import androidx.transition.TransitionInflater
 import de.ka.simpres.R
@@ -24,7 +23,7 @@ class SubjectsDetailFragment :
         val subjectIsNew = arguments?.getBoolean(SUBJECT_IS_NEW, false) ?: false
 
         if (subjectId != null) {
-            viewModel.setupAdapterAndLoad(viewLifecycleOwner, subjectId)
+            viewModel.setup(subjectId)
 
             if (!subjectIsNew) {
                 getBinding()?.detailsCard?.let { ViewCompat.setTransitionName(it, subjectId.toString()) }

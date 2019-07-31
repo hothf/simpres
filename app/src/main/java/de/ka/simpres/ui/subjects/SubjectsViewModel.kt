@@ -2,11 +2,9 @@ package de.ka.simpres.ui.subjects
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import de.ka.simpres.R
 import de.ka.simpres.base.BaseViewModel
@@ -31,9 +29,8 @@ class SubjectsViewModel : BaseViewModel() {
 
     private val resourcesProvider: ResourcesProvider by inject()
 
-    val touchHelper = MutableLiveData<ItemTouchHelper>()
     val blankVisibility = MutableLiveData<Int>().apply { value = View.GONE }
-    val adapter = MutableLiveData<SubjectAdapter>()
+
     val refresh = MutableLiveData<Boolean>().apply { value = false }
     val swipeToRefreshListener = SwipeRefreshLayout.OnRefreshListener { loadSubjects(true) }
     val itemDecoration = DecorationUtil(
@@ -72,12 +69,15 @@ class SubjectsViewModel : BaseViewModel() {
         )
     }
 
+    val adapter = SubjectAdapter(click = itemClickListener, remove = removeListener, move = moveSubjects)
+
     fun layoutManager() = GridLayoutManager(resourcesProvider.getApplicationContext(), COLUMNS_COUNT)
 
     fun itemAnimator() = SlideInDownAnimator()
 
     init {
         startObserving()
+        loadSubjects(true)
     }
 
     fun onAddClick() {
@@ -88,38 +88,13 @@ class SubjectsViewModel : BaseViewModel() {
         )
     }
 
-    /**
-     * Sets up the view, if not already done.
-     *
-     * @param owner the lifecycle owner to keep the data in sync with the lifecycle
-     */
-    fun setupAdapterAndLoad(owner: LifecycleOwner) {
-        if (adapter.value == null) {
-            adapter.value =
-                SubjectAdapter(
-                    owner = owner,
-                    click = itemClickListener,
-                    remove = removeListener,
-                    move = moveSubjects)
-            loadSubjects(true)
-        }
-        adapter.value?.let {
-            it.owner = owner
-            touchHelper.apply {
-                value?.attachToRecyclerView(null)
-                value = null
-                postValue(ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(it)))
-            }
-        }
-    }
-
     private fun startObserving() {
         repository.observableSubjects
             .with(AndroidSchedulerProvider())
             .subscribeBy(
                 onNext = { result ->
                     hideLoading()
-                    adapter.value?.let {
+                    adapter.let {
                         it.overwriteList(result)
 
                         if (it.isEmpty) {

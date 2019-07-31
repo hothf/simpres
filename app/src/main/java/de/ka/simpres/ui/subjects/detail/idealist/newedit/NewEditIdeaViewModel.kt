@@ -101,7 +101,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
         updateTextViews()
 
         commentsAdapter.postValue(
-            CommentsAdapter(owner = owner, open = openComment, sourceItems = currentIdea?.comments?.copy())
+            CommentsAdapter(open = openComment, sourceItems = currentIdea?.comments?.copy())
         )
     }
 
@@ -117,7 +117,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
         updateTextViews()
 
         commentsAdapter.postValue(
-            CommentsAdapter(owner = owner, open = openComment, sourceItems = currentIdea?.comments?.copy())
+            CommentsAdapter(open = openComment, sourceItems = currentIdea?.comments?.copy())
         )
     }
 
