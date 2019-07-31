@@ -11,12 +11,6 @@ import timber.log.Timber
 import java.io.FileNotFoundException
 import java.io.IOException
 
-@BindingAdapter("touchHelper")
-fun useTouchHelperFor(recyclerView: RecyclerView, touchHelper: ItemTouchHelper?) {
-    touchHelper?.attachToRecyclerView(recyclerView)
-}
-
-
 @BindingAdapter("uriLoad")
 fun load(view: ImageView, url: String? = null) {
     if (url == null) {
