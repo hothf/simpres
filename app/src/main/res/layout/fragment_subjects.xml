@@ -49,7 +49,7 @@
             app:setOnRefreshListener="@{viewModel.swipeToRefreshListener}"
             app:setRefreshing="@{viewModel.refresh}">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <de.ka.simpres.utils.AutoReleaseRecyclerView
                 android:id="@+id/recyclerSubjects"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -57,8 +57,7 @@
                 android:adapter="@{viewModel.adapter}"
                 app:addItemDecoration="@{viewModel.itemDecoration}"
                 app:layoutManager="@{viewModel.layoutManager()}"
-                app:setItemAnimator="@{viewModel.itemAnimator}"
-                app:touchHelper="@{viewModel.touchHelper}" />
+                app:setItemAnimator="@{viewModel.itemAnimator}" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

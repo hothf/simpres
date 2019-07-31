@@ -16,13 +16,12 @@ import kotlin.math.abs
 import kotlin.math.min
 
 class IdeaAdapter(
-    owner: LifecycleOwner,
     list: ArrayList<IdeaBaseItemViewModel> = arrayListOf(),
     val listener: (IdeaItem) -> Unit,
     val add: () -> Unit,
     val subjectId: Long,
     val remove: (IdeaItemViewModel) -> Unit
-) : BaseAdapter<IdeaBaseItemViewModel>(owner, list, IdeaAdapterDiffCallback()) {
+) : BaseAdapter<IdeaBaseItemViewModel>(list, IdeaAdapterDiffCallback()) {
 
     override fun getItemViewType(position: Int): Int {
         if (getItems()[position] is IdeaAddItemViewModel) {

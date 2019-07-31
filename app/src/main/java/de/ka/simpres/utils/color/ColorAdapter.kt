@@ -12,8 +12,8 @@ import de.ka.simpres.databinding.ItemColorBinding
  * Adapter for displaying [ColorItemViewModel]s.
  */
 class ColorAdapter(
-    val click: (ColorItemViewModel) -> Unit, owner: LifecycleOwner, list: ArrayList<ColorItemViewModel> = arrayListOf()
-) : BaseAdapter<ColorItemViewModel>(owner, list, null) {
+    val click: (ColorItemViewModel) -> Unit, list: ArrayList<ColorItemViewModel> = arrayListOf()
+) : BaseAdapter<ColorItemViewModel>(list, null) {
 
     init {
         setItems(ColorResources.indicatorColors.map { ColorItemViewModel(it) })

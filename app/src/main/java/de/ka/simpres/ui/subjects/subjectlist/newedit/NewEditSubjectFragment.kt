@@ -23,17 +23,17 @@ class NewEditSubjectFragment : BaseFragment<FragmentSubjectneweditBinding, NewEd
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        val subjectId = arguments?.getLong(SUBJECT_ID_KEY)
-        if (subjectId != null && subjectId > 0) {
-            viewModel.setupEdit(subjectId)
-        } else {
-            val new = arguments?.getBoolean(NEW_KEY, false) ?: false
-            if (new) {
-                viewModel.setupNew()
+        if (savedInstanceState == null || viewModel.currentSubject == null) {
+            val subjectId = arguments?.getLong(SUBJECT_ID_KEY)
+            if (subjectId != null && subjectId > 0) {
+                viewModel.setupEdit(subjectId)
+            } else {
+                val new = arguments?.getBoolean(NEW_KEY, false) ?: false
+                if (new) {
+                    viewModel.setupNew()
+                }
             }
         }
-
-        viewModel.setupAdapterAndLoad(viewLifecycleOwner)
 
         return view
     }

@@ -19,9 +19,9 @@ data class IdeaItem(
     @Convert(converter = CommentsConverter::class, dbType = String::class) var comments: Comments? = null
 ) : Serializable
 
-data class Comments(var comments: List<Comment>)
+data class Comments(var comments: List<Comment>) : Serializable
 
-data class Comment(var id: Long, var text: String, var isLink: Boolean)
+data class Comment(var id: Long, var text: String, var isLink: Boolean) : Serializable
 
 class CommentsConverter : PropertyConverter<Comments, String> {
 

@@ -7,15 +7,9 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import de.ka.simpres.R
+import timber.log.Timber
 import java.io.FileNotFoundException
 import java.io.IOException
-
-@BindingAdapter("touchHelper")
-fun useTouchHelperFor(recyclerView: RecyclerView, touchHelper: ItemTouchHelper?) {
-    touchHelper?.attachToRecyclerView(recyclerView)
-}
-
 
 @BindingAdapter("uriLoad")
 fun load(view: ImageView, url: String? = null) {
@@ -31,6 +25,9 @@ fun load(view: ImageView, url: String? = null) {
         e.printStackTrace()
     } catch (e: IOException) {
         e.printStackTrace()
+        bitmap = null
+    } catch (e: SecurityException) {
+        Timber.e(e, "No permission to load image uri.")
         bitmap = null
     }
     if (bitmap != null) {

@@ -17,14 +17,16 @@ class NewEditIdeaFragment : BaseFragment<FragmentIdeaneweditBinding, NewEditIdea
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
-        arguments?.getLong(SUBJECT_ID_KEY)?.let {
-            val idea = arguments?.getSerializable(IDEA_KEY) as? IdeaItem
-            if (idea != null) {
-                viewModel.setupEdit(it, idea, viewLifecycleOwner)
-            } else {
-                val new = arguments?.getBoolean(NEW_KEY, false) ?: false
-                if (new) {
-                    viewModel.setupNew(it, viewLifecycleOwner)
+        if (savedInstanceState == null || viewModel.currentIdea == null) {
+            arguments?.getLong(SUBJECT_ID_KEY)?.let {
+                val idea = arguments?.getSerializable(IDEA_KEY) as? IdeaItem
+                if (idea != null) {
+                    viewModel.setupEdit(it, idea)
+                } else {
+                    val new = arguments?.getBoolean(NEW_KEY, false) ?: false
+                    if (new) {
+                        viewModel.setupNew(it)
+                    }
                 }
             }
         }

@@ -5,7 +5,7 @@ import androidx.databinding.ViewDataBinding
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.CallSuper
-import androidx.lifecycle.LifecycleOwner
+import androidx.databinding.BaseObservable
 import androidx.recyclerview.widget.*
 import de.ka.simpres.BR
 import io.reactivex.disposables.CompositeDisposable
@@ -16,7 +16,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 abstract class BaseAdapter<E : BaseItemViewModel>(
-    var owner: LifecycleOwner,
     private val items: ArrayList<E> = arrayListOf(),
     private val diffCallback: DiffUtil.ItemCallback<E>? = null
 ) : RecyclerView.Adapter<BaseViewHolder<*>>(), KoinComponent {
@@ -142,9 +141,9 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         if (diffCallback != null) {
-            holder.bind(owner, differ!!.currentList[holder.adapterPosition])
+            holder.bind(differ!!.currentList[holder.adapterPosition])
         } else {
-            holder.bind(owner, items[holder.adapterPosition])
+            holder.bind(items[holder.adapterPosition])
         }
 
         if (holder.adapterPosition in 0 until itemCount) {
@@ -181,7 +180,7 @@ abstract class BaseAdapter<E : BaseItemViewModel>(
  * These viewModels are not created through the android viewmodel framework but still may be used
  * with [MutableLiveData<T>].
  */
-abstract class BaseItemViewModel(val type: Int = 0) : KoinComponent {
+abstract class BaseItemViewModel(val type: Int = 0) : BaseObservable(), KoinComponent {
 
     var compositeDisposable: CompositeDisposable? = null
 
@@ -201,9 +200,8 @@ abstract class BaseViewHolder<T : ViewDataBinding>(private val binding: T) :
     abstract var isSwipeable: Boolean
     abstract var swipeableView: View?
 
-    fun bind(owner: LifecycleOwner, viewModel: BaseItemViewModel) {
+    fun bind(viewModel: BaseItemViewModel) {
         binding.setVariable(BR.viewModel, viewModel)
-        binding.lifecycleOwner = owner
         binding.executePendingBindings()
     }
 

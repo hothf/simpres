@@ -3,7 +3,6 @@ package de.ka.simpres.ui.subjects.detail
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -146,10 +145,9 @@ class SubjectsDetailViewModel : BaseViewModel() {
      * Sets up the whole view and loads the needed data, but only if the data is not already displayed - in that
      * case the data is simply updated.
      *
-     * @param owner the lifecycle owner, needed for keeping new data in sync with the lifecycle owner
      * @param subjectId the id of the subject to display.
      */
-    fun setupAdapterAndLoad(owner: LifecycleOwner, subjectId: Long) {
+    fun setup(subjectId: Long) {
         if (currentSubjectId == subjectId) {
             return
         }
@@ -157,19 +155,13 @@ class SubjectsDetailViewModel : BaseViewModel() {
         currentSubject = null
         currentSubjectId = subjectId
         val ideaAdapter = IdeaAdapter(
-            owner = owner,
             subjectId = subjectId,
             listener = ideaClickListener,
             add = addListener,
             remove = removeListener
         )
-        adapter.value = ideaAdapter
+        adapter.postValue(ideaAdapter)
 
-        touchHelper.apply {
-            value?.attachToRecyclerView(null)
-            value = null
-            postValue(ItemTouchHelper(DragAndSwipeItemTouchHelperCallback(ideaAdapter)))
-        }
         title.postValue("")
         sumUnspent.postValue("")
         doneAmount.postValue("")

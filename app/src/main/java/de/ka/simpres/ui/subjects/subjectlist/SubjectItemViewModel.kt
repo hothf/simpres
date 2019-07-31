@@ -8,7 +8,6 @@ import de.ka.simpres.repo.model.SubjectItem
 import de.ka.simpres.utils.resources.ResourcesProvider
 import de.ka.simpres.utils.toDate
 import de.ka.simpres.utils.toEuro
-import kotlinx.android.synthetic.main.item_subject.view.*
 import org.koin.standalone.inject
 
 class SubjectItemViewModel(

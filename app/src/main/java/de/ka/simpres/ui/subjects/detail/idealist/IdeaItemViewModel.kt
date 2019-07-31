@@ -2,6 +2,10 @@ package de.ka.simpres.ui.subjects.detail.idealist
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import androidx.databinding.BaseObservable
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableFloat
 import androidx.lifecycle.MutableLiveData
 import de.ka.simpres.R
 import de.ka.simpres.repo.Repository
@@ -15,10 +19,10 @@ class IdeaItemViewModel(val item: IdeaItem, color: String, val click: (IdeaItem)
     private val resourcesProvider: ResourcesProvider by inject()
     private val repository: Repository by inject()
 
-    val doneAlpha = MutableLiveData<Float>().apply { value = alphaForDone() }
-    val done = MutableLiveData<Boolean>().apply { value = item.done }
+    val doneAlpha = ObservableFloat().apply { set(alphaForDone()) }
+    val done = ObservableBoolean().apply { set(item.done) }
     val checkerBackground =
-        MutableLiveData<Drawable>().apply { value = retrieveCheckerBackground() }
+        ObservableField<Drawable>().apply { set(retrieveCheckerBackground()) }
     val color = Color.parseColor(color)
 
     override val id = item.id.toInt()
@@ -31,7 +35,7 @@ class IdeaItemViewModel(val item: IdeaItem, color: String, val click: (IdeaItem)
         ""
     }
 
-    fun onItemClick(){
+    fun onItemClick() {
         click(item)
     }
 
@@ -40,9 +44,9 @@ class IdeaItemViewModel(val item: IdeaItem, color: String, val click: (IdeaItem)
      */
     fun toggleDone() {
         item.done = item.done.not()
-        doneAlpha.value = alphaForDone()
-        done.value = item.done
-        checkerBackground.value = retrieveCheckerBackground()
+        doneAlpha.set(alphaForDone())
+        done.set(item.done)
+        checkerBackground.set(retrieveCheckerBackground())
         repository.saveOrUpdateIdea(item)
     }
 

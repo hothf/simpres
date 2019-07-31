@@ -140,7 +140,7 @@
                             app:setSelection="@{viewModel.sumSelection}" />
                     </RelativeLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
+                    <de.ka.simpres.utils.AutoReleaseRecyclerView
                         android:id="@+id/commentsRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

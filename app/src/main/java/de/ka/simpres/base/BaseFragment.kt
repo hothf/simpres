@@ -38,11 +38,7 @@ abstract class BaseFragment<out T : ViewDataBinding, E : BaseViewModel>(clazz: K
 
     private lateinit var binding: ViewDataBinding
 
-    val viewModel: E by lazy {
-        getViewModelByClass(
-            clazz,
-            from = { activity })
-    }
+    val viewModel: E by lazy { getViewModelByClass(clazz) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
