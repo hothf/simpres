@@ -3,7 +3,6 @@ package de.ka.simpres.ui.subjects.subjectlist.newedit
 import android.os.Bundle
 import android.view.View
 import android.widget.CompoundButton
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wafflecopter.multicontactpicker.ContactResult

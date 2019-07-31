@@ -21,11 +21,11 @@ class NewEditIdeaFragment : BaseFragment<FragmentIdeaneweditBinding, NewEditIdea
             arguments?.getLong(SUBJECT_ID_KEY)?.let {
                 val idea = arguments?.getSerializable(IDEA_KEY) as? IdeaItem
                 if (idea != null) {
-                    viewModel.setupEdit(it, idea, viewLifecycleOwner)
+                    viewModel.setupEdit(it, idea)
                 } else {
                     val new = arguments?.getBoolean(NEW_KEY, false) ?: false
                     if (new) {
-                        viewModel.setupNew(it, viewLifecycleOwner)
+                        viewModel.setupNew(it)
                     }
                 }
             }

@@ -1,7 +1,6 @@
 package de.ka.simpres.ui.subjects.detail.idealist.newedit
 
 import android.view.View
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.ka.simpres.R
@@ -92,7 +91,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
     /**
      * Sets up a new empty idea.
      */
-    fun setupNew(subjectId: Long, owner: LifecycleOwner) {
+    fun setupNew(subjectId: Long) {
         currentIdea = IdeaItem(0, subjectId)
         currentSubjectId = subjectId
 
@@ -108,7 +107,7 @@ class NewEditIdeaViewModel : BaseViewModel() {
     /**
      * Sets up an editable idea, taken from the given item.
      */
-    fun setupEdit(subjectId: Long, idea: IdeaItem, owner: LifecycleOwner) {
+    fun setupEdit(subjectId: Long, idea: IdeaItem) {
         currentIdea = idea.copy()
         currentSubjectId = subjectId
 
