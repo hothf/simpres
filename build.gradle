@@ -3,8 +3,8 @@
 buildscript {
     ext {
 
-        project_version_code = 1
-        project_version_name = '1.0.0'
+        project_version_code = 2
+        project_version_name = '1.0.1'
 
         min_version = 23
         target_version = 28
